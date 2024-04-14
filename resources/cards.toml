@@ -1,0 +1,14 @@
+[sword]
+iid = 1
+cost = 1
+damage = 2
+
+[bow]
+iid = 2
+cost = 2
+damage = 2
+
+[shield]
+iid = 3
+cost = 2
+armor = 4
