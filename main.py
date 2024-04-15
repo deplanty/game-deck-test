@@ -13,6 +13,7 @@ player = Player("Lisa", 100)
 player.deck.add_new(sgt.all_cards[1])
 player.deck.add_new(sgt.all_cards[1])
 player.deck.add_new(sgt.all_cards[1])
+player.deck.add_new(sgt.all_cards[3])
 
 player.deck.deck[0].upgrade()
 player.deck.deck[1].upgrade_multiple(3)
@@ -32,7 +33,7 @@ print()
 player.draw_hand()
 print(player.deck.hand)
 card = player.play_card(0)
-print(card._info)
+print(card)
 print(player.deck.hand)
 
 enemy.health -= card.damage

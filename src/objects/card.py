@@ -9,16 +9,13 @@ class Card:
         name (str): The name of the card.
     """
 
-    _info_show = {
-        "damage": "Damage",
-        "armor": "Armor",
-    }
-    
     def __init__(self, name:str):
         self.name = name
         self.iid = 0
         self.cost = 0
         self.upgrades = 0
+        self.description = ""
+        
         self.damage = 0
         self.armor = 0
 
@@ -34,14 +31,17 @@ class Card:
     # Properties
 
     @property
-    def _info(self) -> str:
-        """Return the information of the card as text."""
+    def info(self) -> str:
+        """Return the description of the card as text."""
+        return self.description.format(card=self)
+
+    @property
+    def info_full(self) -> str:
+        """Return the full information of the card as text."""
         
         text = f"{str(self)}\n"
         text += f"Cost = {self.cost}\n"
-        for param, t in self._info_show.items():
-            if self.__dict__[param] != 0:
-                text += f"{t} = {self.__dict__[param]}\n"
+        text += self.description.format(card=self)
         return text
     
     # Class methods
