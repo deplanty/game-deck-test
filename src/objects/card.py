@@ -33,6 +33,7 @@ class Card:
     @property
     def info(self) -> str:
         """Return the description of the card as text."""
+        
         return self.description.format(card=self)
 
     @property
