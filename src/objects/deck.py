@@ -34,8 +34,8 @@ class Deck:
         
         self.deck.append(card.copy())
 
-    def prepare(self):
-        """Reform the deck by adding the discarded and exiled cards."""
+    def reset(self):
+        """Reset the deck by adding all the cards (discarded, exiled and in hand) in the deck."""
         
         self.deck.extend(self.discard)
         self.discard.clear()
@@ -44,16 +44,31 @@ class Deck:
         self.deck.extend(self.hand)
         self.hand.clear()
 
-    def shuffle(self):
-        """Shuffle all the cards without the hand into the deck."""
+    def shuffle_deck(self):
+        """Shuffle the cards in the deck."""
+
+        random.shuffle(self.deck)
+
+    def reset_and_shuffle(self):
+        """Reset the deck and shuffle all the cards."""
+
+        self.reset()
+        self.shuffle_deck()
+
+    def discard_hand(self):
+        """Put cards in hand into the discard pile."""
+
+        self.discard.extend(self.hand)
+        self.hand.clear()
+
+    def shuffle_discard_in_deck(self):
+        """Add all the discarded cards into the deck and shuffle."""
         
         self.deck.extend(self.discard)
         self.discard.clear()
-        self.deck.extend(self.exile)
-        self.exile.clear()
         random.shuffle(self.deck)
 
-    def reset(self):
+    def clear(self):
         """Clear the deck of all its cards."""
         
         self.deck.clear()
@@ -68,8 +83,12 @@ class Deck:
             n_cards (int): Number of cards to be drawn.
         """
 
+        # If the player wants to draw a card but the deck is empty, then shuffle the discarded cards
+        # in the deck. If the deck is still empty, it means that all the cards are in the hand.
+        
         for _ in range(n_cards):
-            self.hand.append(self.deck.pop(-1))
-
             if len(self.deck) == 0:
-                self.shuffle()
+                self.shuffle_discard_in_deck()
+
+            if len(self.deck) != 0:
+                self.hand.append(self.deck.pop(0))

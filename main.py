@@ -30,11 +30,25 @@ print(enemy.deck)
 print()
 
 
-player.draw_hand()
-print(player.deck.hand)
-card = player.play_card(0)
-print(card)
-print(player.deck.hand)
+print("Init deck:", player.deck.deck)
+player.deck.reset_and_shuffle()
+print("Reset and shuffle:", player.deck.deck)
 
-enemy.health -= card.damage
-print(enemy)
+player.draw_hand()
+print("Draw hand 1:", player.deck.hand)
+
+player.draw_hand()
+print("Draw hand 2:", player.deck.hand)
+
+player.draw_hand()
+print("Draw hand 3:", player.deck.hand)
+
+player.deck.discard_hand()
+print("Discard hand")
+print("Hand:", player.deck.hand)
+print("Discard:", player.deck.discard)
+
+player.deck.shuffle_discard_in_deck()
+print("Shuffle discard in deck")
+print("Discard:", player.deck.discard)
+print("Deck:", player.deck.deck)
