@@ -8,6 +8,11 @@ class Card:
     Args:
         name (str): The name of the card.
     """
+
+    _info_show = {
+        "damage": "Damage",
+        "armor": "Armor",
+    }
     
     def __init__(self, name:str):
         self.name = name
@@ -33,9 +38,10 @@ class Card:
         """Return the information of the card as text."""
         
         text = f"{str(self)}\n"
-        text += f"Cost   = {self.cost}\n"
-        text += f"Damage = {self.damage}\n"
-        text += f"Armor  = {self.armor}"
+        text += f"Cost = {self.cost}\n"
+        for param, t in self._info_show.items():
+            if self.__dict__[param] != 0:
+                text += f"{t} = {self.__dict__[param]}\n"
         return text
     
     # Class methods
