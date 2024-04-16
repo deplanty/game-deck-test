@@ -16,7 +16,7 @@ player.deck.add_new(sgt.all_cards[1])
 player.deck.add_new(sgt.all_cards[3])
 
 player.deck.deck[0].upgrade()
-player.deck.deck[1].upgrade_multiple(3)
+player.deck.deck[1].upgrade(3)
 print(player)
 print(player.deck)
 print()

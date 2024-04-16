@@ -1,5 +1,7 @@
 import copy
 
+from src.utils import Signal
+
 
 class Card:
     """
@@ -7,7 +9,12 @@ class Card:
 
     Args:
         name (str): The name of the card.
+
+    Signals:
+        upgraded: triggers when the card is upgraded
     """
+
+    upgraded:Signal
 
     def __init__(self, name:str):
         self.name = name
@@ -18,6 +25,9 @@ class Card:
         
         self.damage = 0
         self.armor = 0
+
+        # Signals
+        self.upgraded = Signal()
 
     def __str__(self) -> str:
         if self.upgrades > 0:
@@ -68,19 +78,21 @@ class Card:
         
         return copy.deepcopy(self)
 
-    def upgrade(self):
-        """Upgrade the card by increasing its stats."""
+    def _upgrade(self):
+        """Upgrade the card once."""
 
         self.upgrades += 1
         self.damage += 1
 
-    def upgrade_multiple(self, n:int):
+    def upgrade(self, n:int=1):
         """
-        Upgrade the card several times.
+        Upgrade the card a given number of times.
 
         Args:
-            n (int): Number of time the card is upgraded.
+            n (int, optional): Number of time the card is upgraded. Defaults to 1.
         """
 
         for _ in range(n):
-            self.upgrade()
+            self._upgrade()
+
+        self.upgraded.emit()
