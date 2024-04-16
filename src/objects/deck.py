@@ -26,13 +26,13 @@ class Deck:
     
     def add(self, card:Card):
         """
-        Add a new card to the deck by copying it.
+        Add a card to the deck.
 
         Args:
             card (Card): The card to add to the deck.
         """
         
-        self.deck.append(card.copy())
+        self.deck.append(card)
 
     def reform(self):
         """Reform the deck by adding all the cards (discarded, exiled and in hand) in the deck."""
@@ -50,7 +50,7 @@ class Deck:
         random.shuffle(self.deck)
 
     def reform_and_shuffle(self):
-        """Reset the deck and shuffle all the cards."""
+        """Reform the deck and shuffle all the cards."""
 
         self.reform()
         self.shuffle_deck()
