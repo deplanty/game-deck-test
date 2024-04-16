@@ -10,45 +10,25 @@ from src.objects import Player
 
 
 player = Player("Lisa", 100)
-player.deck.add_new(sgt.all_cards[1])
-player.deck.add_new(sgt.all_cards[1])
-player.deck.add_new(sgt.all_cards[1])
-player.deck.add_new(sgt.all_cards[3])
+player.deck.add(sgt.all_cards[1])
+player.deck.add(sgt.all_cards[1])
+player.deck.add(sgt.all_cards[1])
+player.deck.add(sgt.all_cards[3])
 
 player.deck.deck[0].upgrade()
 player.deck.deck[1].upgrade(3)
-print(player)
+print("Player:", player)
 print(player.deck)
 print()
 
 enemy = Player("Pap's", 40)
-enemy.deck.add_new(sgt.all_cards[2])
-enemy.deck.add_new(sgt.all_cards[2])
-enemy.deck.add_new(sgt.all_cards[2])
-print(enemy)
-print(enemy.deck)
+enemy.armor = 2
+print("Enemy:", enemy.info)
 print()
 
-
-print("Init deck:", player.deck.deck)
-player.deck.reset_and_shuffle()
-print("Reset and shuffle:", player.deck.deck)
-
 player.draw_hand()
-print("Draw hand 1:", player.deck.hand)
-
-player.draw_hand()
-print("Draw hand 2:", player.deck.hand)
-
-player.draw_hand()
-print("Draw hand 3:", player.deck.hand)
-
-player.deck.discard_hand()
-print("Discard hand")
-print("Hand:", player.deck.hand)
-print("Discard:", player.deck.discard)
-
-player.deck.shuffle_discard_in_deck()
-print("Shuffle discard in deck")
-print("Discard:", player.deck.discard)
-print("Deck:", player.deck.deck)
+card = player.play_card(0)
+enemy.get_hit(card)
+print(player, "plays", card)
+print(card.info)
+print("Enemy:", enemy.info)
