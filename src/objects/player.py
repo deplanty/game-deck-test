@@ -1,5 +1,6 @@
 from src.components import Health
 from src.objects import Card, Deck
+import src.singleton as sgt
 
 
 class Player:
@@ -8,6 +9,7 @@ class Player:
 
     Args:
         name (str): The player's name.
+        max_health (int): The player's max health.
     """
     
     def __init__(self, name:str, max_health:int):
@@ -22,8 +24,8 @@ class Player:
     def __str__(self) -> str:
         return f"Player({self.name}, {self.health})"
 
-    # Method
-
+    # Properties
+    
     @property
     def info(self) -> str:
         """Returns the information of the player"""
@@ -32,8 +34,34 @@ class Player:
         text += f"Armor = {self.armor}"
         return text
 
+    # Class methods
+
+    @classmethod
+    def from_dict(cls, name:str, data:dict):
+        """
+        Return a player with all its data from a dict.
+
+        Args:
+            name (str): The player's name.
+            data (dict): All the data needed.
+
+        Returns:
+            Player: The build player from dict.
+        """
+
+        player = Player(name, data["hp"])
+        player.energy = data["energy"]
+        player.hand_size = data["hand_size"]
+        for iid in data["deck"]:
+            card = sgt.card_from_id(iid)
+            player.deck.add(card)
+        return player
+    
+    # Method
+
     def draw_hand(self):
         """Draw a hand."""
+
         self.deck.draw(self.hand_size)
 
     def play_card(self, index:int) -> Card:
