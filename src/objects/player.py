@@ -59,10 +59,15 @@ class Player:
     
     # Method
 
-    def draw_hand(self):
-        """Draw a hand."""
+    def start_of_turn(self):
+        """
+        Make all the action at the start of the turn:
+        discard hand, draw new hand, reset armor.
+        """
 
+        self.deck.discard_hand()
         self.deck.draw(self.hand_size)
+        self.armor = 0
 
     def play_card(self, index:int) -> Card:
         """
