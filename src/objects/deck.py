@@ -24,7 +24,7 @@ class Deck:
 
     # Methods
     
-    def add_new(self, card:Card):
+    def add(self, card:Card):
         """
         Add a new card to the deck by copying it.
 
@@ -34,8 +34,8 @@ class Deck:
         
         self.deck.append(card.copy())
 
-    def reset(self):
-        """Reset the deck by adding all the cards (discarded, exiled and in hand) in the deck."""
+    def reform(self):
+        """Reform the deck by adding all the cards (discarded, exiled and in hand) in the deck."""
         
         self.deck.extend(self.discard)
         self.discard.clear()
@@ -49,10 +49,10 @@ class Deck:
 
         random.shuffle(self.deck)
 
-    def reset_and_shuffle(self):
+    def reform_and_shuffle(self):
         """Reset the deck and shuffle all the cards."""
 
-        self.reset()
+        self.reform()
         self.shuffle_deck()
 
     def discard_hand(self):
