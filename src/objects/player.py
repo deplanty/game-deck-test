@@ -1,4 +1,4 @@
-from src.components import Health
+from src.components import Health, Gauge
 from src.objects import Card, Deck
 import src.singleton as sgt
 
@@ -16,7 +16,7 @@ class Player:
         self.name = name
         self.health = Health(max_health)
         self.deck = Deck()
-        self.energy = 2
+        self.energy = Gauge(4)
         self.hand_size = 2
         # Buffs
         self.armor = 0
@@ -50,7 +50,7 @@ class Player:
         """
 
         player = Player(name, data["hp"])
-        player.energy = data["energy"]
+        player.energy.maximum = data["energy"]
         player.hand_size = data["hand_size"]
         for iid in data["deck"]:
             card = sgt.card_from_id(iid)
@@ -72,6 +72,7 @@ class Player:
     def play_card(self, index:int) -> Card:
         """
         Play the card given by its index.
+        If the player doesn't have enough energy, return None.
 
         Args:
             index (int): index of the card in the hand.
@@ -80,6 +81,11 @@ class Player:
             Card: The card being played.
         """
 
+        card = self.deck.hand[index]
+        if self.energy < card.cost:
+            return None
+
+        player.energy -= card.cost
         return self.deck.hand.pop(index)
         
     def get_hit(self, card:Card):
