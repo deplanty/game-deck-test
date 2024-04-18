@@ -31,7 +31,7 @@ class Player:
         """Returns the information of the player"""
         
         text = f"{str(self)}\n"
-        text += f"Deck = {len(self.deck.info)}\n"
+        text += f"Deck = {self.deck.info}\n"
         text += f"Armor = {self.armor}"
         return text
 
@@ -69,6 +69,7 @@ class Player:
         self.deck.discard_hand()
         self.deck.draw(self.hand_size)
         self.armor = 0
+        self.energy.refill()
 
     def play_card(self, index:int) -> Card:
         """

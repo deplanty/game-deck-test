@@ -20,7 +20,10 @@ while player.health > 0 or enemy.health > 0 or count > 20:
     print("    Hand:", player.deck.hand)
     number = int(input("    Pick card: "))
     card = player.play_card(number)
-    enemy.get_hit(card)
-    print("    Play card:", card)
-    print("              ", card.info)
-    print()
+    if card:
+        enemy.get_hit(card)
+        print("    Play card:", card)
+        print("              ", card.info)
+        print()
+    else:
+        print("Card is None")

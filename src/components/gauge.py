@@ -40,9 +40,15 @@ class Gauge:
     def __lt__(self, value:int) -> bool:
         return self.current < value
 
+    def __le__(self, value:int) -> bool:
+        return self < value or self == value
+
     def __gt__(self, value:int) -> bool:
         return self.current > value
     
+    def __ge__(self, value:int) -> bool:
+        return self > value or self == value
+
     # Properties
 
     @property
@@ -63,10 +69,10 @@ class Gauge:
         """Set the current value to its maximum."""
         
         self.current = self.maximum
-        self.fill.emit()
+        self.filled.emit()
 
     def empty(self):
         """Set the current value to its minimum."""
         
         self.current = 0
-        self.empty.emit()
+        self.emptied.emit()
