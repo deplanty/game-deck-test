@@ -33,6 +33,12 @@ class Gauge:
             self.depleted.emit()
             self.current = 0
         return self
+
+    def __eq__(self, value:int) -> bool:
+        return self.current == self.value
+
+    def __lt__(self, value:int) -> bool:
+        return self.current <= value
     
     # Properties
 

@@ -85,7 +85,7 @@ class Player:
         if self.energy < card.cost:
             return None
 
-        player.energy -= card.cost
+        self.energy -= card.cost
         return self.deck.hand.pop(index)
         
     def get_hit(self, card:Card):
