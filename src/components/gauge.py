@@ -12,9 +12,9 @@ class Gauge:
         self.current = maximum
 
         # Signals
-        filled = Signal()
-        emptied = Signal()
-        depleted = Signal()
+        self.filled = Signal()
+        self.emptied = Signal()
+        self.depleted = Signal()
 
     def __str__(self) -> str:
         return f"{self.current}/{self.maximum}"
@@ -38,7 +38,10 @@ class Gauge:
         return self.current == self.value
 
     def __lt__(self, value:int) -> bool:
-        return self.current <= value
+        return self.current < value
+
+    def __gt__(self, value:int) -> bool:
+        return self.current > value
     
     # Properties
 

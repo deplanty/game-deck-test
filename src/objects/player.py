@@ -14,7 +14,7 @@ class Player:
     
     def __init__(self, name:str, max_health:int):
         self.name = name
-        self.health = Health(max_health)
+        self.health = Gauge(max_health)
         self.deck = Deck()
         self.energy = Gauge(4)
         self.hand_size = 2
@@ -31,6 +31,7 @@ class Player:
         """Returns the information of the player"""
         
         text = f"{str(self)}\n"
+        text += f"Deck = {len(self.deck.info)}\n"
         text += f"Armor = {self.armor}"
         return text
 
@@ -86,7 +87,7 @@ class Player:
             return None
 
         self.energy -= card.cost
-        return self.deck.hand.pop(index)
+        return self.deck.play_from_hand(index)
         
     def get_hit(self, card:Card):
         """

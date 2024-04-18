@@ -22,6 +22,13 @@ class Deck:
     def __str__(self):
         return str(self.deck)
 
+    # Properties
+
+    @property
+    def info(self) -> str:
+        text = f"{len(self.deck)} in deck, {len(self.discard)} in discard"
+        return text
+    
     # Methods
     
     def add(self, card:Card):
@@ -34,6 +41,21 @@ class Deck:
         
         self.deck.append(card)
 
+    def play_from_hand(self, index:int) -> Card:
+        """
+        Play a card in hand.
+
+        Args:
+            index (int): The index of the card in the hand.
+
+        Returns:
+            Card: The card played.
+        """
+
+        card = self.hand.pop(index)
+        self.discard.append(card)
+        return card
+        
     def reform(self):
         """Reform the deck by adding all the cards (discarded, exiled and in hand) in the deck."""
         
@@ -66,7 +88,7 @@ class Deck:
         
         self.deck.extend(self.discard)
         self.discard.clear()
-        random.shuffle(self.deck)
+        self.shuffle_deck()
 
     def clear(self):
         """Clear the deck of all its cards."""
@@ -75,9 +97,17 @@ class Deck:
         self.discard.clear()
         self.exile.clear()
 
+    def _draw(self):
+        """Draw a card and add it into the deck."""
+        
+        self.hand.append(self.deck.pop(0))
+        
     def draw(self, n_cards:int):
         """
         Draw a certain amount of cards to the hand of the player.
+        If the deck is depleted before all cards are drawn, shuffle the discarded cards
+        into the deck.
+        TODO: If the deck is still empty, it means that all the cards are in the hand.
 
         Args:
             n_cards (int): Number of cards to be drawn.
@@ -88,7 +118,7 @@ class Deck:
         
         for _ in range(n_cards):
             if len(self.deck) == 0:
+                print("DECK EMPTY RESHUFFLE")
                 self.shuffle_discard_in_deck()
 
-            if len(self.deck) != 0:
-                self.hand.append(self.deck.pop(0))
+            self._draw()
