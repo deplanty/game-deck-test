@@ -1,4 +1,4 @@
-from src.components import Health, Gauge
+from src.components import Gauge
 from src.objects import Card, Deck
 import src.singleton as sgt
 

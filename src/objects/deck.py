@@ -1,5 +1,4 @@
 import random
-import typing
 
 from src.objects import Card
     
