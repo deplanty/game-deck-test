@@ -10,7 +10,7 @@ player.deck.reform_and_shuffle()
 
 count = 0
 
-while player.health > 0 or enemy.health > 0 or count > 20:
+while player.health > 0 and enemy.health > 0 and count < 20:
     count += 1
     print("Start of turn", count)
     print("Player:", player.info)
@@ -27,3 +27,4 @@ while player.health > 0 or enemy.health > 0 or count > 20:
         print()
     else:
         print("Card is None")
+    print("Health", enemy.health, enemy.health == 0)

@@ -35,19 +35,19 @@ class Gauge:
         return self
 
     def __eq__(self, value:int) -> bool:
-        return self.current == self.value
+        return self.current == value
 
     def __lt__(self, value:int) -> bool:
         return self.current < value
 
     def __le__(self, value:int) -> bool:
-        return self < value or self == value
+        return self.current <= value
 
     def __gt__(self, value:int) -> bool:
         return self.current > value
     
     def __ge__(self, value:int) -> bool:
-        return self > value or self == value
+        return self.current >= value
 
     # Properties
 
