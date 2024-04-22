@@ -9,39 +9,43 @@ class GameLoop:
 
     def loop_main(self):
         self.player.deck.reform_and_shuffle()
+        self.player.start_of_turn()
         while self.player.is_alive() and self.enemy.is_alive():
-            self.player.start_of_turn()
-            self.loop_turn()
+            action = self.loop_turn()
+            if action == "end of turn":
+                self.player.start_of_turn()
 
         if not self.player.is_alive():
             print("DEFEAT")
         else:
             print("VICTORY")
 
-    def loop_turn(self):
+    def loop_turn(self) -> str:
         print("Player:", self.player.info)
         print("Enemy:", self.enemy.info)
         print("")
         print("  Hand:", self.player.deck.hand)
-        number = self.ask_number("  Pick card: ")
-        card = self.player.play_card(number)
-        self.enemy.get_hit(card)
-        print("  Play card:", card)
-        print("            ", card.info)
-        print()
+        print(f"  [0-{len(self.player.deck.hand) - 1}] or 'e' to end turn")
+        action = self.ask_action("  Pick card: ")
+        if isinstance(action, int):
+            card = self.player.play_card(action)
+            self.enemy.get_hit(card)
+            print("  Play card:", card)
+            print("            ", card.info)
+            print()
+            return "continue"
+        else:
+            return "end of turn"
         
-    def ask_number(self, text:str) -> int:
-        """Ask a number to the user until the answer is valid."""
+    def ask_action(self, text:str) -> int|str:
+        """Ask an action to the user until the answer is valid."""
         
-        ask = True
-        while ask:
-            try:
-                number = int(input(text))
-            except:
-                pass
-            else:
-                ask = False
-        return number
+        action = input(text)
+        if action.isnumeric():
+            return int(action)
+        else:
+            return action
+                
 
 
 gm = GameLoop()
