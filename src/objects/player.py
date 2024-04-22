@@ -62,6 +62,11 @@ class Player:
     
     # Method
 
+    def is_alive(self) -> bool:
+        """Return True if the player is alive."""
+
+        return self.health > 0
+
     def start_of_turn(self):
         """
         Make all the action at the start of the turn:
