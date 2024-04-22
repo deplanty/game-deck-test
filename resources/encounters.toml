@@ -1,8 +1,8 @@
 [Lisa]
 hp = 80
-energy = 4
-hand_size = 3
-deck = [1, 1, 3, 4]
+energy = 2
+hand_size = 2
+deck = [1, 1, 1, 1, 3, 3, 4, 4]
 
 [number_one]
 hp = 10

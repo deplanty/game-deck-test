@@ -90,6 +90,9 @@ class Player:
             Card: The card being played.
         """
 
+        if len(self.deck.hand) <= 0:
+            return None
+        
         card = self.deck.hand[index]
         if self.energy < card.cost:
             return None
