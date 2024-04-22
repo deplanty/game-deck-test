@@ -117,7 +117,6 @@ class Deck:
         
         for _ in range(n_cards):
             if len(self.deck) == 0:
-                print("DECK EMPTY RESHUFFLE")
                 self.shuffle_discard_in_deck()
 
             self._draw()
