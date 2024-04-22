@@ -29,6 +29,7 @@ class GameLoop:
         action = self.ask_action("  Pick card: ")
         if isinstance(action, int):
             card = self.player.play_card(action)
+            self.player.get_buff(card)
             self.enemy.get_hit(card)
             print("  Play card:", card)
             print("            ", card.info)

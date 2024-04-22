@@ -24,7 +24,7 @@ class Player:
         self.armor = 0
 
     def __str__(self) -> str:
-        return f"Player({self.name}, {self.health})"
+        return f"{self.name}(HP: {self.health}, EP: {self.energy})"
 
     # Properties
     
@@ -96,6 +96,16 @@ class Player:
 
         self.energy -= card.cost
         return self.deck.play_from_hand(index)
+
+    def get_buff(self, card:Card):
+        """
+        The player gets the buffs granted by a card.
+
+        Args:
+            card (Card): The card applying its effects on the player.
+        """
+
+        self.armor += card.armor
         
     def get_hit(self, card:Card):
         """
