@@ -1,3 +1,5 @@
+import copy
+
 from src.components import Gauge
 from src.objects import Card, Deck
 import src.singleton as sgt
@@ -105,3 +107,8 @@ class Player:
             self.health -= damage
         else:
             self.armor -= card.damage
+
+    def copy(self):
+        """Return a copy of the player."""
+
+        return copy.deepcopy(self)

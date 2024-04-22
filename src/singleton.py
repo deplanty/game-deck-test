@@ -22,6 +22,27 @@ def card_from_id(iid:int, copy:bool=True) -> Card:
     else:
         return card
 
+
+def encounter_from_name(name:str, copy:bool=True) -> Player:
+    """
+    Return the encounter given by its name.
+    If `copy` is true, copy the encounter.
+
+    Args:
+        name (str): The encounter's name.
+        copy (bool): Copy or not the returned encounter.
+
+    Returns:
+        Player: The wanted encounter
+    """
+    
+    encounter = all_players[name]
+    if copy:
+        return encounter.copy()
+    else:
+        return encounter
+    
+
 # Register all the cards in the game.
 #  They are stored in a dict {id: card}.
 all_cards = dict()
