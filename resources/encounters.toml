@@ -2,7 +2,7 @@
 hp = 80
 energy = 2
 hand_size = 2
-deck = [1, 1, 1, 1, 3, 3, 4, 4]
+deck = [1, 1, 1, 1, 3, 3, 4, 4, 5, 5]
 
 [number_one]
 hp = 10

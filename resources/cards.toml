@@ -22,3 +22,9 @@ cost = 1
 damage = 1
 armor = 2
 description = "Gain {card.armor} armor and deal {card.damage} damage."
+
+[great_sword]
+iid = 5
+cost = 2
+damage = 4
+description = "Deal {card.damage} damage"
