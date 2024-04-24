@@ -28,6 +28,8 @@ class Card:
         self.base_damage = 0
         self.armor = 0
         self.strenght = 0
+        self.burn = 0
+        self.poison = 0
 
         # Signals
         self.upgraded = Signal()

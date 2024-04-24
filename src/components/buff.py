@@ -18,6 +18,8 @@ class Buff:
 
     def __sub__(self, value:int):
         self.value -= value
+        if self.value < 0:
+            self.value = 0
         return self
 
     def __rsub__(self, value:int) -> int:

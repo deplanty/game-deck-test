@@ -25,6 +25,10 @@ class Player:
         self.strenght = Buff("Strenght")
         self.armored = Buff("Armored")
         self.buffs = [self.armor, self.strenght, self.armored]
+        # Debuff
+        self.burn = Buff("Burn")
+        self.poison = Buff("Poison")
+        self.debuffs = [self.burn, self.poison]
 
     def __str__(self) -> str:
         return f"{self.name}(HP: {self.health}, EP: {self.energy})"
@@ -38,10 +42,12 @@ class Player:
         text = f"{str(self)}\n"
         text += f"Deck = {self.deck.info}\n"
         for buff in self.buffs:
-            if buff.info: text += f"{buff.info}\n"
+            if buff.info: text += f"+ {buff.info}\n"
+        for debuff in self.debuffs:
+            if debuff.info: text += f"- {debuff.info}\n"
         return text
 
-    # Class methods
+        # Class methods
 
     @classmethod
     def from_dict(cls, name:str, data:dict):
@@ -74,14 +80,24 @@ class Player:
 
     def start_of_turn(self):
         """
-        Make all the action at the start of the turn:
-        discard hand, draw new hand, reset armor.
+        Make all the start of turn actions: discard hand, draw new hand, reset armor, ...
         """
 
         self.deck.discard_hand()
         self.deck.draw(self.hand_size)
         self.energy.refill()
         self.armor.value = 0
+        # Apply start of turn debuff
+        self.health -= self.poison
+        self.poison -= 1
+
+    def end_of_turn(self):
+        """
+        Make all the en of turn actions: apply buffs and debuffs
+        """
+        
+        self.health -= self.burn
+        self.burn -= 1
 
     def play_card(self, index:int) -> Card:
         """
@@ -131,6 +147,9 @@ class Player:
             self.health -= damage
         else:
             self.armor -= card.damage
+
+        self.burn += card.burn
+        self.poison += card.poison
 
     def copy(self):
         """Return a copy of the player."""

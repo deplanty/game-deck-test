@@ -34,3 +34,15 @@ iid = 6
 cost = 1
 strenght = 1
 description = "Give {card.strenght} strenght."
+
+[fireball]
+iid = 7
+cost = 1
+burn = 1
+description = "Apply {card.burn} burn."
+
+[venom]
+iid = 8
+cost = 1
+poison = 1
+description = "Apply {card.poison} poison."

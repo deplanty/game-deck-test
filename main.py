@@ -17,6 +17,7 @@ class GameLoop:
                 action = self.loop_turn()
                 if action == "end of turn":
                     turn = "enemy"
+                    self.player.end_of_turn()
                     self.enemy.start_of_turn()
                 elif action == "quit":
                     return
@@ -24,6 +25,7 @@ class GameLoop:
                 action = self.loop_turn_enemy()
                 if action == "end of turn":
                     turn = "player"
+                    self.enemy.end_of_turn()
                     self.player.start_of_turn() 
                     
 
