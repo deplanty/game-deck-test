@@ -49,7 +49,8 @@ class Card:
     def damage(self) -> int:
         """Return the calculated damage of the card."""
 
-        damage = self.base_damage + self.upgrades + self.owner.strenght
+        damage = self.base_damage + self.upgrades
+        if self.owner: damage + self.owner.strenght
         return damage
 
     @property
