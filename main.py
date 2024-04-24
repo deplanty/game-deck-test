@@ -18,6 +18,8 @@ class GameLoop:
                 if action == "end of turn":
                     turn = "enemy"
                     self.enemy.start_of_turn()
+                elif action == "quit":
+                    return
             elif turn == "enemy":
                 action = self.loop_turn_enemy()
                 if action == "end of turn":
@@ -47,10 +49,15 @@ class GameLoop:
             print("            ", card.info)
             print()
             return "continue"
-        else:
+        elif action == "e":
             print("  End of turn")
             print()
             return "end of turn"
+        elif action == "q":
+            return "quit"
+        else:
+            print()
+            return "continue"
 
     def loop_turn_enemy(self) -> str:
         print("Enemy:", self.enemy.info)
