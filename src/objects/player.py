@@ -1,6 +1,6 @@
 import copy
 
-from src.components import Gauge
+from src.components import Gauge, Buff
 from src.objects import Card, Deck
 import src.singleton as sgt
 
@@ -17,12 +17,14 @@ class Player:
     def __init__(self, name:str, max_health:int):
         self.name = name
         self.health = Gauge(max_health)
-        self.deck = Deck()
         self.energy = Gauge(4)
+        self.deck = Deck()
         self.hand_size = 2
         # Buffs
-        self.armor = 0
-        self.strenght = 0
+        self.armor = Buff("Armor")
+        self.strenght = Buff("Strenght")
+        self.armored = Buff("Armored")
+        self.buffs = [self.armor, self.strenght, self.armored]
 
     def __str__(self) -> str:
         return f"{self.name}(HP: {self.health}, EP: {self.energy})"
@@ -35,8 +37,8 @@ class Player:
         
         text = f"{str(self)}\n"
         text += f"Deck = {self.deck.info}\n"
-        text += f"Armor = {self.armor}\n"
-        text += f"Strenght = {self.strenght}"
+        for buff in self.buffs:
+            if buff.info: text += f"{buff.info}\n"
         return text
 
     # Class methods
@@ -78,8 +80,8 @@ class Player:
 
         self.deck.discard_hand()
         self.deck.draw(self.hand_size)
-        self.armor = 0
         self.energy.refill()
+        self.armor.value = 0
 
     def play_card(self, index:int) -> Card:
         """
@@ -125,7 +127,7 @@ class Player:
         # The card deal damage to the armor. If the armor drops to 0, damage the player.
         if card.damage >= self.armor:
             damage = card.damage - self.armor
-            self.armor = 0
+            self.armor.value = 0
             self.health -= damage
         else:
             self.armor -= card.damage
