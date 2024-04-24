@@ -18,13 +18,16 @@ class Card:
 
     def __init__(self, name:str):
         self.name = name
+        self.owner:Player = None
+        
         self.iid = 0
         self.cost = 0
         self.upgrades = 0
         self.description = ""
         
-        self.damage = 0
+        self.base_damage = 0
         self.armor = 0
+        self.strenght = 0
 
         # Signals
         self.upgraded = Signal()
@@ -39,6 +42,13 @@ class Card:
         return str(self)
 
     # Properties
+
+    @property
+    def damage(self) -> int:
+        """Return the calculated damage of the card."""
+
+        damage = self.base_damage + self.upgrades + self.owner.strenght
+        return damage
 
     @property
     def info(self) -> str:
@@ -82,7 +92,6 @@ class Card:
         """Upgrade the card once."""
 
         self.upgrades += 1
-        self.damage += 1
 
     def upgrade(self, n:int=1):
         """

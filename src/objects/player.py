@@ -22,6 +22,7 @@ class Player:
         self.hand_size = 2
         # Buffs
         self.armor = 0
+        self.strenght = 0
 
     def __str__(self) -> str:
         return f"{self.name}(HP: {self.health}, EP: {self.energy})"
@@ -34,7 +35,8 @@ class Player:
         
         text = f"{str(self)}\n"
         text += f"Deck = {self.deck.info}\n"
-        text += f"Armor = {self.armor}"
+        text += f"Armor = {self.armor}\n"
+        text += f"Strenght = {self.strenght}"
         return text
 
     # Class methods
@@ -57,6 +59,7 @@ class Player:
         player.hand_size = data["hand_size"]
         for iid in data["deck"]:
             card = sgt.card_from_id(iid)
+            card.owner = player
             player.deck.add(card)
         return player
     
@@ -109,6 +112,7 @@ class Player:
         """
 
         self.armor += card.armor
+        self.strenght += card.strenght
         
     def get_hit(self, card:Card):
         """

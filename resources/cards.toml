@@ -1,13 +1,13 @@
 [sword]
 iid = 1
 cost = 1
-damage = 2
+base_damage = 2
 description = "Deal {card.damage} damage."
 
 [bow]
 iid = 2
 cost = 2
-damage = 2
+base_damage = 2
 description = "Deal {card.damage} damage."
 
 [shield]
@@ -19,12 +19,18 @@ description = "Gain {card.armor} armor."
 [sword_and_shield]
 iid = 4
 cost = 1
-damage = 1
+base_damage = 1
 armor = 2
 description = "Gain {card.armor} armor and deal {card.damage} damage."
 
 [great_sword]
 iid = 5
 cost = 2
-damage = 4
-description = "Deal {card.damage} damage"
+base_damage = 4
+description = "Deal {card.damage} damage."
+
+[push_up]
+iid = 6
+cost = 1
+strenght = 1
+description = "Give {card.strenght} strenght."
