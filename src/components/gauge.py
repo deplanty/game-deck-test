@@ -2,20 +2,23 @@ from src.utils import Signal
 
 
 class Gauge:
+    """
+    Represents a gauge that can be used for several objects: Health, Energy, ...
 
-    filled:Signal  # When the gauge fills
-    emptied:Signal  # When the gauge empties
-    depleted:Signal  # When the gauge is empty
-    
+    Args:
+        maximum (int): The maximum value of the gauge.
+
+    Signals:
+        changed: Emits when the current value is changed.
+    """
+
     def __init__(self, maximum:int):
         self._maximum = maximum
         self.current = maximum
 
         # Signals
-        self.filled = Signal()
-        self.emptied = Signal()
-        self.depleted = Signal()
-
+        self.changed = Signal()  # When the value changed
+        
     def __str__(self) -> str:
         return f"{self.current}/{self.maximum}"
 
@@ -24,14 +27,14 @@ class Gauge:
 
     def __add__(self, value:int):
         self.current += value
-        self.filled.emit()
+        self.changed.emit()
         return self
 
     def __sub__(self, value:int):
         self.current -= value
         if self.current <= 0:
-            self.depleted.emit()
             self.current = 0
+        self.changed.emit()
         return self
 
     def __eq__(self, value:int) -> bool:
@@ -61,7 +64,15 @@ class Gauge:
 
     @maximum.setter
     def maximum(self, value:int):
+        """
+        Change the maximum value of the gauge.
+        If the maximum is geater than the current value, set the current to maximum.
+        """
+        
         self._maximum = value
+        if self.current > self._maximum:
+            self.current = self._maximum
+            self.changed.emit()  # FIXME: Is is ok?
 
     # Methods
 
@@ -69,10 +80,10 @@ class Gauge:
         """Set the current value to its maximum."""
         
         self.current = self.maximum
-        self.filled.emit()
+        self.changed.emit()
 
     def empty(self):
         """Set the current value to its minimum."""
         
         self.current = 0
-        self.emptied.emit()
+        self.changed.emit()

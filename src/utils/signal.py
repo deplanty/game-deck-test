@@ -1,4 +1,8 @@
 class Signal:
+    """
+    Represent a signal that triggers when some actions are played.
+    """
+    
     def __init__(self):
         self.funcs = list()
 

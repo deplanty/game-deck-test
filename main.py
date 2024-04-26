@@ -8,6 +8,8 @@ class GameLoop:
         self.enemy = sgt.encounter_from_name("number_one")
 
     def loop_main(self):
+        """Mainloop"""
+        
         self.player.deck.reform_and_shuffle()
         self.enemy.deck.reform_and_shuffle()
         turn = "player"
@@ -27,14 +29,20 @@ class GameLoop:
                     turn = "player"
                     self.enemy.end_of_turn()
                     self.player.start_of_turn() 
-                    
-
+        
         if not self.player.is_alive():
             print("DEFEAT")
         else:
             print("VICTORY")
 
     def loop_turn(self) -> str:
+        """
+        The loop controlling the user's turn.
+
+        Returns:
+            str: Status after a loop - "continue" or "end of turn".
+        """
+        
         print("Player:", self.player.info)
         print("Enemy:", self.enemy.info)
         print()
@@ -62,6 +70,13 @@ class GameLoop:
             return "continue"
 
     def loop_turn_enemy(self) -> str:
+        """
+        The loop controlling the enemy's turn.
+
+        Returns:
+            str: Status after a loop - "continue" or "end of turn".
+        """
+        
         print("Enemy:", self.enemy.info)
         print("Player:", self.player.info)
         print()
@@ -79,8 +94,16 @@ class GameLoop:
             return "continue"
         
     def ask_action(self, text:str) -> int|str:
-        """Ask an action to the user until the answer is valid."""
-        
+        """
+        Ask an action to the user.
+
+        Args:
+            text (str): The text displayed.
+
+        Returns:
+            int|str: The user's answer.
+        """
+                
         action = input(text)
         if action.isnumeric():
             return int(action)

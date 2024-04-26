@@ -1,10 +1,27 @@
+from src.utils import Signal
+
+
 class Buff:
+    """
+    Represent a buff or a debuff: strenght, armor, burn, poison, ...
+
+    Args:
+        name (str): The name of the buff or debuff.
+        value (int): The current value of the buff or debuff.
+
+    Signals:
+        triggered: When the buff is triggered
+    """
+    
     def __init__(self, name:str, value:int=0):
         self.name = name
         self.value = value
 
+        # Signals
+        self.triggered = Signal()
+
     def __str__(self) -> str:
-        return f"Buff({self.name})"
+        return f"{self.name}({self.value})"
 
     def __repr__(self) -> str:
         return str(self)
