@@ -39,13 +39,13 @@ class Player:
     def info(self) -> str:
         """Returns the information of the player"""
         
-        text = f"{str(self)}\n"
-        text += f"Deck = {self.deck.info}\n"
+        text = [f"{str(self)}"]
+        text.append(f"Deck = {self.deck.info}")
         for buff in self.buffs:
-            if buff.info: text += f"+ {buff.info}\n"
+            if buff.info: text.append(f"+ {buff.info}")
         for debuff in self.debuffs:
-            if debuff.info: text += f"- {debuff.info}\n"
-        return text
+            if debuff.info: text.append(f"- {debuff.info}")
+        return "\n".join(text)
 
         # Class methods
 
