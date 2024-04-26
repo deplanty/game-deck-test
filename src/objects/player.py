@@ -33,6 +33,9 @@ class Player:
     def __str__(self) -> str:
         return f"{self.name}(HP: {self.health}, EP: {self.energy})"
 
+    def __repr__(self) -> str:
+        return str(self)
+
     # Properties
     
     @property

@@ -56,3 +56,10 @@ all_players = dict()
 for name, data in toml.load("resources/encounters.toml").items():
     player = Player.from_dict(name, data)
     all_players[player.name] = player
+
+# All encounters are stored in a list
+all_encounters = [
+    encounter_from_name(name) for name in ["number_one", "number_two", "number_three"]
+]
+
+root = None
