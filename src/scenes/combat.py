@@ -5,6 +5,7 @@ class SceneCombat:
     def __init__(self):
         self.player = sgt.encounter_from_name("Lisa")
         self.enemy = sgt.encounter_from_name("number_one")
+        self.active = True
 
     def start(self):
         """Mainloop"""
@@ -13,7 +14,7 @@ class SceneCombat:
         self.enemy.deck.reform_and_shuffle()
         turn = "player"
         self.player.start_of_turn()
-        while self.player.is_alive() and self.enemy.is_alive():
+        while self.player.is_alive() and self.enemy.is_alive() and self.active:
             if turn == "player":
                 action = self.loop_turn()
                 if action == "end of turn":
@@ -33,6 +34,11 @@ class SceneCombat:
             print("DEFEAT")
         else:
             print("VICTORY")
+
+    def stop(self):
+        """Stop the mainloop"""
+
+        self.active = False
 
     def loop_turn(self) -> str:
         """
