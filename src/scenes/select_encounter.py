@@ -10,6 +10,7 @@ class SceneSelectEncounter:
         """Mainloop"""
 
         answer = ""
+        scene = None
         while answer != "quit" and self.active:
             print("List of encounters:")
             for i, encounter in enumerate(sgt.all_encounters, 1):
@@ -19,7 +20,12 @@ class SceneSelectEncounter:
             answer = input("  Input: ")
             if answer.isnumeric():
                 answer = int(answer)
-                sgt.root.change_scene(SceneCombat())
+                scene = SceneCombat()
+
+        # FIXME: change scene and exit this method! Currently, the method ends when quiting
+        if scene is not None:
+            sgt.root.change_scene(scene)
+        print("TEST TEST TEST")
         return 
             
     def stop(self):
