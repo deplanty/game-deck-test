@@ -1,11 +1,12 @@
 import src.singleton as sgt
-from src.scenes import SceneCombat
+from src.scenes import Scene, SceneCombat
 
 
-class SceneSelectEncounter:
+class SceneSelectEncounter(Scene):
     def run(self):
         """Run this scene loop."""
 
+        super().__init__()
         answer = ""
         scene = None
         while answer != "quit":

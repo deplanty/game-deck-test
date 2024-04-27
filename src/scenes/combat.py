@@ -1,8 +1,10 @@
 import src.singleton as sgt
+from src.scenes import Scene
 
 
-class SceneCombat:
+class SceneCombat(Scene):
     def __init__(self):
+        super().__init__()
         self.player = sgt.encounter_from_name("Lisa")
         self.enemy = sgt.encounter_from_name("number_one")
 
