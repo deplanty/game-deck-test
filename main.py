@@ -8,15 +8,18 @@ class GameLoop:
         sgt.root = self
         self.current_scene = SceneSelectEncounter()
 
-    def start(self):
-        self.current_scene.start()
+    def mainloop(self):
+        while True:
+            scene = self.current_scene.run()
+            if scene:
+                self.current_scene = scene
+                self.current_scene.run()
+            else:
+                break
+        
 
-    def change_scene(self, scene):
-        self.current_scene.stop()
-        self.current_scene = scene
-        self.current_scene.start()
 
 
 if __name__ == "__main__":
     gm = GameLoop()
-    gm.start()
+    gm.mainloop()

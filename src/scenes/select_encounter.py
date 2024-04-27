@@ -3,15 +3,12 @@ from src.scenes import SceneCombat
 
 
 class SceneSelectEncounter:
-    def __init__(self):
-        self.active = True
-        
-    def start(self):
-        """Mainloop"""
+    def run(self):
+        """Run this scene loop."""
 
         answer = ""
         scene = None
-        while answer != "quit" and self.active:
+        while answer != "quit":
             print("List of encounters:")
             for i, encounter in enumerate(sgt.all_encounters, 1):
                 print(f"  {i}. {encounter}")
@@ -21,14 +18,6 @@ class SceneSelectEncounter:
             if answer.isnumeric():
                 answer = int(answer)
                 scene = SceneCombat()
-
-        # FIXME: change scene and exit this method! Currently, the method ends when quiting
-        if scene is not None:
-            sgt.root.change_scene(scene)
-        print("TEST TEST TEST")
-        return 
-            
-    def stop(self):
-        """Stop the mainloop"""
-
-        self.active = False
+                answer = "quit"
+        return scene
+           
