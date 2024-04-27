@@ -24,6 +24,7 @@ class SceneSelectEncounter(Scene):
                 selected = self.encounters[answer]
                 scene = SceneCombat(selected.name)
                 answer = "quit"
+                print()
         return scene
 
     def ask_input(self, text:str) -> int|str:

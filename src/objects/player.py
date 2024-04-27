@@ -65,7 +65,7 @@ class Player:
             Player: The build player from dict.
         """
 
-        player = Player(name, data["hp"])
+        player = cls(name, data["hp"])
         player.energy.maximum = data["energy"]
         player.hand_size = data["hand_size"]
         for iid in data["deck"]:
