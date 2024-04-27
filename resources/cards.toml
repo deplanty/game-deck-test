@@ -38,11 +38,11 @@ description = "Give {card.strenght} strenght."
 [fireball]
 iid = 7
 cost = 1
-burn = 1
+burn = 2
 description = "Apply {card.burn} burn."
 
 [venom]
 iid = 8
 cost = 1
-poison = 1
+poison = 2
 description = "Apply {card.poison} poison."
