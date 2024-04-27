@@ -5,22 +5,22 @@ from src.scenes import Scene
 class SceneCombat(Scene):
     def __init__(self, enemy_name:str):
         super().__init__()
-        self.player = sgt.encounter_from_name("Lisa")
         self.enemy = sgt.encounter_from_name(enemy_name)
 
     def run(self):
         """Run this scene loop."""
 
-        self.player.deck.reform_and_shuffle()
+        sgt.player.deck.reform_and_shuffle()
         self.enemy.deck.reform_and_shuffle()
         turn = "player"
-        self.player.start_of_turn()
-        while self.player.is_alive() and self.enemy.is_alive():
+        sgt.player.start_of_turn()
+        count = 1
+        while sgt.player.is_alive() and self.enemy.is_alive():
             if turn == "player":
                 action = self.loop_turn()
                 if action == "end of turn":
                     turn = "enemy"
-                    self.player.end_of_turn()
+                    sgt.player.end_of_turn()
                     self.enemy.start_of_turn()
                 elif action == "quit":
                     return
@@ -29,9 +29,11 @@ class SceneCombat(Scene):
                 if action == "end of turn":
                     turn = "player"
                     self.enemy.end_of_turn()
-                    self.player.start_of_turn()
+                    sgt.player.start_of_turn()
 
-        if not self.player.is_alive():
+            count += 1
+
+        if not sgt.player.is_alive():
             print("DEFEAT")
         else:
             print("VICTORY")
@@ -44,17 +46,17 @@ class SceneCombat(Scene):
             str: Status after a loop - "continue" or "end of turn".
         """
 
-        print("Player:", self.player.info)
+        print("Player:", sgt.player.info)
         print("Enemy:", self.enemy.info)
         print()
-        print("  Hand:", self.player.deck.hand)
-        print(f"  [0-{len(self.player.deck.hand) - 1}] or 'e' to end turn")
+        print("  Hand:", sgt.player.deck.hand)
+        print(f"  [0-{len(sgt.player.deck.hand) - 1}] or 'e' to end turn")
         action = self.ask_action("  Pick card: ")
         if isinstance(action, int):
-            card = self.player.play_card(action)
+            card = sgt.player.play_card(action)
             if card is None:
                 return "continue"
-            self.player.get_buff(card)
+            sgt.player.get_buff(card)
             self.enemy.get_hit(card)
             print("  Play card:", card)
             print("            ", card.info)
@@ -64,7 +66,8 @@ class SceneCombat(Scene):
             print("  End of turn")
             print()
             return "end of turn"
-        elif action == "q":
+        elif action == "quit":
+            print("loop_turn, QUIT")
             return "quit"
         else:
             print()
@@ -79,7 +82,7 @@ class SceneCombat(Scene):
         """
 
         print("Enemy:", self.enemy.info)
-        print("Player:", self.player.info)
+        print("Player:", sgt.player.info)
         print()
         card = self.enemy.play_card(0)
         if card is None:
@@ -88,7 +91,7 @@ class SceneCombat(Scene):
             return "end of turn"
         else:
             self.enemy.get_buff(card)
-            self.player.get_hit(card)
+            sgt.player.get_hit(card)
             print("  Play card:", card)
             print("            ", card.info)
             print()

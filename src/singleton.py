@@ -63,3 +63,4 @@ all_encounters = [
 ]
 
 root = None
+player = encounter_from_name("Lisa")
