@@ -9,15 +9,9 @@ class GameLoop:
         self.current_scene = SceneSelectEncounter()
 
     def mainloop(self):
-        while True:
+        while self.current_scene:
             scene = self.current_scene.run()
-            if scene:
-                self.current_scene = scene
-                self.current_scene.run()
-            else:
-                break
-        
-
+            self.current_scene = scene
 
 
 if __name__ == "__main__":
