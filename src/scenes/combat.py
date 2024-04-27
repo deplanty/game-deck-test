@@ -3,10 +3,10 @@ from src.scenes import Scene
 
 
 class SceneCombat(Scene):
-    def __init__(self):
+    def __init__(self, enemy_name:str):
         super().__init__()
         self.player = sgt.encounter_from_name("Lisa")
-        self.enemy = sgt.encounter_from_name("number_one")
+        self.enemy = sgt.encounter_from_name(enemy_name)
 
     def run(self):
         """Run this scene loop."""
