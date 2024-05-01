@@ -13,9 +13,12 @@ label_short = tui.Label(root)
 label_short.text = "Hello, World!"
 label_short.grid(row=1, height=1)
 
+frame = tui.Frame(root)
+frame.grid(row=2)
+
 label = tui.Label(root)
 label.text = "Plop hehe"
-label.grid(row=2)
+label.grid(row=3)
 
 root.update()
 root.scr.getch()

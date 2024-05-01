@@ -4,6 +4,8 @@ class Widget:
 
     Args:
         parent (Widget): The parent widget.
+
+    TODO: Manage grid with different columns.
     """
 
     def __init__(self, parent):
