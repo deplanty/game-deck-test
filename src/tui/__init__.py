@@ -1,1 +1,4 @@
-from .widget import Widget, Tui, Label
+from .widget import Widget
+from .tui import Tui
+from .frame import Frame
+from .label import Label

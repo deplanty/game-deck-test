@@ -1,8 +1,3 @@
-import textwrap
-
-import curses
-
-
 class Widget:
     """
     The base class for all widgets.
@@ -109,68 +104,3 @@ class Widget:
         for i in range(row):
             row_position += self.children[i].height
         return row_position
-
-
-class Tui(Widget):
-    def __init__(self):
-        super().__init__(None)
-        self.scr = curses.initscr()
-        self.children = list()
-
-    # Methods
-
-    def update(self):
-        for child in self.children:
-            child._update()
-        self.scr.refresh()
-
-
-class Frame(Widget):
-    """
-    A simple widget use to contains other widgets
-
-    Args:
-        parent (Widget): The parent widget
-    """
-
-    def __init__(self, parent):
-        super().__init__(parent)
-
-    def update(self):
-        pass
-
-
-class Label(Widget):
-    """
-    A simple widget that displays some text.
-
-    Args:
-        parent (Widget): The parent widget
-    """
-
-    def __init__(self, parent, text:str=""):
-        super().__init__(parent)
-        self._text = text
-
-    # Properties
-
-    @property
-    def text(self) -> str:
-        return self._text
-
-    @text.setter
-    def text(self, value:str):
-        self._text = value
-
-    # Methods
-
-    def update(self):
-        x = self.pos_column
-        y = self.parent.grid_get_row_position(self.row)
-        width = 50
-        height = self.height
-
-        text = textwrap.wrap(self._text, width)
-        nlines = min(height, len(text))
-        for i in range(nlines):
-            self.parent.scr.addstr(y + i, x, text[i])
