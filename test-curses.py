@@ -1,3 +1,5 @@
+import textwrap
+
 import curses
 
 
@@ -70,7 +72,11 @@ class Label(Widget):
     def text(self, value:str):
         self._text = value
         self.fill()
-        self.addstr(self.rect.y, self.rect.x, self._text)
+
+        text = textwrap.wrap(self._text, self.rect.w)
+        nlines = min(self.rect.h, len(text))
+        for i in range(nlines):
+            self.addstr(self.rect.y + i, self.rect.x, text[i])
 
 
 
@@ -89,10 +95,9 @@ def main():
     frame.fill()
     label = Label(scr, Rect(32, 0, 30, 1), 2)
     label.text = "Hello, World!"
-    label = Label(scr, Rect(32, 1, 30, 1), 1)
+    label = Label(scr, Rect(32, 1, 30, 2), 1)
     label.text = "How are you today?"
     label.text = "Extra large text that overflow from its boundaries"
-    label.text = "Fine"
     scr.refresh()
     scr.getkey()
 
