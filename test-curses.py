@@ -15,31 +15,24 @@ title.grid(0)
 progress = tui.Progressbar(root, align="center", display="value")
 progress.grid(1)
 
-# First frame
+# Frame
 frame_1 = tui.Frame(root)
 frame_1.grid(2)
 # Fill frame
-for i in range(4):
+for i in range(2):
     for j in range(2):
         label = tui.Label(frame_1, f"Cell({i}, {j})")
         label.grid(i, j)
 
-# Second frame
-frame_2 = tui.Frame(root)
-frame_2.grid(3)
-# Fill frame
-for i in range(3):
-    for j in range(5):
-        label = tui.Label(frame_2, f"Cell({i}, {j})")
-        label.grid(i, j)
+# Entry
+entry = tui.Entry(root)
+entry.grid(3)
+entry.focus_set()
 
-
-
-root.update()
-
-for i in range(100):
+for i in range(1):
     progress += 1
     root.update()
-    x = root.scr.getch()
-    if x == 97:
-        break
+    # x = root.scr.getch()
+    # print(x)
+    # if x == 97:
+    #     break
