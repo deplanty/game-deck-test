@@ -3,22 +3,29 @@ from src import tui
 import curses
 
 
+lorem = "Lorem ipsum dolor sit amet. " * 15
+
 root = tui.Tui()
 
-label_long = tui.Label(root)
-label_long.text = "Hello, World! I am a very long text that overflows from its boundaries."
-label_long.grid(row=0, height=2)
+frame_left = tui.Frame(root)
+frame_left.grid(row=0, column=0)
 
-label_short = tui.Label(root)
-label_short.text = "Hello, World!"
-label_short.grid(row=1, height=1)
+label = tui.Label(frame_left, lorem)
+label.grid(row=0, column=0)
 
-frame = tui.Frame(root)
-frame.grid(row=2)
+frame_right = tui.Frame(root)
+frame_right.grid(row=0, column=1)
 
-label = tui.Label(root)
-label.text = "Plop hehe"
-label.grid(row=3)
+label = tui.Label(frame_right, lorem)
+label.grid(row=0, column=0)
+label = tui.Label(frame_right, lorem)
+label.grid(row=0, column=1)
+
+# for j in range(20):
+#     label = tui.Label(root, "123456789-123456789-123456789")
+#     label.grid(row=0, column=j)
+
+
 
 root.update()
 root.scr.getch()

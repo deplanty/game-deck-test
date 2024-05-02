@@ -17,10 +17,9 @@ class Widget:
         self.parent = parent
         self.children = list()
 
-        # Grid position and size
+        # Grid position
         self.row = 0
         self.column = 0
-        self.height = 1
 
         # At the end of this instanciation, add this widget as a child
         if parent is not None:
@@ -56,12 +55,21 @@ class Widget:
     
     @property
     def width(self) -> int:
-        """Returns the width of the widget (=column width)."""
+        """Returns the width of the widget."""
 
         if self.parent is None:
             return curses.COLS
         else:
             return self.parent.grid_get_column_width(self.column)
+
+    @property
+    def height(self) -> int:
+        """Returns the height of the widget."""
+
+        if self.parent is None:
+            return curses.LINES
+        else:
+            return self.parent.grid_get_row_height(self.row)
 
     @property
     def grid_nrows(self) -> int:
@@ -103,21 +111,18 @@ class Widget:
         self.children.append(child)
         self.children.sort(key=lambda x: x.row)
 
-    def grid(self, row:int, column:int=0, height:int=1):
+    def grid(self, row:int, column:int=0):
         """
         How should be displayed the widget with its siblings.
+        FIXME: Manage when several widgets are on the same "grid cell".
 
         Args:
             row (int): The grid row
             column (int): The grid column. Defaults to 0.
-            height (int): The height of the widget. Defaults to 1.
-
-        FIXME: Manage when several widgets are on the same "grid cell".
         """
-
+        
         self.row = row
         self.column = column
-        self.height = height
 
     def grid_get_row_position(self, row:int) -> int:
         """
@@ -134,6 +139,21 @@ class Widget:
         for i in range(row):
             row_position += self.children[i].height
         return row_position
+
+    def grid_get_row_height(self, row:int) -> int:
+        """
+        Returns the height of a row in the grid.
+
+        Args:
+            row (int): The grid row.
+
+        Returns:
+            int: The height of the row.
+        """
+
+        rows = set(child.row for child in self.children)
+        height = self.height // len(rows)
+        return height
 
     def grid_get_column_position(self, column:int) -> int:
         """
