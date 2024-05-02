@@ -7,7 +7,11 @@ class Tui(Widget):
     def __init__(self):
         super().__init__(None)
         self.scr = curses.initscr()
+        curses.noecho()
+
         self.children = list()
+        self.focus_widget = None
+
         Widget.main = self
 
     # Methods
@@ -15,4 +19,7 @@ class Tui(Widget):
     def update(self):
         for child in self.children:
             child._update()
+
+        if self.focus_widget:
+            self.focus_widget.focus()
         self.scr.refresh()

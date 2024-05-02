@@ -188,3 +188,13 @@ class Widget:
 
     def addstr(self, y:int, x:int, text:str, *args, **kwargs):
         self.main.scr.addstr(y, x, text, *args, *kwargs)
+
+    def focus_set(self):
+        self.main.focus_widget = self
+
+    def focus(self):
+        self.main.scr.move(self.y, self.x)
+        self.main.focus_widget._on_focus()
+
+    def _on_focus(self):
+        pass
