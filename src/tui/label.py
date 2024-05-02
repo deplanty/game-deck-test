@@ -33,6 +33,8 @@ class Label(Widget):
         width = self.width
         height = self.height
 
+        print(x, y, width, height)
+
         text = textwrap.wrap(self._text, width)
         nlines = min(height, len(text))
         for i in range(nlines):

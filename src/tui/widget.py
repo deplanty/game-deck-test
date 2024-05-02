@@ -137,7 +137,7 @@ class Widget:
 
         row_position = 0
         for i in range(row):
-            row_position += self.children[i].height
+            row_position += self.grid_get_row_height(i)
         return row_position
 
     def grid_get_row_height(self, row:int) -> int:
@@ -151,8 +151,8 @@ class Widget:
             int: The height of the row.
         """
 
-        rows = set(child.row for child in self.children)
-        height = self.height // len(rows)
+        rows = max(child.row for child in self.children) + 1
+        height = self.height // rows
         return height
 
     def grid_get_column_position(self, column:int) -> int:
@@ -182,6 +182,6 @@ class Widget:
             int: The width of the column.
         """
 
-        columns = set(child.column for child in self.children)
-        width = self.width // len(columns)
+        columns = max(child.column for child in self.children) + 1
+        width = self.width // columns
         return width
