@@ -9,6 +9,10 @@ class Widget:
         parent (Widget): The parent widget.
     """
 
+    # The main window widget is accessible from every one here.
+    # The tui.Tui class set its value.
+    main = None
+
     def __init__(self, parent):
         self.parent = parent
         self.children = list()

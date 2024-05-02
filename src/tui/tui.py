@@ -8,6 +8,7 @@ class Tui(Widget):
         super().__init__(None)
         self.scr = curses.initscr()
         self.children = list()
+        Widget.main = self
 
     # Methods
 

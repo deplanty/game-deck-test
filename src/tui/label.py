@@ -36,4 +36,4 @@ class Label(Widget):
         text = textwrap.wrap(self._text, width)
         nlines = min(height, len(text))
         for i in range(nlines):
-            self.parent.scr.addstr(y + i, x, text[i])
+            self.main.scr.addstr(y + i, x, text[i])
