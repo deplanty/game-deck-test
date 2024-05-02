@@ -33,7 +33,7 @@ class Label(Widget):
     @align.setter
     def align(self, value:str):
         """One in [left, center, right]."""
-        
+
         _valid = ["left", "center", "right"]
         if value not in _valid:
             raise ValueError(f"{value} not in {_valid}")
@@ -56,4 +56,4 @@ class Label(Widget):
                 line = f"{text[i]:>{width}}"
             elif self.align == "center":
                 line = f"{text[i]:^{width}}"
-            self.main.scr.addstr(y + i, x, line)
+            self.addstr(y + i, x, line)

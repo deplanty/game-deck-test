@@ -52,7 +52,7 @@ class Widget:
             return 0
         else:
             return self.parent.y + self.parent.grid_get_row_position(self.row)
-    
+
     @property
     def width(self) -> int:
         """Returns the width of the widget."""
@@ -120,7 +120,7 @@ class Widget:
             row (int): The grid row
             column (int): The grid column. Defaults to 0.
         """
-        
+
         self.row = row
         self.column = column
 
@@ -185,3 +185,6 @@ class Widget:
         columns = max(child.column for child in self.children) + 1
         width = self.width // columns
         return width
+
+    def addstr(self, y:int, x:int, text:str, *args, **kwargs):
+        self.main.scr.addstr(y, x, text, *args, *kwargs)
