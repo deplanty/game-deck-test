@@ -11,9 +11,10 @@ class Label(Widget):
         parent (Widget): The parent widget
     """
 
-    def __init__(self, parent, text:str=""):
+    def __init__(self, parent, text:str="", align="left"):
         super().__init__(parent)
         self._text = text
+        self.align = align
 
     # Properties
 
@@ -23,7 +24,20 @@ class Label(Widget):
 
     @text.setter
     def text(self, value:str):
-        self._text = value
+        self._text = str(value)
+
+    @property
+    def align(self) -> str:
+        return self._align
+
+    @align.setter
+    def align(self, value:str):
+        """One in [left, center, right]."""
+        
+        _valid = ["left", "center", "right"]
+        if value not in _valid:
+            raise ValueError(f"{value} not in {_valid}")
+        self._align = value
 
     # Methods
 
@@ -36,4 +50,10 @@ class Label(Widget):
         text = textwrap.wrap(self._text, width)
         nlines = min(height, len(text))
         for i in range(nlines):
-            self.main.scr.addstr(y + i, x, text[i])
+            if self.align == "left":
+                line = text[i]
+            elif self.align == "right":
+                line = f"{text[i]:>{width}}"
+            elif self.align == "center":
+                line = f"{text[i]:^{width}}"
+            self.main.scr.addstr(y + i, x, line)

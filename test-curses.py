@@ -8,7 +8,7 @@ lorem = "Lorem ipsum dolor sit amet. " * 15
 root = tui.Tui()
 
 # Title
-title = tui.Label(root, "Main Title!")
+title = tui.Label(root, lorem, align="center")
 title.grid(0)
 
 # First frame
