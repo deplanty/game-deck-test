@@ -11,9 +11,13 @@ root = tui.Tui()
 title = tui.Label(root, lorem, align="center")
 title.grid(0)
 
+# Progress
+progress = tui.Progressbar(root, align="center", display="value")
+progress.grid(1)
+
 # First frame
 frame_1 = tui.Frame(root)
-frame_1.grid(1)
+frame_1.grid(2)
 # Fill frame
 for i in range(4):
     for j in range(2):
@@ -22,7 +26,7 @@ for i in range(4):
 
 # Second frame
 frame_2 = tui.Frame(root)
-frame_2.grid(2)
+frame_2.grid(3)
 # Fill frame
 for i in range(3):
     for j in range(5):
@@ -30,5 +34,12 @@ for i in range(3):
         label.grid(i, j)
 
 
+
 root.update()
-root.scr.getch()
+
+for i in range(100):
+    progress += 1
+    root.update()
+    x = root.scr.getch()
+    if x == 97:
+        break
