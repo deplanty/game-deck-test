@@ -7,24 +7,27 @@ lorem = "Lorem ipsum dolor sit amet. " * 15
 
 root = tui.Tui()
 
-frame_left = tui.Frame(root)
-frame_left.grid(row=0, column=0)
+# Title
+title = tui.Label(root, "Main Title!")
+title.grid(0)
 
-label = tui.Label(frame_left, lorem)
-label.grid(row=0, column=0)
+# First frame
+frame_1 = tui.Frame(root)
+frame_1.grid(1)
+# Fill frame
+for i in range(4):
+    for j in range(2):
+        label = tui.Label(frame_1, f"Cell({i}, {j})")
+        label.grid(i, j)
 
-frame_right = tui.Frame(root)
-frame_right.grid(row=0, column=1)
-
-label = tui.Label(frame_right, lorem)
-label.grid(row=0, column=0)
-label = tui.Label(frame_right, lorem)
-label.grid(row=0, column=1)
-
-# for j in range(20):
-#     label = tui.Label(root, "123456789-123456789-123456789")
-#     label.grid(row=0, column=j)
-
+# Second frame
+frame_2 = tui.Frame(root)
+frame_2.grid(2)
+# Fill frame
+for i in range(3):
+    for j in range(5):
+        label = tui.Label(frame_2, f"Cell({i}, {j})")
+        label.grid(i, j)
 
 
 root.update()
