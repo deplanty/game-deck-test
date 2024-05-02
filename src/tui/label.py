@@ -28,9 +28,9 @@ class Label(Widget):
     # Methods
 
     def update(self):
-        x = self.pos_column
+        x = self.parent.grid_get_column_position(self.column)
         y = self.parent.grid_get_row_position(self.row)
-        width = 50
+        width = self.parent.grid_get_column_width(self.column)
         height = self.height
 
         text = textwrap.wrap(self._text, width)

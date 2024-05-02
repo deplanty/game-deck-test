@@ -1,11 +1,12 @@
+import curses
+
+
 class Widget:
     """
     The base class for all widgets.
 
     Args:
         parent (Widget): The parent widget.
-
-    TODO: Manage grid with different columns.
     """
 
     def __init__(self, parent):
@@ -43,10 +44,25 @@ class Widget:
     @property
     def pos_column(self) -> int:
         """Returns the left column position of the widget."""
+        
         if self.parent is None:
             return 0
         else:
             return self.parent.pos_column + self.column
+
+    @property
+    def grid_nrows(self) -> int:
+        """The number of rows in the grid of this widget."""
+
+        rows = max(0, *(child.row for child in self.children))
+        return rows + 1
+
+    @property
+    def grid_ncolumns(self) -> int:
+        """The number of columns in the grid of this widget."""
+
+        columns = max(0, *(child.column for child in self.children))
+        return columns + 1
 
     # Methods
 
@@ -92,7 +108,7 @@ class Widget:
 
     def grid_get_row_position(self, row:int) -> int:
         """
-        Returns the absolute row position for ont of its child from a griven
+        Returns the absolute row position for one of its child from a given
         grid row.
 
         Args:
@@ -106,3 +122,34 @@ class Widget:
         for i in range(row):
             row_position += self.children[i].height
         return row_position
+
+    def grid_get_column_position(self, column:int) -> int:
+        """
+        Returns the absolute column position for a child from a given grid column.
+
+        Args:
+            column (int): The grid column.
+
+        Returns:
+            int: The absolute position
+        """
+
+        col_position = self.pos_column
+        for i in range(column):
+            col_position += self.grid_get_column_width(i)
+        return col_position
+
+    def grid_get_column_width(self, column:int) -> int:
+        """
+        Returns the width of a column in the grid.
+
+        Args:
+            column: The grid column.
+
+        Returns:
+            int: The width of the column.
+        """
+
+        columns = set(child.column for child in self.children)
+        width = curses.COLS // len(columns)
+        return width
