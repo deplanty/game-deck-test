@@ -37,22 +37,31 @@ class Widget:
     # Properties
 
     @property
-    def pos_row(self) -> int:
-        """Returns the top row position of the widget."""
+    def x(self) -> int:
+        """Returns the absolute column position of the widget."""
 
         if self.parent is None:
             return 0
         else:
-            return self.parent.pos_row + self.row
+            return self.parent.x + self.parent.grid_get_column_position(self.column)
 
     @property
-    def pos_column(self) -> int:
-        """Returns the left column position of the widget."""
-        
+    def y(self) -> int:
+        """Returns the absolute row position of the widget."""
+
         if self.parent is None:
             return 0
         else:
-            return self.parent.pos_column + self.column
+            return self.parent.y + self.parent.grid_get_row_position(self.row)
+    
+    @property
+    def width(self) -> int:
+        """Returns the width of the widget (=column width)."""
+
+        if self.parent is None:
+            return curses.COLS
+        else:
+            return self.parent.grid_get_column_width(self.column)
 
     @property
     def grid_nrows(self) -> int:
@@ -112,8 +121,7 @@ class Widget:
 
     def grid_get_row_position(self, row:int) -> int:
         """
-        Returns the absolute row position for one of its child from a given
-        grid row.
+        Returns the relative row position of a child (given from its grid row).
 
         Args:
             row (int): The grid row.
@@ -122,14 +130,14 @@ class Widget:
             int: The absolute position.
         """
 
-        row_position = self.pos_row
+        row_position = 0
         for i in range(row):
             row_position += self.children[i].height
         return row_position
 
     def grid_get_column_position(self, column:int) -> int:
         """
-        Returns the absolute column position for a child from a given grid column.
+        Returns the relative column position of a child (given from its grid column).
 
         Args:
             column (int): The grid column.
@@ -138,7 +146,7 @@ class Widget:
             int: The absolute position
         """
 
-        col_position = self.pos_column
+        col_position = 0
         for i in range(column):
             col_position += self.grid_get_column_width(i)
         return col_position
@@ -155,5 +163,5 @@ class Widget:
         """
 
         columns = set(child.column for child in self.children)
-        width = curses.COLS // len(columns)
+        width = self.width // len(columns)
         return width
