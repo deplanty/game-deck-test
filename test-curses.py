@@ -12,17 +12,28 @@ title = tui.Label(root, lorem, align="center")
 title.grid(0)
 
 # Progress
-progress = tui.Progressbar(root, align="center", display="value")
+progress = tui.Progressbar(root, maximum=200, align="center", display="value")
 progress.grid(1)
 
 # Frame
 frame_1 = tui.Frame(root)
 frame_1.grid(2)
 # Fill frame
-for i in range(2):
-    for j in range(2):
-        label = tui.Label(frame_1, f"Cell({i}, {j})")
-        label.grid(i, j)
+label = tui.Label(frame_1, "Row 0-1, Column 0")
+label.filler = "."
+label.grid(0, 0, row_span=2)
+label = tui.Label(frame_1, "Row 2, Column 0")
+label.filler = "_"
+label.grid(2, 0)
+label = tui.Label(frame_1, "Row 0, Column 1-2")
+label.filler = "_"
+label.grid(0, 1, column_span=2)
+label = tui.Label(frame_1, "Row 1-2, Column 1")
+label.filler = "-"
+label.grid(1, 1, row_span=2)
+label = tui.Label(frame_1, "Row 1-2, Column 2")
+label.grid(1, 2, row_span=2)
+
 
 # Entry
 entry = tui.Entry(root)
@@ -30,7 +41,7 @@ entry.grid(3)
 entry.focus_set()
 
 for i in range(1):
-    progress += 1
+    progress += 50
     root.update()
     # x = root.scr.getch()
     # print(x)
