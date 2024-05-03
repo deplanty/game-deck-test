@@ -8,28 +8,44 @@ class SceneCombatUi(tui.Tui):
         super().__init__()
         self.scene = scene
 
-        # Enemy frame with all its compile
+        # Enemy frame
         self.frame_enemy = tui.Frame(self)
-        self.frame_enemy.grid(0)
-        self.label_enemy = tui.Label(self.frame_enemy)
-        self.label_enemy.grid(0)
+        self.frame_enemy.grid(0, columnspan=2)
+        self.label_enemy_name = tui.Label(self.frame_enemy, self.scene.enemy.name, "center")
+        self.label_enemy_name.grid(0)
+        self.enemy_hp = tui.Progressbar(self.frame_enemy, self.scene.enemy.health.maximum, "center")
+        self.enemy_hp.grid(1)
+        self.label_enemy_info = tui.Label(self.frame_enemy)
+        self.label_enemy_info.grid(2)
         self.label_enemy_card = tui.Label(self.frame_enemy)
-        self.label_enemy_card.grid(1)
+        self.label_enemy_card.grid(3)
 
+        # Player frame
         self.frame_player = tui.Frame(self)
-        self.frame_player.grid(2)
-        self.label_player = tui.Label(self.frame_player)
-        self.label_player.grid(0)
+        self.frame_player.grid(1, columnspan=2)
+        self.label_player_name = tui.Label(self.frame_player, sgt.player.name, "center")
+        self.label_player_name.grid(0)
+        self.player_hp = tui.Progressbar(self.frame_player, sgt.player.health.maximum, "center")
+        self.player_hp.grid(1)
+        self.label_player_info = tui.Label(self.frame_player)
+        self.label_player_info.grid(2)
         self.label_player_card = tui.Label(self.frame_player)
-        self.label_player_card.grid(1)
+        self.label_player_card.grid(3)
 
+        # History of played cards
+        self.frame_history = tui.Label(self)
+        self.frame_history.filler = "."
+        self.frame_history.grid(0, 2, rowspan=3)
+
+        # Cards in player's hand frame
         self.frame_cards = tui.Frame(self)
-        self.frame_cards.grid(3)
+        self.frame_cards.grid(2, columnspan=3)
         self.label_hand = tui.Label(self.frame_cards)
         self.label_hand.grid(0)
 
+        # Frame for the user inputs
         self.frame_input = tui.Frame(self)
-        self.frame_input.grid(4)
+        self.frame_input.grid(3, columnspan=3)
         self.label_input = tui.Label(self.frame_input, "Input:")
         self.label_input.grid(0, 0)
         self.entry_input = tui.Entry(self.frame_input)
@@ -39,13 +55,18 @@ class SceneCombatUi(tui.Tui):
         self.label_status.grid(1, 0)
         self.value_status = tui.Label(self.frame_input)
         self.value_status.grid(1, 1)
-        
-        self.update()
 
     def update(self):
-        self.label_enemy.text = self.scene.enemy.info
-        self.label_player.text = sgt.player.info
+        self.label_enemy_info.text = self.scene.enemy.info
+        self.label_player_info.text = sgt.player.info
         self.label_hand.text = sgt.player.deck.hand
+
+        self.enemy_hp.current = self.scene.enemy.health.current
+
+        history = list()
+        for player, card in self.scene.history_cards:
+            history.insert(0, f"{player.name}: {card}")
+        self.frame_history.text = "\n".join(history)
         super().update()
 
     def card_played(self, player, card):
@@ -56,11 +77,13 @@ class SceneCombatUi(tui.Tui):
 
         label.text = f"{card}\n{card.info}"
 
-        
+
 class SceneCombat(Scene):
     def __init__(self, enemy_name:str):
         super().__init__()
+
         self.enemy = sgt.encounter_from_name(enemy_name)
+        self.history_cards = list()
 
         self.ui = SceneCombatUi(self)
 
@@ -117,9 +140,12 @@ class SceneCombat(Scene):
             card = sgt.player.play_card(action)
             if card is None:
                 return "continue"
-            sgt.player.get_buff(card)
-            self.enemy.get_hit(card)
-            self.ui.card_played(sgt.player, card)
+
+            self.play_card(sgt.player, self.enemy, card)
+            # sgt.player.get_buff(card)
+            # self.enemy.get_hit(card)
+            # self.ui.card_played(sgt.player, card)
+            # self.history_cards.append((sgt.player, card.copy()))
             # print("  Play card:", card)
             # print("            ", card.info)
             # print()
@@ -154,9 +180,10 @@ class SceneCombat(Scene):
             # print()
             return "end of turn"
         else:
-            self.enemy.get_buff(card)
-            sgt.player.get_hit(card)
-            self.ui.card_played(self.enemy, card)
+            self.play_card(self.enemy, sgt.player, card)
+            # self.enemy.get_buff(card)
+            # sgt.player.get_hit(card)
+            # self.ui.card_played(self.enemy, card)
             # print("  Play card:", card)
             # print("            ", card.info)
             # print()
@@ -175,3 +202,9 @@ class SceneCombat(Scene):
             return int(action)
         else:
             return action
+
+    def play_card(self, source, destination, card):
+        source.get_buff(card)
+        destination.get_hit(card)
+        self.history_cards.append((source, card.copy()))
+        self.ui.card_played(source, card)

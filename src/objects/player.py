@@ -13,7 +13,7 @@ class Player:
         name (str): The player's name.
         max_health (int): The player's max health.
     """
-    
+
     def __init__(self, name:str, max_health:int):
         self.name = name
         self.health = Gauge(max_health)
@@ -37,12 +37,12 @@ class Player:
         return str(self)
 
     # Properties
-    
+
     @property
     def info(self) -> str:
         """Returns the information of the player"""
-        
-        text = [f"{str(self)}"]
+
+        text = list()
         text.append(f"Deck = {self.deck.info}")
         for buff in self.buffs:
             if buff.info: text.append(f"+ {buff.info}")
@@ -73,7 +73,7 @@ class Player:
             card.owner = player
             player.deck.add(card)
         return player
-    
+
     # Method
 
     def is_alive(self) -> bool:
@@ -98,7 +98,7 @@ class Player:
         """
         Make all the en of turn actions: apply buffs and debuffs
         """
-        
+
         self.health -= self.burn
         self.burn -= 1
 
@@ -116,7 +116,7 @@ class Player:
 
         if len(self.deck.hand) <= 0:
             return None
-        
+
         card = self.deck.hand[index]
         if self.energy < card.cost:
             return None
@@ -134,7 +134,7 @@ class Player:
 
         self.armor += card.armor
         self.strenght += card.strenght
-        
+
     def get_hit(self, card:Card):
         """
         The player gets hit by a card and apply the effect of the card.

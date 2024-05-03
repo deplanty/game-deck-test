@@ -21,18 +21,18 @@ frame_1.grid(2)
 # Fill frame
 label = tui.Label(frame_1, "Row 0-1, Column 0")
 label.filler = "."
-label.grid(0, 0, row_span=2)
+label.grid(0, 0, rowspan=2)
 label = tui.Label(frame_1, "Row 2, Column 0")
 label.filler = "_"
 label.grid(2, 0)
 label = tui.Label(frame_1, "Row 0, Column 1-2")
 label.filler = "_"
-label.grid(0, 1, column_span=2)
+label.grid(0, 1, columnspan=2)
 label = tui.Label(frame_1, "Row 1-2, Column 1")
 label.filler = "-"
-label.grid(1, 1, row_span=2)
+label.grid(1, 1, rowspan=2)
 label = tui.Label(frame_1, "Row 1-2, Column 2")
-label.grid(1, 2, row_span=2)
+label.grid(1, 2, rowspan=2)
 
 
 # Entry
