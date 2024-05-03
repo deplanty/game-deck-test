@@ -42,18 +42,23 @@ class Label(Widget):
     # Methods
 
     def update(self):
-        x = self.x
-        y = self.y
-        width = self.width
-        height = self.height
+        # Separate the different lines of the text.
+        # Wrap the line that are longer than the frame width.
+        # Store each line in a list.
+        text_split = self._text.split("\n")
+        lines = list()
+        for line in text_split:
+            text = textwrap.wrap(line, self.width)
+            for line in text:
+                if self.align == "left":
+                    pass
+                elif self.align == "right":
+                    line = f"{line:>{self.width}}"
+                elif self.align == "center":
+                    line = f"{line:^{self.width}}"
+                lines.append(line)
 
-        text = textwrap.wrap(self._text, width)
-        nlines = min(height, len(text))
+        # Display as many lines as the frame height allows.
+        nlines = min(self.height, len(lines))
         for i in range(nlines):
-            if self.align == "left":
-                line = text[i]
-            elif self.align == "right":
-                line = f"{text[i]:>{width}}"
-            elif self.align == "center":
-                line = f"{text[i]:^{width}}"
-            self.addstr(y + i, x, line)
+            self.addstr(self.y + i, self.x, lines[i])
