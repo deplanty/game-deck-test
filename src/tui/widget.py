@@ -20,8 +20,8 @@ class Widget:
         # Grid position
         self.row = 0
         self.column = 0
-        self.row_span = 1
-        self.column_span = 1
+        self.rowspan = 1
+        self.columnspan = 1
 
         # Paramters
         self._filler = " "
@@ -66,7 +66,7 @@ class Widget:
         if self.parent is None:
             return curses.COLS
         else:
-            return self.parent.grid_get_column_width(self.column) * self.column_span
+            return self.parent.grid_get_column_width(self.column) * self.columnspan
 
     @property
     def height(self) -> int:
@@ -75,7 +75,7 @@ class Widget:
         if self.parent is None:
             return curses.LINES
         else:
-            return self.parent.grid_get_row_height(self.row) * self.row_span
+            return self.parent.grid_get_row_height(self.row) * self.rowspan
 
     @property
     def filler(self) -> str:
@@ -128,21 +128,21 @@ class Widget:
         self.children.append(child)
         self.children.sort(key=lambda x: x.row)
 
-    def grid(self, row:int, column:int=0, row_span:int=1, column_span:int=1):
+    def grid(self, row:int, column:int=0, rowspan:int=1, columnspan:int=1):
         """
         How should be displayed the widget with its siblings.
 
         Args:
             row (int): The grid row.
             column (int): The grid column. Defaults to 0.
-            row_span (int): The number of grid row this widget takes.
-            column_span (int): The number of grid column this widget takes.
+            rowspan (int): The number of grid row this widget takes.
+            columnspan (int): The number of grid column this widget takes.
         """
 
         self.row = row
         self.column = column
-        self.row_span = row_span
-        self.column_span = column_span
+        self.rowspan = rowspan
+        self.columnspan = columnspan
 
     def grid_get_row_position(self, row:int) -> int:
         """
@@ -163,7 +163,7 @@ class Widget:
     def grid_get_row_height(self, row:int) -> int:
         """
         Returns the height of a row in the grid.
-        TODO: Use self.row_span.
+        TODO: Use self.rowspan.
 
         Args:
             row (int): The grid row.
@@ -172,7 +172,7 @@ class Widget:
             int: The height of the row.
         """
 
-        rows = max(child.row + child.row_span - 1 for child in self.children) + 1
+        rows = max(child.row + child.rowspan - 1 for child in self.children) + 1
         height = self.height // rows
         return height
 
@@ -203,7 +203,7 @@ class Widget:
             int: The width of the column.
         """
 
-        columns = max(child.column + child.column_span - 1 for child in self.children) + 1
+        columns = max(child.column + child.columnspan - 1 for child in self.children) + 1
         width = self.width // columns
         return width
 
