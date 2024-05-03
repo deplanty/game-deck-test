@@ -16,10 +16,7 @@ class Label(Widget):
         self._text = text
         self.align = align
 
-        # Flags
-        self._flag_fill = False  # Fill the widget with blank to remove previous text.
-
-    # Properties
+        # Properties
 
     @property
     def text(self) -> str:
@@ -49,7 +46,7 @@ class Label(Widget):
     def update(self):
         # If the label is modified, then the flag is up and the widget must be reset.
         if self._flag_fill:
-            self.fill(" ")
+            self.fill()
             self._flag_fill = False
 
         lines = self._get_text_as_list()

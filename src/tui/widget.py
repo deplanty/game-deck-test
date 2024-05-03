@@ -20,6 +20,12 @@ class Widget:
         # Grid position
         self.row = 0
         self.column = 0
+        self.row_span = 1
+        self.column_span = 1
+
+        # Paramters
+        self._filler = " "
+        self._flag_fill = False
 
         # At the end of this instanciation, add this widget as a child
         if parent is not None:
@@ -69,7 +75,18 @@ class Widget:
         if self.parent is None:
             return curses.LINES
         else:
-            return self.parent.grid_get_row_height(self.row)
+            return self.parent.grid_get_row_height(self.row) * self.row_span
+
+    @property
+    def filler(self) -> str:
+        return self._filler
+
+    @filler.setter
+    def filler(self, char:str):
+        if len(char) != 1:
+            raise ValueError(f"String '{char}' was given but only one char was expected")
+        self._filler = char
+        self._flag_fill = True
 
     @property
     def grid_nrows(self) -> int:
@@ -111,18 +128,22 @@ class Widget:
         self.children.append(child)
         self.children.sort(key=lambda x: x.row)
 
-    def grid(self, row:int, column:int=0):
+    def grid(self, row:int, column:int=0, row_span:int=1, column_span:int=1):
         """
         How should be displayed the widget with its siblings.
         FIXME: Manage when several widgets are on the same "grid cell".
 
         Args:
-            row (int): The grid row
+            row (int): The grid row.
             column (int): The grid column. Defaults to 0.
+            row_span (int): The number of grid row this widget takes.
+            column_span (int): The number of grid column this widget takes.
         """
 
         self.row = row
         self.column = column
+        self.row_span = row_span
+        self.column_span = column_span
 
     def grid_get_row_position(self, row:int) -> int:
         """
@@ -143,6 +164,7 @@ class Widget:
     def grid_get_row_height(self, row:int) -> int:
         """
         Returns the height of a row in the grid.
+        TODO: Use self.row_span.
 
         Args:
             row (int): The grid row.
@@ -151,7 +173,7 @@ class Widget:
             int: The height of the row.
         """
 
-        rows = max(child.row for child in self.children) + 1
+        rows = max(child.row + child.row_span - 1 for child in self.children) + 1
         height = self.height // rows
         return height
 
@@ -189,10 +211,10 @@ class Widget:
     def addstr(self, y:int, x:int, text:str, *args, **kwargs):
         self.main.scr.addstr(y, x, text, *args, *kwargs)
 
-    def fill(self, char:str):
-        """Fill the widget with the char."""
+    def fill(self):
+        """Fill the widget with the char `self.filler`."""
 
-        line = char * self.width
+        line = self.filler * self.width
         for row in range(self.height):
             self.addstr(self.y + row, self.x, line)
 
