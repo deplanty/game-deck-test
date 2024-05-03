@@ -189,6 +189,13 @@ class Widget:
     def addstr(self, y:int, x:int, text:str, *args, **kwargs):
         self.main.scr.addstr(y, x, text, *args, *kwargs)
 
+    def fill(self, char:str):
+        """Fill the widget with the char."""
+
+        line = char * self.width
+        for row in range(self.height):
+            self.addstr(self.y + row, self.x, line)
+
     def focus_set(self):
         self.main.focus_widget = self
 

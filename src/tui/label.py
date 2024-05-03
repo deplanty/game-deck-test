@@ -16,6 +16,9 @@ class Label(Widget):
         self._text = text
         self.align = align
 
+        # Flags
+        self._flag_fill = False  # Fill the widget with blank to remove previous text.
+
     # Properties
 
     @property
@@ -25,6 +28,7 @@ class Label(Widget):
     @text.setter
     def text(self, value:str):
         self._text = str(value)
+        self._flag_fill = True
 
     @property
     def align(self) -> str:
@@ -38,13 +42,32 @@ class Label(Widget):
         if value not in _valid:
             raise ValueError(f"{value} not in {_valid}")
         self._align = value
+        self._flag_fill = True
 
     # Methods
 
     def update(self):
-        # Separate the different lines of the text.
-        # Wrap the line that are longer than the frame width.
-        # Store each line in a list.
+        # If the label is modified, then the flag is up and the widget must be reset.
+        if self._flag_fill:
+            self.fill(" ")
+            self._flag_fill = False
+
+        lines = self._get_text_as_list()
+        # Display as many lines as the frame height allows.
+        nlines = min(self.height, len(lines))
+        for i in range(nlines):
+            self.addstr(self.y + i, self.x, lines[i])
+
+    def _get_text_as_list(self) -> list[str]:
+        """
+        Separate the different lines of the text.
+        Wrap the lines that are longer than the widget's width.
+        Return each line in a list.
+
+        Returns:
+            list[str]: All the lines to display on screen.
+        """
+
         text_split = self._text.split("\n")
         lines = list()
         for line in text_split:
@@ -58,7 +81,4 @@ class Label(Widget):
                     line = f"{line:^{self.width}}"
                 lines.append(line)
 
-        # Display as many lines as the frame height allows.
-        nlines = min(self.height, len(lines))
-        for i in range(nlines):
-            self.addstr(self.y + i, self.x, lines[i])
+        return lines
