@@ -4,6 +4,21 @@ from src.tui import Widget
 
 
 class Entry(Widget):
+    """
+    Create an Entry Widget (= TextEdit).
+
+    Args:
+        parent (Widget): The parent widget.
+        placeholder (str): The string that is displayed when nothing is typed.
+
+    Events:
+        keyboard characters: Display them in the widget.
+        backspace: Remove the last character.
+        escape: Reset the text to its origin.
+        return: Validate the entry and stop the internal loop.
+        tabulation: Go to next widget in the focus list.
+    """
+
     def __init__(self, parent:Widget, placeholder:str="Entry"):
         super().__init__(parent)
 
@@ -24,10 +39,12 @@ class Entry(Widget):
 
     def _on_focus(self):
         K_BACKSPACE = 8
+        K_TABULATION = 9
         K_RETURN = 10
         K_ESCAPE = 27
 
         tmp = self.text
+        validate = False  # FIXME: Do something with this?
 
         curses.cbreak()
         while True:
@@ -37,10 +54,13 @@ class Entry(Widget):
                 self.text += char
             elif key == K_BACKSPACE:
                 self.text = self.text[:-1]
-            elif key == K_ESCAPE:
-                self.text = tmp
+            elif key == K_TABULATION:
+                validate = False
                 break
             elif key == K_RETURN:
+                validate = True
                 break
+            elif key == K_ESCAPE:
+                self.text = tmp
             self.update()
         curses.nocbreak()
