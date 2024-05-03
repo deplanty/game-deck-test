@@ -19,12 +19,12 @@ class Card:
     def __init__(self, name:str):
         self.name = name
         self.owner:Player = None
-        
+
         self.iid = 0
         self.cost = 0
         self.upgrades = 0
         self.description = ""
-        
+
         self.base_damage = 0
         self.armor = 0
         self.strenght = 0
@@ -50,26 +50,26 @@ class Card:
         """Return the calculated damage of the card."""
 
         damage = self.base_damage + self.upgrades
-        if self.owner: damage + self.owner.strenght
+        if self.owner: damage += self.owner.strenght
         return damage
 
     @property
     def info(self) -> str:
         """Return the description of the card as text."""
-        
+
         return self.description.format(card=self)
 
     @property
     def info_full(self) -> str:
         """Return the full information of the card as text."""
-        
+
         text = f"{str(self)}\n"
         text += f"Cost = {self.cost}\n"
         text += self.description.format(card=self)
         return text
-    
+
     # Class methods
-    
+
     @classmethod
     def from_dict(cls, name:str, data:dict):
         """
@@ -79,7 +79,7 @@ class Card:
             name (str): The name of the card.
             data (dict): Data of the card (iid, cost, damage, armor, ...)
         """
-        
+
         card = cls(name)
         card.__dict__.update(data)
         return card
@@ -88,7 +88,7 @@ class Card:
 
     def copy(self):
         """Return a copy of this card"""
-        
+
         return copy.deepcopy(self)
 
     def _upgrade(self):
