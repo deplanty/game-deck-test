@@ -40,10 +40,18 @@ entry = tui.Entry(root)
 entry.grid(3)
 entry.focus_set()
 
-for i in range(1):
-    progress += 50
+entry_2 = tui.Entry(root)
+entry_2.grid(4)
+
+
+entry_2.focus_next = entry
+entry.focus_next = entry_2
+progress += 50
+
+while True:
     root.update()
-    # x = root.scr.getch()
-    # print(x)
-    # if x == 97:
-    #     break
+
+    if entry.text == "quit":
+        break
+    elif entry_2.text == "quit":
+        break

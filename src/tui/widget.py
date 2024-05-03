@@ -17,6 +17,8 @@ class Widget:
         self.parent = parent
         self.children = list()
 
+        self.focus_next = None
+
         # Grid position
         self.row = 0
         self.column = 0
@@ -24,7 +26,7 @@ class Widget:
         self.columnspan = 1
 
         # Paramters
-        self._filler = " "
+        self.filler = " "
         self._flag_fill = False
 
         # At the end of this instanciation, add this widget as a child
@@ -89,18 +91,12 @@ class Widget:
         self._flag_fill = True
 
     @property
-    def grid_nrows(self) -> int:
-        """The number of rows in the grid of this widget."""
+    def focus_next(self) -> "Widget":
+        return self._focus_next
 
-        rows = max(0, *(child.row for child in self.children))
-        return rows + 1
-
-    @property
-    def grid_ncolumns(self) -> int:
-        """The number of columns in the grid of this widget."""
-
-        columns = max(0, *(child.column for child in self.children))
-        return columns + 1
+    @focus_next.setter
+    def focus_next(self, widget:"Widget"):
+        self._focus_next = widget
 
     # Methods
 
@@ -220,9 +216,20 @@ class Widget:
     def focus_set(self):
         self.main.focus_widget = self
 
-    def focus(self):
+    def focus_remove(self):
+        if self.main.focus_widget == self:
+            self.main.focus_widget = None
+
+    def focus(self) -> str:
+        """
+        When a widget have the focus, set the cursor at its position and execute its function.
+
+        Returns:
+            str: The status of the output.
+        """
+
         self.main.scr.move(self.y, self.x)
-        self.main.focus_widget._on_focus()
+        return self._on_focus()
 
     def _on_focus(self):
         pass

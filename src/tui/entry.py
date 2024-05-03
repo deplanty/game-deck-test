@@ -37,14 +37,21 @@ class Entry(Widget):
         self.addstr(self.y, self.x, line)
         self.main.scr.move(self.y, self.x + len(self.text))
 
-    def _on_focus(self):
+    def _on_focus(self) -> str:
+        """
+        This function is triggered when a widget gets the focus.
+
+        Returns:
+            result: A string representing the output result.
+        """
+
         K_BACKSPACE = 8
         K_TABULATION = 9
         K_RETURN = 10
         K_ESCAPE = 27
 
         tmp = self.text
-        validate = False  # FIXME: Do something with this?
+        result = "ok"  # FIXME: Do something with this?
 
         curses.cbreak()
         while True:
@@ -55,12 +62,14 @@ class Entry(Widget):
             elif key == K_BACKSPACE:
                 self.text = self.text[:-1]
             elif key == K_TABULATION:
-                validate = False
+                result = "tab"
                 break
             elif key == K_RETURN:
-                validate = True
+                result = "ok"
                 break
             elif key == K_ESCAPE:
                 self.text = tmp
             self.update()
         curses.nocbreak()
+
+        return result
