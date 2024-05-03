@@ -66,7 +66,7 @@ class Widget:
         if self.parent is None:
             return curses.COLS
         else:
-            return self.parent.grid_get_column_width(self.column)
+            return self.parent.grid_get_column_width(self.column) * self.column_span
 
     @property
     def height(self) -> int:
@@ -131,7 +131,6 @@ class Widget:
     def grid(self, row:int, column:int=0, row_span:int=1, column_span:int=1):
         """
         How should be displayed the widget with its siblings.
-        FIXME: Manage when several widgets are on the same "grid cell".
 
         Args:
             row (int): The grid row.
@@ -204,7 +203,7 @@ class Widget:
             int: The width of the column.
         """
 
-        columns = max(child.column for child in self.children) + 1
+        columns = max(child.column + child.column_span - 1 for child in self.children) + 1
         width = self.width // columns
         return width
 
