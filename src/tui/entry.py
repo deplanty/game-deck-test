@@ -10,7 +10,7 @@ class Entry(Widget):
         self.placeholder = placeholder
         self.text = ""
 
-        self._empty = "▁"
+        self._empty = "_"
 
     def update(self):
         if self.text == "":
