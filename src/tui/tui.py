@@ -8,6 +8,7 @@ class Tui(Widget):
         super().__init__(None)
         self.scr = curses.initscr()
         curses.noecho()
+        self.scr.clear()
 
         self.children = list()
         self.focus_widget = None
