@@ -1,6 +1,22 @@
 import curses
 
 
+class Grid:
+    def __init__(self, row:int=0, column:int=0, rowspan:int=1, columnspan:int=1):
+        self.row = row
+        self.column = column
+        self.rowspan = rowspan
+        self.columnspan = columnspan
+
+
+class Place:
+    def __init__(self, x:int=0, y:int=0, width:int=1, height:int=1):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+
 class Widget:
     """
     The base class for all widgets.
@@ -19,11 +35,9 @@ class Widget:
 
         self.focus_next = None
 
-        # Grid position
-        self.row = 0
-        self.column = 0
-        self.rowspan = 1
-        self.columnspan = 1
+        # How to position the widget
+        self._grid = Grid()
+        self._place = Place()  # TODO: place the widget at a particular position and size
 
         # Paramters
         self.filler = " "
@@ -50,7 +64,7 @@ class Widget:
         if self.parent is None:
             return 0
         else:
-            return self.parent.x + self.parent.grid_get_column_position(self.column)
+            return self.parent.x + self.parent.grid_get_column_position(self._grid.column)
 
     @property
     def y(self) -> int:
@@ -59,7 +73,7 @@ class Widget:
         if self.parent is None:
             return 0
         else:
-            return self.parent.y + self.parent.grid_get_row_position(self.row)
+            return self.parent.y + self.parent.grid_get_row_position(self._grid.row)
 
     @property
     def width(self) -> int:
@@ -68,7 +82,7 @@ class Widget:
         if self.parent is None:
             return curses.COLS
         else:
-            return self.parent.grid_get_column_width(self.column) * self.columnspan
+            return self.parent.grid_get_column_width(self._grid.column) * self._grid.columnspan
 
     @property
     def height(self) -> int:
@@ -77,7 +91,7 @@ class Widget:
         if self.parent is None:
             return curses.LINES
         else:
-            return self.parent.grid_get_row_height(self.row) * self.rowspan
+            return self.parent.grid_get_row_height(self._grid.row) * self._grid.rowspan
 
     @property
     def filler(self) -> str:
@@ -121,7 +135,7 @@ class Widget:
         """
 
         self.children.append(child)
-        self.children.sort(key=lambda x: x.row)
+        self.children.sort(key=lambda x: x._grid.row)
 
     def grid(self, row:int, column:int=0, rowspan:int=1, columnspan:int=1):
         """
@@ -134,10 +148,10 @@ class Widget:
             columnspan (int): The number of grid column this widget takes.
         """
 
-        self.row = row
-        self.column = column
-        self.rowspan = rowspan
-        self.columnspan = columnspan
+        self._grid.row = row
+        self._grid.column = column
+        self._grid.rowspan = rowspan
+        self._grid.columnspan = columnspan
 
     def grid_get_row_position(self, row:int) -> int:
         """
@@ -167,7 +181,7 @@ class Widget:
             int: The height of the row.
         """
 
-        rows = max(child.row + child.rowspan - 1 for child in self.children) + 1
+        rows = max(child._grid.row + child._grid.rowspan - 1 for child in self.children) + 1
         height = self.height // rows
         return height
 
@@ -198,7 +212,7 @@ class Widget:
             int: The width of the column.
         """
 
-        columns = max(child.column + child.columnspan - 1 for child in self.children) + 1
+        columns = max(child._grid.column + child._grid.columnspan - 1 for child in self.children) + 1
         width = self.width // columns
         return width
 
