@@ -109,7 +109,6 @@ class Widget:
         """Hiden function to update all the children widgets and this widget."""
 
         for child in self.children:
-            child.update()
             child._update()
         self.update()
 
