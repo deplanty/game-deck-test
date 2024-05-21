@@ -25,7 +25,7 @@ class Entry(Widget):
         self.placeholder = placeholder
         self.text = ""
 
-        self._empty = "_"
+        self._empty = "░"
 
     def update(self):
         if self.text == "":
@@ -35,6 +35,9 @@ class Entry(Widget):
 
         line = f"{text:{self._empty}<{self.width}}"
         self.addstr(self.y, self.x, line)
+        self._set_cursor_end()
+
+    def _set_cursor_end(self) -> None:
         self.main.scr.move(self.y, self.x + len(self.text))
 
     def _on_focus(self) -> str:
@@ -52,6 +55,7 @@ class Entry(Widget):
 
         tmp = self.text
         result = "ok"  # FIXME: Do something with this?
+        self._set_cursor_end()
 
         curses.cbreak()
         while True:
