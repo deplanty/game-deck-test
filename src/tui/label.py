@@ -73,9 +73,9 @@ class Label(Widget):
                 if self.align == "left":
                     pass
                 elif self.align == "right":
-                    line = f"{line:>{self.width}}"
+                    line = f"{line:{self._filler}>{self.width}}"
                 elif self.align == "center":
-                    line = f"{line:^{self.width}}"
+                    line = f"{line:{self._filler}^{self.width}}"
                 lines.append(line)
 
         return lines
