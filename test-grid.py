@@ -1,6 +1,5 @@
 from src import tui
 
-import curses
 import textwrap
 
 
