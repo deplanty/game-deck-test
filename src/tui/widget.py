@@ -3,18 +3,24 @@ import curses
 
 class Grid:
     def __init__(self, row:int=0, column:int=0, rowspan:int=1, columnspan:int=1):
-        self.row = row
-        self.column = column
-        self.rowspan = rowspan
-        self.columnspan = columnspan
+        self.set(row, column, rowspan, columnspan)
+
+    def set(self, row:int=None, column:int=None, rowspan:int=None, columnspan:int=None):
+        if row is not None: self.row = row
+        if column is not None: self.column = column
+        if rowspan is not None: self.rowspan = rowspan
+        if columnspan is not None: self.columnspan = columnspan
 
 
 class Place:
     def __init__(self, x:int=0, y:int=0, width:int=1, height:int=1):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+        self.set(x, y, width, height)
+
+    def set(self, x:int=None, y:int=None, width:int=None, height:int=None):
+        if x is not None: self.x = x
+        if y is not None: self.y = y
+        if width is not None: self.width = width
+        if height is not None: self.height = height
 
 
 class Widget:
@@ -36,6 +42,7 @@ class Widget:
         self.focus_next = None
 
         # How to position the widget
+        self._layout = ""  # How the widget is placed in its parent
         self._grid = Grid()
         self._place = Place()  # TODO: place the widget at a particular position and size
 
@@ -63,8 +70,11 @@ class Widget:
 
         if self.parent is None:
             return 0
-        else:
+
+        if self._layout == "grid":
             return self.parent.x + self.parent.grid_get_column_position(self._grid.column)
+        elif self._layout == "place":
+            return self.parent.x + self._place.x
 
     @property
     def y(self) -> int:
@@ -72,8 +82,11 @@ class Widget:
 
         if self.parent is None:
             return 0
-        else:
+
+        if self._layout == "grid":
             return self.parent.y + self.parent.grid_get_row_position(self._grid.row)
+        elif self._layout == "place":
+            return self.parent.y + self._place.y
 
     @property
     def width(self) -> int:
@@ -81,8 +94,11 @@ class Widget:
 
         if self.parent is None:
             return curses.COLS
-        else:
+
+        if self._layout == "grid":
             return self.parent.grid_get_column_width(self._grid.column) * self._grid.columnspan
+        elif self._layout == "place":
+            return self._place.width
 
     @property
     def height(self) -> int:
@@ -90,8 +106,11 @@ class Widget:
 
         if self.parent is None:
             return curses.LINES
-        else:
+
+        if self._layout == "grid":
             return self.parent.grid_get_row_height(self._grid.row) * self._grid.rowspan
+        elif self._layout == "place":
+            return self._place.height
 
     @property
     def filler(self) -> str:
@@ -148,10 +167,22 @@ class Widget:
             columnspan (int): The number of grid column this widget takes.
         """
 
-        self._grid.row = row
-        self._grid.column = column
-        self._grid.rowspan = rowspan
-        self._grid.columnspan = columnspan
+        self._layout = "grid"
+        self._grid.set(row, column, rowspan, columnspan)
+
+    def place(self, x:int=0, y:int=0, width:int=1, height:int=1):
+        """
+            How should be displayed the widget with its siblings.
+
+            Args:
+                x (int): The x (column) position.
+                y (int): The y (row) position.
+                width (int): The width allowed.
+                height (int): The height allowed.
+        """
+
+        self._layout = "place"
+        self._place.set(x, y, width, height)
 
     def grid_get_row_position(self, row:int) -> int:
         """
@@ -217,6 +248,12 @@ class Widget:
         return width
 
     def addstr(self, y:int, x:int, text:str, *args, **kwargs):
+        """Write a string. The string cannot overflow the window size."""
+        
+        if x + len(text) > curses.COLS:
+            end_too_long = "~]"
+            allowed = curses.COLS - x - len(end_too_long)
+            text = text[:allowed] + end_too_long
         self.main.scr.addstr(y, x, text, *args, *kwargs)
 
     def fill(self):
@@ -227,6 +264,8 @@ class Widget:
             self.addstr(self.y + row, self.x, line)
 
     def focus_set(self):
+        """Set this widget as the current focused widget."""
+        
         self.main.focus_widget = self
 
     def focus_remove(self):
