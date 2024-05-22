@@ -12,6 +12,11 @@ class Grid:
         if columnspan is not None: self.columnspan = columnspan
 
 
+class Pack:
+    def __init__(self):
+        ...
+
+
 class Place:
     def __init__(self, x:int=0, y:int=0, width:int=1, height:int=1):
         self.set(x, y, width, height)
@@ -45,6 +50,7 @@ class Widget:
         self._layout = ""  # How the widget is placed in its parent
         self._grid = Grid()
         self._place = Place()  # TODO: place the widget at a particular position and size
+        self._pack = Pack()
 
         # Paramters
         self.filler = " "
@@ -158,7 +164,7 @@ class Widget:
 
     def grid(self, row:int, column:int=0, rowspan:int=1, columnspan:int=1):
         """
-        How should be displayed the widget with its siblings.
+        The widget is displayed if a grid.
 
         Args:
             row (int): The grid row.
@@ -170,9 +176,16 @@ class Widget:
         self._layout = "grid"
         self._grid.set(row, column, rowspan, columnspan)
 
+    def pack(self):
+        """
+        The widget are packed one above the other.
+        """
+
+        self._layout = "pack"
+
     def place(self, x:int=0, y:int=0, width:int=1, height:int=1):
         """
-            How should be displayed the widget with its siblings.
+        The widget is placed at a given position.
 
             Args:
                 x (int): The x (column) position.
