@@ -79,6 +79,8 @@ class Widget:
 
         if self._layout == "grid":
             return self.parent.x + self.parent.grid_get_column_position(self._grid.column)
+        elif self._layout == "pack":
+            return self.parent.x
         elif self._layout == "place":
             return self.parent.x + self._place.x
 
@@ -91,6 +93,8 @@ class Widget:
 
         if self._layout == "grid":
             return self.parent.y + self.parent.grid_get_row_position(self._grid.row)
+        elif self._layout == "pack":
+            return self.parent.y + self.parent._pack_get_row_position(self)
         elif self._layout == "place":
             return self.parent.y + self._place.y
 
@@ -103,6 +107,8 @@ class Widget:
 
         if self._layout == "grid":
             return self.parent.grid_get_column_width(self._grid.column) * self._grid.columnspan
+        elif self._layout == "pack":
+            return self.parent.width
         elif self._layout == "place":
             return self._place.width
 
@@ -115,8 +121,22 @@ class Widget:
 
         if self._layout == "grid":
             return self.parent.grid_get_row_height(self._grid.row) * self._grid.rowspan
+        if self._layout == "pack":
+            return self.height_calc
         elif self._layout == "place":
             return self._place.height
+
+    @property
+    def height_calc(self) -> int:
+        """The calculated height of a widget.
+        
+        The calculated height represents the height taken by the widget to fully show its content.
+        The widgets that are containers, such as the Frame, doesn't have a proper height and rely
+        on the height of its children.
+        The widgets that are elements, such as the Label, have an intrinsect height.
+        """
+
+        return 1
 
     @property
     def filler(self) -> str:
@@ -162,6 +182,24 @@ class Widget:
         self.children.append(child)
         self.children.sort(key=lambda x: x._grid.row)
 
+    def addstr(self, y:int, x:int, text:str, *args, **kwargs):
+        """Write a string. The string cannot overflow the window size."""
+        
+        if x + len(text) > curses.COLS:
+            end_too_long = "~]"
+            allowed = curses.COLS - x - len(end_too_long)
+            text = text[:allowed] + end_too_long
+        self.main.scr.addstr(y, x, text, *args, *kwargs)
+
+    def fill(self):
+        """Fill the widget with the char `self.filler`."""
+
+        line = self.filler * self.width
+        for row in range(self.height):
+            self.addstr(self.y + row, self.x, line)
+
+    # Methods for layout
+
     def grid(self, row:int, column:int=0, rowspan:int=1, columnspan:int=1):
         """
         The widget is displayed if a grid.
@@ -173,6 +211,10 @@ class Widget:
             columnspan (int): The number of grid column this widget takes.
         """
 
+        layouts = self._get_layout_siblings()
+        if any(l != "grid" for l in layouts if l):
+            raise Exception(f"Can't use layout 'grid' with '{layouts[0]}' already in use")
+        
         self._layout = "grid"
         self._grid.set(row, column, rowspan, columnspan)
 
@@ -180,6 +222,10 @@ class Widget:
         """
         The widget are packed one above the other.
         """
+        
+        layouts = self._get_layout_siblings()
+        if any(l != "pack" for l in layouts if l):
+            raise Exception(f"Can't use layout 'pack' with '{layouts[0]}' already in use")
 
         self._layout = "pack"
 
@@ -237,7 +283,7 @@ class Widget:
             column (int): The grid column.
 
         Returns:
-            int: The absolute position
+            int: The relative position
         """
 
         col_position = 0
@@ -260,21 +306,24 @@ class Widget:
         width = self.width // columns
         return width
 
-    def addstr(self, y:int, x:int, text:str, *args, **kwargs):
-        """Write a string. The string cannot overflow the window size."""
-        
-        if x + len(text) > curses.COLS:
-            end_too_long = "~]"
-            allowed = curses.COLS - x - len(end_too_long)
-            text = text[:allowed] + end_too_long
-        self.main.scr.addstr(y, x, text, *args, *kwargs)
+    def _pack_get_row_position(self, widget) -> int:
+        """
+        Returns the relative row position of a child widget.
 
-    def fill(self):
-        """Fill the widget with the char `self.filler`."""
+        Args:
+            widget (Widget): The child widget.
 
-        line = self.filler * self.width
-        for row in range(self.height):
-            self.addstr(self.y + row, self.x, line)
+        Returns:
+            int: The relative row position in this widget.
+        """
+
+        row = 0
+        for child in self.children:
+            if child == widget:
+                return row
+            row += child.height_calc
+
+    # TODO: Sort the methods
 
     def focus_set(self):
         """Set this widget as the current focused widget."""
@@ -298,3 +347,8 @@ class Widget:
 
     def _on_focus(self):
         pass
+
+    def _get_layout_siblings(self) -> list[str]:
+        """Return a list with the layout of all the siblings"""
+        
+        return [child._layout for child in self.parent.children]

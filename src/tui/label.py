@@ -41,6 +41,15 @@ class Label(Widget):
         self._align = value
         self._flag_fill = True
 
+    @property
+    def height_calc(self) -> int:
+        """
+        Overwrite the Widget.height_calc property.
+        The height of a label is given by the number of lines needed to fully display its content.
+        """
+
+        return len(self._get_text_as_list())
+
     # Methods
 
     def update(self):
