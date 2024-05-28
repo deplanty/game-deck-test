@@ -39,6 +39,8 @@ class Entry(Widget):
         self._set_cursor_end()
 
     def _set_cursor_end(self) -> None:
+        """Set the cursor at the end of the entry."""
+
         self.main.scr.move(self.y, self.x + len(self.text))
 
     def _on_focus(self) -> str:
@@ -55,6 +57,7 @@ class Entry(Widget):
 
         curses.cbreak()
         while True:
+            self.update()
             key = self.main.scr.getch()
             char = chr(key)
             if char.isprintable():
@@ -69,7 +72,6 @@ class Entry(Widget):
                 break
             elif key == Keys.ESCAPE:
                 self.text = tmp
-            self.update()
         curses.nocbreak()
 
         return result
