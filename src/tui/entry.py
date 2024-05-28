@@ -1,6 +1,7 @@
 import curses
 
 from src.tui import Widget
+from src.tui.keys import Keys
 
 
 class Entry(Widget):
@@ -48,11 +49,6 @@ class Entry(Widget):
             result: A string representing the output result.
         """
 
-        K_BACKSPACE = 8
-        K_TABULATION = 9
-        K_RETURN = 10
-        K_ESCAPE = 27
-
         tmp = self.text
         result = "ok"  # FIXME: Do something with this?
         self._set_cursor_end()
@@ -63,15 +59,15 @@ class Entry(Widget):
             char = chr(key)
             if char.isprintable():
                 self.text += char
-            elif key == K_BACKSPACE:
+            elif key == Keys.BACKSPACE:
                 self.text = self.text[:-1]
-            elif key == K_TABULATION:
+            elif key == Keys.TABLUATION:
                 result = "tab"
                 break
-            elif key == K_RETURN:
+            elif key == Keys.RETURN:
                 result = "ok"
                 break
-            elif key == K_ESCAPE:
+            elif key == Keys.ESCAPE:
                 self.text = tmp
             self.update()
         curses.nocbreak()
