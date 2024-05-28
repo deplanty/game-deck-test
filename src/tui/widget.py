@@ -157,7 +157,7 @@ class Widget:
     def focus_next(self, widget:"Widget"):
         self._focus_next = widget
 
-    # Methods
+    # Methods required
 
     def update(self):
         """How the widget displays information."""
@@ -182,6 +182,8 @@ class Widget:
         self.children.append(child)
         self.children.sort(key=lambda x: x._grid.row)
 
+    # Methods general
+
     def addstr(self, y:int, x:int, text:str, *args, **kwargs):
         """Write a string. The string cannot overflow the window size."""
         
@@ -190,6 +192,9 @@ class Widget:
             allowed = curses.COLS - x - len(end_too_long)
             text = text[:allowed] + end_too_long
         self.main.scr.addstr(y, x, text, *args, *kwargs)
+
+    def getch(self) -> str:
+        return self.main.scr.getch()
 
     def fill(self):
         """Fill the widget with the char `self.filler`."""

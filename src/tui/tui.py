@@ -8,6 +8,10 @@ class Tui(Widget):
         super().__init__(None)
         self.scr = curses.initscr()
         curses.noecho()
+        # FIXME: keypad(True) allows to detect keystrokes of the arrows.
+        #        but it conflicts with other printable characters (same chr).
+        #        Find something to manage this.
+        self.scr.keypad(True)
         self.scr.clear()
 
         self.children = list()

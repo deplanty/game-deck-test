@@ -1,11 +1,14 @@
 import curses
 
 from src import tui
+from src.tui.keys import Keys
 
 
 class Choice(tui.Widget):
-    def __init__(self, parent:tui.Widget):
+    def __init__(self, parent:tui.Widget, selector:str=">"):
         super().__init__(parent)
+
+        self.selector = selector
 
         self.choices = list()
         self.ui_elements = list()
@@ -39,22 +42,23 @@ class Choice(tui.Widget):
         """
 
         curses.cbreak()
+        cursor_previous = curses.curs_set(2)  # Very visible
         while True:
-            key = self.main.scr.getch()
-            if key == curses.KEY_UP:
-                print("UP")
+            self.update()
+            key = self.getch()
+            if key == Keys.ARROW_UP:
                 self.current -= 1
-            elif key == curses.KEY_DOWN:
-                print("DOWN")
+            elif key == Keys.ARROW_DOWN:
                 self.current += 1
-            elif key == 10:
-                print("RETURN")
+            elif key == Keys.RETURN:
                 result = "ok"
                 break
-            elif key == 8:
-                print("BACKSPACE")
-            self.update()
+            elif key == Keys.TABLUATION:
+                result = "tab"
+                break
+
         curses.nocbreak()
+        curses.curs_set(cursor_previous)
 
         return result
 
@@ -63,10 +67,12 @@ class Choice(tui.Widget):
     def update(self):
         for i, label in enumerate(self.ui_elements):
             if self.current == i:
-                label.text = "*" + self.choices[i]
+                prefix = f"{self.selector}"
             else:
-                label.text = self.choices[i]
+                prefix = " " * len(self.selector)
+            label.text = f"{prefix} {self.choices[i]}"
             label.update()
+        self._set_cursor_current()
 
     # Methods
 
@@ -78,10 +84,13 @@ class Choice(tui.Widget):
         label.pack()
         self.ui_elements.append(label)
         
-
     def add_elements(self, *texts):
         """Add several elements."""
 
         for text in texts:
             self.add_element(text)
         
+    def _set_cursor_current(self):
+        """Set the cursor at the current selected line."""
+
+        self.main.scr.move(self.y + self.current, self.x)
