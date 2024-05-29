@@ -67,6 +67,9 @@ class Entry(Widget):
             elif key == Keys.TABLUATION:
                 result = "tab"
                 break
+            elif key == Keys.TABLUATION_BACK:
+                result = "tab_back"
+                break
             elif key == Keys.RETURN:
                 result = "ok"
                 break

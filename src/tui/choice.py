@@ -7,6 +7,7 @@ from src.tui.keys import Keys
 
 class Choice(Widget):
 
+    hovered:Signal
     selected:Signal
 
     def __init__(self, parent:Widget, selector:str=">"):
@@ -18,6 +19,7 @@ class Choice(Widget):
         self.ui_elements = list()
 
         self.selected = Signal()
+        self.hovered = Signal()
         
         self._current = 0  # Current selection
         self._selected = False  # If the Return key has been pressed
@@ -60,17 +62,24 @@ class Choice(Widget):
         while True:
             self.update()
             key = self.getch()
+            print(key)
             if key == Keys.ARROW_UP:
                 self.current -= 1
+                self.hovered.emit()
             elif key == Keys.ARROW_DOWN:
                 self.current += 1
+                self.hovered.emit()
             elif key == Keys.RETURN:
                 self._selected = True
                 self.selected.emit()
                 result = "tab"
                 break
             elif key == Keys.TABLUATION:
+                self.selected.emit()
                 result = "tab"
+                break
+            elif key == Keys.TABLUATION_BACK:
+                result = "tab_back"
                 break
 
         curses.nocbreak()
