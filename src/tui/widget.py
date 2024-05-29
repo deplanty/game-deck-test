@@ -45,6 +45,7 @@ class Widget:
         self.children = list()
 
         self.focus_next = None
+        self._is_on_focus = False  # If the widget is currently focused
 
         # How to position the widget
         self._layout = ""  # How the widget is placed in its parent
@@ -348,7 +349,10 @@ class Widget:
         """
 
         self.main.scr.move(self.y, self.x)
-        return self._on_focus()
+        self._is_on_focus = True
+        result = self._on_focus()
+        self._is_on_focus = False
+        return result
 
     def _on_focus(self):
         pass

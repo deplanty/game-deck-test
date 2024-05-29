@@ -61,7 +61,7 @@ class Choice(Widget):
                 self.current += 1
             elif key == Keys.RETURN:
                 self._selected = True
-                result = "ok"
+                result = "tab"
                 break
             elif key == Keys.TABLUATION:
                 result = "tab"
@@ -76,7 +76,7 @@ class Choice(Widget):
 
     def update(self):
         for i, label in enumerate(self.ui_elements):
-            if self.current == i:
+            if (self._is_on_focus or self._selected) and self.current == i:
                 prefix = f"{self.selector}"
             else:
                 prefix = " " * len(self.selector)
