@@ -39,28 +39,22 @@ class SceneCombatUi(tui.Tui):
         # Cards in player's hand frame
         self.frame_cards = tui.Frame(self)
         self.frame_cards.grid(2, columnspan=3)
-        self.label_hand = tui.Label(self.frame_cards)
-        self.label_hand.grid(0)
+        self.choice_hand = tui.Choice(self.frame_cards)
+        self.choice_hand.pack()
 
         # Frame for the user inputs
         self.frame_input = tui.Frame(self)
         self.frame_input.grid(3, columnspan=3)
-        self.label_input = tui.Label(self.frame_input)
-        self.label_input.grid(0, 0)
-        self.entry_input = tui.Entry(self.frame_input)
-        self.entry_input.focus_set()
-        self.entry_input.grid(0, 1)
         self.label_status = tui.Label(self.frame_input)
-        self.label_status.grid(1, 0)
+        self.label_status.grid(0, 0)
         self.value_status = tui.Label(self.frame_input)
-        self.value_status.grid(1, 1)
+        self.value_status.grid(0, 1)
 
         # Initialize values
         self.label_enemy_name.text = self.scene.enemy.name
         self.enemy_hp.maximum = self.scene.enemy.health.maximum
         self.label_player_name.text = sgt.player.name
         self.player_hp.maximum = sgt.player.health.maximum
-        self.label_input.text = "Input:\n  n - Card number\n  e - End of turn\n  quit - Quit game"
         self.label_status.text = "Status:"
 
     def update(self):
@@ -73,8 +67,9 @@ class SceneCombatUi(tui.Tui):
         # Show the cards in hand
         cards = ["Cards in hand:"]
         for i, card in enumerate(sgt.player.deck.hand):
-            cards.append(f"   {i}. {card} - {card.info}")
-        self.label_hand.text = "\n".join(cards)
+            self.choice_hand.add_label(f"{card} - {card.info}")
+        self.choice_hand.add_label("End of turn")
+        self.choice_hand.add_label("Quit")
 
         # Show the history of played cards
         history = list()

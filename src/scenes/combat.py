@@ -53,21 +53,23 @@ class SceneCombat(Scene):
         """
 
         self.ui.value_status.text = "Player turn"
+        self.ui.choice_hand.reset_choices()
+        self.ui.choice_hand.focus_set()
         self.ui.update()
-        action = self.ask_action()
-        self.ui.entry_input.text = ""
-        if isinstance(action, int):
-            card = sgt.player.play_card(action)
+
+        index = self.ui.choice_hand.current
+        text = self.ui.choice_hand.choice
+
+        if text == "End of turn":
+            return "end of turn"
+        elif text == "Quit":
+            return "quit"
+        else:
+            card = sgt.player.play_card(index)
             if card is None:
                 return "continue"
 
             self.play_card(sgt.player, self.enemy, card)
-            return "continue"
-        elif action == "e":
-            return "end of turn"
-        elif action == "quit":
-            return "quit"
-        else:
             return "continue"
 
     def loop_turn_enemy(self) -> str:
@@ -87,20 +89,6 @@ class SceneCombat(Scene):
         else:
             self.play_card(self.enemy, sgt.player, card)
             return "continue"
-
-    def ask_action(self) -> int|str:
-        """
-        Ask an action to the user.
-
-        Returns:
-            int|str: The user's answer.
-        """
-
-        action = self.ui.entry_input.text
-        if action.isnumeric():
-            return int(action)
-        else:
-            return action
 
     def play_card(self, source, destination, card):
         source.get_buff(card)

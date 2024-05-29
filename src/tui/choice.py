@@ -16,7 +16,6 @@ class Choice(Widget):
         self.selector = selector
 
         self.choices = list()
-        self.ui_elements = list()
 
         self.selected = Signal()
         self.hovered = Signal()
@@ -89,7 +88,8 @@ class Choice(Widget):
     # Methods Required
 
     def update(self):
-        for i, label in enumerate(self.ui_elements):
+        for i, label in enumerate(self.children):
+            print(i, label)
             if (self._is_on_focus or self._selected) and self.current == i:
                 prefix = f"{self.selector}"
             else:
@@ -106,7 +106,7 @@ class Choice(Widget):
         self.choices.append(text)
         label = tui.Label(self, text)
         label.pack()
-        self.ui_elements.append(label)
+        self.children.append(label)
         
     def add_labels(self, *texts):
         """Add several labels."""
@@ -118,6 +118,14 @@ class Choice(Widget):
         """TODO: Add a widget as a selectable option."""
 
         raise NotImplementedError()
+
+    def reset_choices(self):
+        """Reset all the data in the widget"""
+
+        self.choices.clear()
+        self.children.clear()
+        self.current = 0
+        self._selected = False
         
     def _set_cursor_current(self):
         """Set the cursor at the current selected line."""
