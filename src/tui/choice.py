@@ -1,11 +1,14 @@
 import curses
 
 from src import tui
-from src.tui import Widget
+from src.tui import Widget, Signal
 from src.tui.keys import Keys
 
 
 class Choice(Widget):
+
+    selected:Signal
+
     def __init__(self, parent:Widget, selector:str=">"):
         super().__init__(parent)
 
@@ -13,6 +16,8 @@ class Choice(Widget):
 
         self.choices = list()
         self.ui_elements = list()
+
+        self.selected = Signal()
         
         self._current = 0  # Current selection
         self._selected = False  # If the Return key has been pressed
@@ -61,6 +66,7 @@ class Choice(Widget):
                 self.current += 1
             elif key == Keys.RETURN:
                 self._selected = True
+                self.selected.emit()
                 result = "tab"
                 break
             elif key == Keys.TABLUATION:

@@ -3,26 +3,49 @@ import curses
 from src import tui
 
 
+def on_choice_shape_selected():
+    global label
+    global choice_shape
+
+    label.text += choice_shape.choice
+
+
 root = tui.Tui()
-label = tui.Label(root)
-label.text = "Select 'Plop' or write 'exit' in the entry.\n"
-label.text += "Use TAB to navigate through the widgets."
-label.pack()
+
+frame_choices = tui.Frame(root)
+frame_choices.pack()
+
+choice_shape = tui.Choice(frame_choices)
+choice_shape.add_labels("Triangle", "Square", "Pentagon", "Hexagon")
+choice_shape.grid(0, 0)
+choice_shape.focus_set()
+choice_shape.selected.connect(on_choice_shape_selected)
+
+choice_element = tui.Choice(frame_choices)
+choice_element.add_labels("Water", "Fire", "Earth", "Wind", "Ice")
+choice_element.grid(0, 1)
+
+choice_trait = tui.Choice(frame_choices)
+choice_trait.add_labels("Soft", "Hard")
+choice_trait.add_label("Lorem ipsum dolor sit amet." * 5)
+choice_trait.grid(0, 2)
 
 tui.Frame(root).pack()
-
-choice = tui.Choice(root)
-choice.add_labels("Choix 1", "Choix 2", "Choix 3", "Choix 4", "Quit")
-choice.pack()
-choice.focus_set()
 
 entry = tui.Entry(root)
 entry.pack()
 
-choice.focus_next = entry
-entry.focus_next = choice
+tui.Frame(root).pack()
+
+label = tui.Label(root)
+label.pack()
+
+choice_shape.focus_next = choice_element
+choice_element.focus_next = choice_trait
+choice_trait.focus_next = entry
+entry.focus_next = choice_shape
 
 while True:
     root.update()
-    if choice.choice == "Quit" or entry.text == "exit":
+    if entry.text == "exit":
         break   

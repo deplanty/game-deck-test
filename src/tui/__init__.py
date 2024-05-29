@@ -1,3 +1,5 @@
+from .signal import Signal
+
 from .widget import Widget
 from .tui import Tui
 from .frame import Frame
