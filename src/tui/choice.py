@@ -1,18 +1,21 @@
 import curses
 
 from src import tui
+from src.tui import Widget
 from src.tui.keys import Keys
 
 
-class Choice(tui.Widget):
-    def __init__(self, parent:tui.Widget, selector:str=">"):
+class Choice(Widget):
+    def __init__(self, parent:Widget, selector:str=">"):
         super().__init__(parent)
 
         self.selector = selector
 
         self.choices = list()
         self.ui_elements = list()
-        self._current = 0
+        
+        self._current = 0  # Current selection
+        self._selected = False  # If the Return key has been pressed
 
     @property
     def height_calc(self) -> int:
@@ -29,7 +32,12 @@ class Choice(tui.Widget):
 
     @property
     def choice(self) -> str:
-        return self.choices[self.current]
+        """
+        Return the selected choice as text.
+        If nothing was selected, return an empty string.
+        """
+
+        return self.choices[self.current] if self._selected else ""
 
     # Events
 
@@ -41,6 +49,7 @@ class Choice(tui.Widget):
             str: The choice made.
         """
 
+        self._selected = False
         curses.cbreak()
         cursor_previous = curses.curs_set(2)  # Very visible
         while True:
@@ -51,6 +60,7 @@ class Choice(tui.Widget):
             elif key == Keys.ARROW_DOWN:
                 self.current += 1
             elif key == Keys.RETURN:
+                self._selected = True
                 result = "ok"
                 break
             elif key == Keys.TABLUATION:
@@ -76,19 +86,24 @@ class Choice(tui.Widget):
 
     # Methods
 
-    def add_element(self, text:str):
-        """Add an element that can bee chosen."""
+    def add_label(self, text:str):
+        """Add a label from text that can be chosen."""
 
         self.choices.append(text)
         label = tui.Label(self, text)
         label.pack()
         self.ui_elements.append(label)
         
-    def add_elements(self, *texts):
-        """Add several elements."""
+    def add_labels(self, *texts):
+        """Add several labels."""
 
         for text in texts:
-            self.add_element(text)
+            self.add_label(text)
+
+    def add_widget(self, widget:Widget):
+        """TODO: Add a widget as a selectable option."""
+
+        raise NotImplementedError()
         
     def _set_cursor_current(self):
         """Set the cursor at the current selected line."""

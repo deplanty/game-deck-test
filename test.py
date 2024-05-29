@@ -12,7 +12,7 @@ label.pack()
 tui.Frame(root).pack()
 
 choice = tui.Choice(root)
-choice.add_elements("Choix 1", "Choix 2", "Choix 3", "Choix 4", "Quit")
+choice.add_labels("Choix 1", "Choix 2", "Choix 3", "Choix 4", "Quit")
 choice.pack()
 choice.focus_set()
 
