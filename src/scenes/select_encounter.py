@@ -11,24 +11,26 @@ class SceneSelectEncounter(Scene):
         self.encounters = sgt.all_encounters
 
         self.ui = SceneSelectEncounterUi(self)
+        self.ui.choice_encounter.selected.connect(self._on_choice_encouter_selected)
         
     def run(self):
-        """Run this scene loop."""
+        """Run this scene loop.
+        
+        The loop is carried by the choice selector.
+        When the choice is made, the loop ends and the scene switch to the selected encounter.
+        """
 
-        answer = ""
-        scene = None
-        while answer != "quit":
-            self.ui.update()
-            answer = self.ask_input()
-            if isinstance(answer, int):
-                selected = self.encounters[answer]
-                scene = SceneCombat(selected.name)
-                answer = "quit"
-        return scene
+        self.ui.choice_encounter.focus_set()
+        self.ui.update()
 
-    def ask_input(self) -> int|str:
-        action = self.ui.entry.text
-        if action.isnumeric():
-            return int(action)
+        return self.scene
+
+    # Events
+
+    def _on_choice_encouter_selected(self):
+        if self.ui.choice_encounter.choice == "Quit":
+            self.scene = None
         else:
-            return action
+            index = self.ui.choice_encounter.current
+            selected = self.encounters[index]
+            self.scene = SceneCombat(selected.name)

@@ -6,19 +6,15 @@ class SceneSelectEncounterUi(tui.Tui):
         super().__init__()
         self.scene = scene
 
-        self.label_encounter = tui.Label(self)
-        self.label_encounter.grid(0)
+        self.label = tui.Label(self, "List of encounters:")
+        self.label.pack()
 
-        self.entry = tui.Entry(self, "Select encounter")
-        self.entry.grid(1, rowspan=4)
-
-        self.entry.focus_set()
+        self.choice_encounter = tui.Choice(self)
+        self.choice_encounter.pack()
 
     def update(self):
-        encounters = ["List of encounters:"]
         for i, encounter in enumerate(self.scene.encounters):
-            encounters.append(f"   {i}. {encounter}.")
-        encounters.append("   'quit' to stop.")
-        self.label_encounter.text = "\n".join(encounters)
+            self.choice_encounter.add_label(str(encounter))
+        self.choice_encounter.add_label("Quit")
         
         super().update()
