@@ -50,7 +50,7 @@ class Widget:
         # How to position the widget
         self._layout = ""  # How the widget is placed in its parent
         self._grid = Grid()
-        self._place = Place()  # TODO: place the widget at a particular position and size
+        self._place = Place()
         self._pack = Pack()
 
         # Paramters
@@ -268,7 +268,6 @@ class Widget:
     def grid_get_row_height(self, row:int) -> int:
         """
         Returns the height of a row in the grid.
-        TODO: Use self.rowspan.
 
         Args:
             row (int): The grid row.
