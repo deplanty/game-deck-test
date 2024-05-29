@@ -60,9 +60,7 @@ class Entry(Widget):
             self.update()
             key = self.main.scr.getch()
             char = chr(key)
-            if char.isprintable():
-                self.text += char
-            elif key == Keys.BACKSPACE:
+            if key == Keys.BACKSPACE:
                 self.text = self.text[:-1]
             elif key == Keys.TABLUATION:
                 result = "tab"
@@ -75,6 +73,9 @@ class Entry(Widget):
                 break
             elif key == Keys.ESCAPE:
                 self.text = tmp
+            elif char.isprintable():
+                self.text += char
+
         curses.nocbreak()
 
         return result

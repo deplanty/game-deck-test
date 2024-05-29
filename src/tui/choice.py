@@ -62,7 +62,6 @@ class Choice(Widget):
         while True:
             self.update()
             key = self.getch()
-            print(key)
             if key == Keys.ARROW_UP:
                 self.current -= 1
                 self.hovered.emit()
