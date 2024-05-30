@@ -100,11 +100,16 @@ class Choice(Widget):
 
     # Methods
 
-    def add_label(self, text:str):
-        """Add a label from text that can be chosen."""
+    def add_label(self, text:str, **kwargs):
+        """Add a label from text that can be chosen.
+
+        Args:
+            text: Text to display in a Label.
+            kwargs: Label args.
+        """
 
         self.choices.append(text)
-        label = tui.Label(self, text)
+        label = tui.Label(self, text, **kwargs)
         label.pack()
         
     def add_labels(self, *texts):
