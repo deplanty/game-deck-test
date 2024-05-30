@@ -26,6 +26,7 @@ class Card:
         self.upgrades = 0
         self.description = ""
 
+        # FIXME: with strenght, even non damaging cards apply damage. Should not happend.
         self.base_damage = 0
         self.armor = 0
         self.strenght = 0
