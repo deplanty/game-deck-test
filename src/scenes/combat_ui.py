@@ -70,9 +70,13 @@ class SceneCombatUi(tui.Tui):
         cards = ["Cards in hand:"]
         self.choice_hand.reset_choices()
         for i, card in enumerate(sgt.player.deck.hand):
-            self.choice_hand.add_label(card.name_full)
-        self.choice_hand.add_label("End of turn")
-        self.choice_hand.add_label("Quit")
+            if sgt.player.energy >= card.cost:
+                style = Style.NORMAL
+            else:
+                style = Style.TEXT_MUTED
+            self.choice_hand.add_label(card.name_full, style=style)
+        self.choice_hand.add_label("End of turn", style=Style.TEXT_INFO)
+        self.choice_hand.add_label("Quit", style=Style.TEXT_WARNING)
         self.frame_cards.fill()
 
         # Show the history of played cards
