@@ -12,6 +12,7 @@ class SceneCombat(Scene):
         self.history_cards = list()
 
         self.ui = SceneCombatUi(self)
+        self.ui.choice_hand.hovered.connect(self._on_player_card_hovered)
 
     def run(self):
         """Run this scene loop."""
@@ -95,3 +96,14 @@ class SceneCombat(Scene):
         destination.get_hit(card)
         self.history_cards.append((source, card.copy()))
         self.ui.card_played(source, card)
+
+    # Events
+
+    def _on_player_card_hovered(self):
+        index = self.ui.choice_hand.current
+        if index < len(sgt.player.deck.hand):
+            card = sgt.player.deck.hand[index]
+            self.ui.label_card_hand.text = card.info_full
+        else:
+            self.ui.label_card_hand.text = ""
+        self.ui.label_card_hand.update()

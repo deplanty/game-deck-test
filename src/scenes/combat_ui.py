@@ -40,7 +40,10 @@ class SceneCombatUi(tui.Tui):
         self.frame_cards = tui.Frame(self)
         self.frame_cards.grid(2, columnspan=3)
         self.choice_hand = tui.Choice(self.frame_cards)
-        self.choice_hand.pack()
+        self.choice_hand.grid(0, 0, columnspan=2)
+        self.label_card_hand = tui.Label(self.frame_cards)
+        self.label_card_hand.prefix = "Hovered card:\n"
+        self.label_card_hand.grid(0, 2, columnspan=2)
 
         # Frame for the user inputs
         self.frame_input = tui.Frame(self)
