@@ -15,10 +15,12 @@ class SceneCombatUi(tui.Tui):
         self.label_enemy_name.pack()
         self.enemy_hp = tui.Progressbar(self.frame_enemy, align="center", style=Style.TEXT_DANGER)
         self.enemy_hp.pack()
-        self.label_enemy_info = tui.Label(self.frame_enemy)
-        self.label_enemy_info.pack()
-        self.label_enemy_card = tui.Label(self.frame_enemy)
-        self.label_enemy_card.pack()
+        frame = tui.Frame(self.frame_enemy)
+        frame.pack()
+        self.label_enemy_info = tui.Label(frame)
+        self.label_enemy_info.grid(0, 0)
+        self.label_enemy_card = tui.Label(frame)
+        self.label_enemy_card.grid(0, 1)
 
         # Player frame
         self.frame_player = tui.Frame(self)
@@ -27,10 +29,12 @@ class SceneCombatUi(tui.Tui):
         self.label_player_name.pack()
         self.player_hp = tui.Progressbar(self.frame_player, align="center", style=Style.TEXT_DANGER)
         self.player_hp.pack()
-        self.label_player_info = tui.Label(self.frame_player)
-        self.label_player_info.pack()
-        self.label_player_card = tui.Label(self.frame_player)
-        self.label_player_card.pack()
+        frame = tui.Frame(self.frame_player)
+        frame.pack()
+        self.label_player_info = tui.Label(frame)
+        self.label_player_info.grid(0, 0)
+        self.label_player_card = tui.Label(frame)
+        self.label_player_card.grid(0, 1)
 
         # History of played cards
         self.frame_history = tui.Label(self)
