@@ -1,14 +1,17 @@
 from src.tui import Widget
+from src.tui.style import Style
 
 
 class Progressbar(Widget):
-    def __init__(self, parent, maximum:int=100, align:str="left", display:str="value"):
+    def __init__(self, parent, maximum:int=100, align:str="left", display:str="value", style:str=Style.NORMAL):
         super().__init__(parent)
 
         self._maximum = maximum
         self._current = 0
         self.align = align
         self.display = display
+        
+        self.set_style(style)
 
     def __add__(self, value:int):
         self._current = min(self._maximum, self._current + value)

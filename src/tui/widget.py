@@ -1,5 +1,7 @@
 import curses
 
+from src.tui.style import Style
+
 
 class Grid:
     def __init__(self, row:int=0, column:int=0, rowspan:int=1, columnspan:int=1):
@@ -44,6 +46,7 @@ class Widget:
         self.parent = parent
         self.children = list()
 
+        # Focus
         self.focus_next = None
         self._is_on_focus = False  # If the widget is currently focused
 
@@ -53,9 +56,12 @@ class Widget:
         self._place = Place()
         self._pack = Pack()
 
-        # Paramters
+        # Fill the widget to hide previous characters
         self.filler = " "
         self._flag_fill = False
+
+        # Style
+        self.style = Style.NORMAL
 
         # At the end of this instanciation, add this widget as a child
         if parent is not None:
@@ -192,7 +198,7 @@ class Widget:
             end_too_long = "~]"
             allowed = curses.COLS - x - len(end_too_long)
             text = text[:allowed] + end_too_long
-        self.main.scr.addstr(y, x, text, *args, *kwargs)
+        self.main.scr.addstr(y, x, text, self.style, *args, *kwargs)
 
     def getch(self) -> str:
         return self.main.scr.getch()
@@ -352,6 +358,9 @@ class Widget:
         result = self._on_focus()
         self._is_on_focus = False
         return result
+
+    def set_style(self, style:int):
+        self.style = curses.color_pair(style)
 
     def _on_focus(self):
         pass

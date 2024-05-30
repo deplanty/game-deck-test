@@ -1,7 +1,5 @@
 import textwrap
 
-import curses
-
 from src.tui import Widget
 from src.tui.style import Style
 
@@ -21,9 +19,9 @@ class Label(Widget):
         self.suffix = suffix
         self.align = align
 
-        self.style = curses.color_pair(style)
+        self.set_style(style)
 
-        # Properties
+    # Properties
 
     @property
     def text(self) -> str:
@@ -94,7 +92,7 @@ class Label(Widget):
         # Display as many lines as the frame height allows.
         nlines = min(self.height, len(lines))
         for i in range(nlines):
-            self.addstr(self.y + i, self.x, lines[i], self.style)
+            self.addstr(self.y + i, self.x, lines[i])
 
     def _get_text_as_list(self) -> list[str]:
         """
@@ -120,6 +118,3 @@ class Label(Widget):
                 lines.append(line)
 
         return lines
-
-    def set_style(self, style:int):
-        self.style = curses.color_pair(style)
