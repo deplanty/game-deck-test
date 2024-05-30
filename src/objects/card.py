@@ -21,6 +21,7 @@ class Card:
         self.owner:Player = None
 
         self.iid = 0
+        self.name_full = ""
         self.cost = 0
         self.upgrades = 0
         self.description = ""

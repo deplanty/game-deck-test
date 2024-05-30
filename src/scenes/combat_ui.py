@@ -40,10 +40,10 @@ class SceneCombatUi(tui.Tui):
         self.frame_cards = tui.Frame(self)
         self.frame_cards.grid(2, columnspan=3)
         self.choice_hand = tui.Choice(self.frame_cards)
-        self.choice_hand.grid(0, 0, columnspan=2)
+        self.choice_hand.grid(0, 0)
         self.label_card_hand = tui.Label(self.frame_cards)
         self.label_card_hand.prefix = "Hovered card:\n"
-        self.label_card_hand.grid(0, 2, columnspan=2)
+        self.label_card_hand.grid(0, 1, columnspan=3)
 
         # Frame for the user inputs
         self.frame_input = tui.Frame(self)
@@ -69,7 +69,7 @@ class SceneCombatUi(tui.Tui):
         cards = ["Cards in hand:"]
         self.choice_hand.reset_choices()
         for i, card in enumerate(sgt.player.deck.hand):
-            self.choice_hand.add_label(f"{card} - {card.info}")
+            self.choice_hand.add_label(card.name_full)
         self.choice_hand.add_label("End of turn")
         self.choice_hand.add_label("Quit")
         self.frame_cards.fill()

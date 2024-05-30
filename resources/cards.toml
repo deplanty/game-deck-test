@@ -1,23 +1,27 @@
 [sword]
 iid = 1
+name_full = "Sword"
 cost = 1
 base_damage = 2
 description = "Deal {card.damage} damage."
 
 [bow]
 iid = 2
+name_full = "Bow"
 cost = 2
 base_damage = 2
 description = "Deal {card.damage} damage."
 
 [shield]
 iid = 3
+name_full = "Shield"
 cost = 1
 armor = 4
 description = "Gain {card.armor} armor."
 
 [sword_and_shield]
 iid = 4
+name_full = "Sword and shield"
 cost = 1
 base_damage = 1
 armor = 2
@@ -25,24 +29,28 @@ description = "Gain {card.armor} armor and deal {card.damage} damage."
 
 [great_sword]
 iid = 5
+name_full = "Great sword"
 cost = 2
 base_damage = 4
 description = "Deal {card.damage} damage."
 
 [push_up]
 iid = 6
+name_full = "Push-up"
 cost = 1
 strenght = 1
 description = "Give {card.strenght} strenght."
 
 [fireball]
 iid = 7
+name_full = "Fireball"
 cost = 1
 burn = 2
 description = "Apply {card.burn} burn."
 
 [venom]
 iid = 8
+name_full = "Venom"
 cost = 1
 poison = 2
 description = "Apply {card.poison} poison."
