@@ -7,9 +7,13 @@ def update_label():
     global choice_shape
     global choice_element
     global choice_trait
-    global label
+    global label_shape
+    global label_element
+    global label_trait
 
-    label.text = f"Shape: {choice_shape.choice}\nElement: {choice_element.choice}\nTrait: {choice_trait.choice}"
+    label_shape.text = choice_shape.choice
+    label_element.text = choice_element.choice
+    label_trait.text = choice_trait.choice
 
 
 root = tui.Tui()
@@ -41,9 +45,14 @@ entry.pack()
 
 tui.Frame(root).pack()
 
-label = tui.Label(root)
+label_shape = tui.Label(root, prefix="Shape: ", suffix=".")
+label_shape.pack()
+label_element = tui.Label(root, prefix="Element: ", suffix="?")
+label_element.pack()
+label_trait = tui.Label(root, prefix="Trait: ", suffix="!")
+label_trait.pack()
+
 update_label()
-label.pack()
 
 choice_shape.focus_next = choice_element
 choice_element.focus_next = choice_trait

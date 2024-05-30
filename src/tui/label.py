@@ -11,9 +11,11 @@ class Label(Widget):
         parent (Widget): The parent widget
     """
 
-    def __init__(self, parent, text:str="", align="left"):
+    def __init__(self, parent, text:str="", prefix:str="", suffix:str="", align:str="left"):
         super().__init__(parent)
-        self._text = text
+        self.text = text
+        self.prefix = prefix
+        self.suffix = suffix
         self.align = align
 
         # Properties
@@ -25,6 +27,24 @@ class Label(Widget):
     @text.setter
     def text(self, value:str):
         self._text = str(value)
+        self._flag_fill = True
+
+    @property
+    def prefix(self) -> str:
+        return self._prefix
+
+    @prefix.setter
+    def prefix(self, value:str):
+        self._prefix = str(value)
+        self._flag_fill = True
+
+    @property
+    def suffix(self) -> str:
+        return self._suffix
+
+    @suffix.setter
+    def suffix(self, value:str):
+        self._suffix = str(value)
         self._flag_fill = True
 
     @property
@@ -40,6 +60,13 @@ class Label(Widget):
             raise ValueError(f"{value} not in {_valid}")
         self._align = value
         self._flag_fill = True
+
+    @property
+    def text_full(self) -> str:
+        if self.text:
+            return self.prefix + self.text + self.suffix
+        else:
+            return self.prefix
 
     @property
     def height_calc(self) -> int:
@@ -74,7 +101,7 @@ class Label(Widget):
             list[str]: All the lines to display on screen.
         """
 
-        text_split = self._text.split("\n")
+        text_split = self.text_full.split("\n")
         lines = list()
         for line in text_split:
             text = textwrap.wrap(line, self.width)
