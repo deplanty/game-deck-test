@@ -55,6 +55,7 @@ class Choice(Widget):
             str: The choice made.
         """
 
+        self.hovered.emit()
         self._selected = False
         curses.cbreak()
         cursor_previous = curses.curs_set(2)  # Very visible
