@@ -64,7 +64,7 @@ class Tui(Widget):
         curses.init_pair(Style.TEXT_DANGER, Color.DANGER, -1)
         curses.init_pair(Style.TEXT_WARNING, Color.WARNING, -1)
         curses.init_pair(Style.TEXT_INFO, Color.INFO, -1)
-        curses.init_pair(Style.TEXT_MUTED, 250, -1)
+        curses.init_pair(Style.TEXT_MUTED, 238, -1)
 
         curses.init_pair(Style.BG_PRIMARY, Color.WHITE, Color.PRIMARY)
         curses.init_pair(Style.BG_SECONDARY, Color.WHITE, Color.SECONDARY)

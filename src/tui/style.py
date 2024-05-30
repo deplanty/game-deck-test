@@ -5,7 +5,7 @@ class Color:
     SECONDARY = 239
     SUCCESS = 28
     DANGER = 124
-    WARNING = 21
+    WARNING = 214
     INFO = 75
 
     WHITE = curses.COLOR_WHITE
