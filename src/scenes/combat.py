@@ -26,6 +26,7 @@ class SceneCombat(Scene):
                 action = self.loop_turn()
                 if action == "end of turn":
                     turn = "enemy"
+                    self.ui.choice_hand.focus_remove()
                     sgt.player.end_of_turn()
                     self.enemy.start_of_turn()
                 elif action == "quit":
@@ -52,8 +53,7 @@ class SceneCombat(Scene):
             str: Status after a loop - "continue" or "end of turn".
         """
 
-        self.ui.value_status.text = "Player turn"
-        self.ui.choice_hand.reset_choices()
+        self.ui.label_status.text = "Player turn"
         self.ui.choice_hand.focus_set()
         self.ui.update()
 
@@ -80,7 +80,7 @@ class SceneCombat(Scene):
             str: Status after a loop - "continue" or "end of turn".
         """
 
-        self.ui.value_status.text = "Enemy turn"
+        self.ui.label_status.text = "Enemy turn"
 
         self.ui.update()
         card = self.enemy.play_card(0)

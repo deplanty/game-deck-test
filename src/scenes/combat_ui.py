@@ -11,30 +11,30 @@ class SceneCombatUi(tui.Tui):
         self.frame_enemy = tui.Frame(self)
         self.frame_enemy.grid(0, columnspan=2)
         self.label_enemy_name = tui.Label(self.frame_enemy, align="center")
-        self.label_enemy_name.grid(0)
+        self.label_enemy_name.pack()
         self.enemy_hp = tui.Progressbar(self.frame_enemy, align="center")
-        self.enemy_hp.grid(1)
+        self.enemy_hp.pack()
         self.label_enemy_info = tui.Label(self.frame_enemy)
-        self.label_enemy_info.grid(2)
+        self.label_enemy_info.pack()
         self.label_enemy_card = tui.Label(self.frame_enemy)
-        self.label_enemy_card.grid(3)
+        self.label_enemy_card.pack()
 
         # Player frame
         self.frame_player = tui.Frame(self)
         self.frame_player.grid(1, columnspan=2)
         self.label_player_name = tui.Label(self.frame_player, align="center")
-        self.label_player_name.grid(0)
+        self.label_player_name.pack()
         self.player_hp = tui.Progressbar(self.frame_player, align="center")
-        self.player_hp.grid(1)
+        self.player_hp.pack()
         self.label_player_info = tui.Label(self.frame_player)
-        self.label_player_info.grid(2)
+        self.label_player_info.pack()
         self.label_player_card = tui.Label(self.frame_player)
-        self.label_player_card.grid(3)
+        self.label_player_card.pack()
 
         # History of played cards
         self.frame_history = tui.Label(self)
         self.frame_history.filler = "."
-        self.frame_history.grid(0, 2, rowspan=3)
+        self.frame_history.grid(0, 2, rowspan=2)
 
         # Cards in player's hand frame
         self.frame_cards = tui.Frame(self)
@@ -46,16 +46,14 @@ class SceneCombatUi(tui.Tui):
         self.frame_input = tui.Frame(self)
         self.frame_input.grid(3, columnspan=3)
         self.label_status = tui.Label(self.frame_input)
-        self.label_status.grid(0, 0)
-        self.value_status = tui.Label(self.frame_input)
-        self.value_status.grid(0, 1)
+        self.label_status.pack()
 
         # Initialize values
         self.label_enemy_name.text = self.scene.enemy.name
         self.enemy_hp.maximum = self.scene.enemy.health.maximum
         self.label_player_name.text = sgt.player.name
         self.player_hp.maximum = sgt.player.health.maximum
-        self.label_status.text = "Status:"
+        self.label_status.prefix = "Status: "
 
     def update(self):
         # Update player and enemy health and all
@@ -66,10 +64,12 @@ class SceneCombatUi(tui.Tui):
 
         # Show the cards in hand
         cards = ["Cards in hand:"]
+        self.choice_hand.reset_choices()
         for i, card in enumerate(sgt.player.deck.hand):
             self.choice_hand.add_label(f"{card} - {card.info}")
         self.choice_hand.add_label("End of turn")
         self.choice_hand.add_label("Quit")
+        self.frame_cards.fill()
 
         # Show the history of played cards
         history = list()
