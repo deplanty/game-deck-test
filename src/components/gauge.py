@@ -13,8 +13,9 @@ class Gauge:
     """
 
     def __init__(self, maximum:int):
-        self._maximum = maximum
         self.current = maximum
+        self.maximum = maximum
+        self._allow_overflow = False
 
         # Signals
         self.changed = Signal()  # When the value changed
@@ -27,6 +28,8 @@ class Gauge:
 
     def __add__(self, value:int):
         self.current += value
+        if not self._allow_overflow and self.current > self.maximum:
+            self.current = self.maximum
         self.changed.emit()
         return self
 
