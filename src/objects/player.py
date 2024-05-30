@@ -133,6 +133,10 @@ class Player:
             card (Card): The card applying its effects on the player.
         """
 
+        self.health -= card.hurt
+        self.health += card.heal
+        self.energy += card.energy
+
         self.armor += card.armor
         self.strenght += card.strenght
 

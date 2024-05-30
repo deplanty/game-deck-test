@@ -32,6 +32,9 @@ class Card:
         self.strenght = 0
         self.burn = 0
         self.poison = 0
+        self.heal = 0
+        self.energy = 0
+        self.hurt = 0
 
         # Signals
         self.upgraded = Signal()
@@ -51,9 +54,12 @@ class Card:
     def damage(self) -> int:
         """Return the calculated damage of the card."""
 
-        damage = self.base_damage + self.upgrades
-        if self.owner: damage += self.owner.strenght
-        return damage
+        if self.base_damage == 0:
+            return 0
+        else:
+            damage = self.base_damage + self.upgrades
+            if self.owner: damage += self.owner.strenght
+            return damage
 
     @property
     def info(self) -> str:

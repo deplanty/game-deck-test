@@ -54,3 +54,18 @@ name_full = "Venom"
 cost = 1
 poison = 2
 description = "Apply {card.poison} poison."
+
+[perfusion]
+iid = 9
+name_full = "Perfusion"
+cost = 0
+energy = 1
+hurt = 2
+description = "Take {card.hurt} damage to gain {card.energy} energy."
+
+[bandage]
+iid = 10
+name_full = "Bandage"
+cost = 2
+heal = 4
+description = "Heal {card.heal} health."
