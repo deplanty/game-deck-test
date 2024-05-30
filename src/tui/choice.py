@@ -89,7 +89,6 @@ class Choice(Widget):
 
     def update(self):
         for i, label in enumerate(self.children):
-            print(i, label)
             if (self._is_on_focus or self._selected) and self.current == i:
                 prefix = f"{self.selector}"
             else:
@@ -106,7 +105,6 @@ class Choice(Widget):
         self.choices.append(text)
         label = tui.Label(self, text)
         label.pack()
-        self.children.append(label)
         
     def add_labels(self, *texts):
         """Add several labels."""
