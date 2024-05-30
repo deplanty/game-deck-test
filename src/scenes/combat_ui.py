@@ -1,5 +1,6 @@
 import src.singleton as sgt
 from src import tui
+from src.tui.style import Style
 
 
 class SceneCombatUi(tui.Tui):
@@ -10,7 +11,7 @@ class SceneCombatUi(tui.Tui):
         # Enemy frame
         self.frame_enemy = tui.Frame(self)
         self.frame_enemy.grid(0, columnspan=2)
-        self.label_enemy_name = tui.Label(self.frame_enemy, align="center")
+        self.label_enemy_name = tui.Label(self.frame_enemy, align="center", style=Style.TEXT_PRIMARY)
         self.label_enemy_name.pack()
         self.enemy_hp = tui.Progressbar(self.frame_enemy, align="center")
         self.enemy_hp.pack()
@@ -22,7 +23,7 @@ class SceneCombatUi(tui.Tui):
         # Player frame
         self.frame_player = tui.Frame(self)
         self.frame_player.grid(1, columnspan=2)
-        self.label_player_name = tui.Label(self.frame_player, align="center")
+        self.label_player_name = tui.Label(self.frame_player, align="center", style=Style.TEXT_PRIMARY)
         self.label_player_name.pack()
         self.player_hp = tui.Progressbar(self.frame_player, align="center")
         self.player_hp.pack()
