@@ -43,6 +43,7 @@ class Player:
         """Returns the information of the player"""
 
         text = list()
+        text.append(f"Energy = {self.energy}")
         text.append(f"Deck = {self.deck.info}")
         for buff in self.buffs:
             if buff.info: text.append(f"+ {buff.info}")
