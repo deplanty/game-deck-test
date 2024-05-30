@@ -90,10 +90,10 @@ class Choice(Widget):
     def update(self):
         for i, label in enumerate(self.children):
             if (self._is_on_focus or self._selected) and self.current == i:
-                prefix = f"{self.selector}"
+                label.prefix = f"{self.selector} "
             else:
-                prefix = " " * len(self.selector)
-            label.text = f"{prefix} {self.choices[i]}"
+                label.prefix = " " * (len(self.selector) + 1)
+            label.text = self.choices[i]
             label.update()
         self._set_cursor_current()
 
@@ -128,4 +128,7 @@ class Choice(Widget):
     def _set_cursor_current(self):
         """Set the cursor at the current selected line."""
 
-        self.main.scr.move(self.y + self.current, self.x)
+        height = 0
+        for i in range(self.current):
+            height += self.children[i].height
+        self.main.scr.move(self.y + height, self.x)

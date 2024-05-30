@@ -33,8 +33,8 @@ choice_element.grid(0, 1)
 choice_element.selected.connect(update_label)
 
 choice_trait = tui.Choice(frame_choices)
-choice_trait.add_labels("Soft", "Hard")
 choice_trait.add_label("Lorem ipsum dolor sit amet." * 5)
+choice_trait.add_labels("Soft", "Hard")
 choice_trait.grid(0, 2)
 choice_trait.selected.connect(update_label)
 
