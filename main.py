@@ -1,12 +1,12 @@
 import src.singleton as sgt
 from src.objects import Player
-from src.scenes import SceneCombat, SceneSelectEncounter
+from src.scenes import SceneSelectHero
 
 
 class GameLoop:
     def __init__(self):
         sgt.root = self
-        self.current_scene = SceneSelectEncounter()
+        self.current_scene = SceneSelectHero()
 
     def mainloop(self):
         while self.current_scene:
