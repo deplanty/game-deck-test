@@ -42,7 +42,7 @@ class Widget:
     # The tui.Tui class set its value.
     main = None
 
-    def __init__(self, parent):
+    def __init__(self, parent:"Widget"):
         self.parent = parent
         self.children = list()
 

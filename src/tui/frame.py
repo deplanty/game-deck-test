@@ -7,10 +7,13 @@ class Frame(Widget):
 
     Args:
         parent (Widget): The parent widget
+        border (bool): This frame have borders or not. TODO: WIP
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, border:bool=False):
         super().__init__(parent)
+
+        self.border = border
 
     @property
     def height_calc(self) -> int:
@@ -23,7 +26,10 @@ class Frame(Widget):
             - TODO: For place: ... It's... something? ... WIP !"""
 
         if not self.children:
-            return 1
+            if self.border:
+                return 2
+            else:
+                return 1
 
         layout = self.children[0]._layout
         if layout == "grid":
@@ -39,9 +45,25 @@ class Frame(Widget):
             return height
 
         elif layout == "pack":
-            return 1
+            if self.border:
+                return 2
+            else:
+                return 1
         elif layout == "place":
-            return 1
+            if self.border:
+                return 2
+            else:
+                return 1
 
     def update(self):
-        pass
+        if self.border:
+            line = "-" * (self.width - 2)
+            top = f"+{line}+"
+            bottom = f"+{line}+"
+            self.addstr(self.y, self.x, top)
+            for row in range(self.height - 2):
+                self.addstr(self.y + row, self.x, "|")
+                self.addstr(self.y + row, self.x + self.width - 2, "|")
+            self.addstr(self.y + 1, self.x, bottom)
+        else:
+            pass        

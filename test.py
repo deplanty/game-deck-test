@@ -40,6 +40,13 @@ choice_trait.selected.connect(update_label)
 
 tui.Frame(root).pack()
 
+frame = tui.Frame(root, border=True)
+frame.pack()
+label_border = tui.Label(frame, text="Titel")
+label_border.pack()
+
+tui.Frame(root).pack()
+
 entry = tui.Entry(root)
 entry.pack()
 
