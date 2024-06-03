@@ -42,8 +42,10 @@ tui.Frame(root).pack()
 
 frame = tui.Frame(root, border=True)
 frame.pack()
-label_border = tui.Label(frame, text="Titel")
+label_border = tui.Label(frame, text="Title")
 label_border.pack()
+label_border_bis = tui.Label(frame, text="Subtitle")
+label_border_bis.pack()
 
 tui.Frame(root).pack()
 

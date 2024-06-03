@@ -3,6 +3,12 @@ import curses
 from src.tui.style import Style
 
 
+class Vector2:
+    def __init__(self, x:int, y:int):
+        self.x = x
+        self.y = y
+
+
 class Grid:
     def __init__(self, row:int=0, column:int=0, rowspan:int=1, columnspan:int=1):
         self.set(row, column, rowspan, columnspan)
@@ -46,6 +52,8 @@ class Widget:
         self.parent = parent
         self.children = list()
 
+        self.pad_intern = Vector2(0, 0)
+
         # Focus
         self.focus_next = None
         self._is_on_focus = False  # If the widget is currently focused
@@ -84,12 +92,15 @@ class Widget:
         if self.parent is None:
             return 0
 
+        x = 0
         if self._layout == "grid":
-            return self.parent.x + self.parent.grid_get_column_position(self._grid.column)
+            x = self.parent.x + self.parent.grid_get_column_position(self._grid.column)
         elif self._layout == "pack":
-            return self.parent.x
+            x = self.parent.x
         elif self._layout == "place":
-            return self.parent.x + self._place.x
+            x = self.parent.x + self._place.x
+
+        return x + self.parent.pad_intern.x
 
     @property
     def y(self) -> int:
@@ -98,12 +109,15 @@ class Widget:
         if self.parent is None:
             return 0
 
+        y = 0
         if self._layout == "grid":
-            return self.parent.y + self.parent.grid_get_row_position(self._grid.row)
+            y = self.parent.y + self.parent.grid_get_row_position(self._grid.row)
         elif self._layout == "pack":
-            return self.parent.y + self.parent._pack_get_row_position(self)
+            y = self.parent.y + self.parent._pack_get_row_position(self)
         elif self._layout == "place":
-            return self.parent.y + self._place.y
+            y = self.parent.y + self._place.y
+
+        return y + self.parent.pad_intern.y
 
     @property
     def width(self) -> int:
@@ -112,12 +126,15 @@ class Widget:
         if self.parent is None:
             return curses.COLS
 
+        w = 0
         if self._layout == "grid":
-            return self.parent.grid_get_column_width(self._grid.column) * self._grid.columnspan
+            w = self.parent.grid_get_column_width(self._grid.column) * self._grid.columnspan
         elif self._layout == "pack":
-            return self.parent.width
+            w = self.parent.width
         elif self._layout == "place":
-            return self._place.width
+            w = self._place.width
+
+        return w - self.parent.pad_intern.x * 2
 
     @property
     def height(self) -> int:
@@ -126,12 +143,15 @@ class Widget:
         if self.parent is None:
             return curses.LINES
 
+        h = 0
         if self._layout == "grid":
-            return self.parent.grid_get_row_height(self._grid.row) * self._grid.rowspan
+            h = self.parent.grid_get_row_height(self._grid.row) * self._grid.rowspan
         if self._layout == "pack":
-            return self.height_calc
+            h = self.height_calc
         elif self._layout == "place":
-            return self._place.height
+            h = self._place.height
+
+        return h - self.parent.pad_intern.y * 2
 
     @property
     def height_calc(self) -> int:

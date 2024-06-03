@@ -14,6 +14,9 @@ class Frame(Widget):
         super().__init__(parent)
 
         self.border = border
+        if self.border:
+            self.pad_intern.x = 1
+            self.pad_intern.y = 1
 
     @property
     def height_calc(self) -> int:
@@ -27,7 +30,7 @@ class Frame(Widget):
 
         if not self.children:
             if self.border:
-                return 2
+                return self.pad_intern.y * 2
             else:
                 return 1
 
@@ -46,12 +49,12 @@ class Frame(Widget):
 
         elif layout == "pack":
             if self.border:
-                return 2
+                return self.pad_intern.y * 2 + 4
             else:
                 return 1
         elif layout == "place":
             if self.border:
-                return 2
+                return self.pad_intern. y * 2
             else:
                 return 1
 
@@ -61,9 +64,9 @@ class Frame(Widget):
             top = f"+{line}+"
             bottom = f"+{line}+"
             self.addstr(self.y, self.x, top)
-            for row in range(self.height - 2):
+            for row in range(1, self.height - 1):
                 self.addstr(self.y + row, self.x, "|")
-                self.addstr(self.y + row, self.x + self.width - 2, "|")
-            self.addstr(self.y + 1, self.x, bottom)
+                self.addstr(self.y + row, self.x + self.width - 1, "|")
+            self.addstr(self.y + row + 1, self.x, bottom)
         else:
-            pass        
+            pass
