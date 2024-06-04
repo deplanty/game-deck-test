@@ -26,7 +26,8 @@ class Frame(Widget):
         If the widget have children, the height depends on the layout.
             - For grid: it's the sum of the height of each row.
             - For pack: it's the sum of the height of each child.
-            - TODO: For place: ... It's... something? ... WIP !"""
+            - TODO: For place: ... It's... something? ... WIP !
+        """
 
         if not self.children:
             if self.border:

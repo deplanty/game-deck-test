@@ -19,7 +19,7 @@ class Gauge:
 
         # Signals
         self.changed = Signal()  # When the value changed
-        
+
     def __str__(self) -> str:
         return f"{self.current}/{self.maximum}"
 
@@ -51,7 +51,7 @@ class Gauge:
 
     def __gt__(self, value:int) -> bool:
         return self.current > value
-    
+
     def __ge__(self, value:int) -> bool:
         return self.current >= value
 
@@ -71,22 +71,22 @@ class Gauge:
         Change the maximum value of the gauge.
         If the maximum is geater than the current value, set the current to maximum.
         """
-        
+
         self._maximum = value
         if self.current > self._maximum:
             self.current = self._maximum
-            self.changed.emit()  # FIXME: Is is ok?
+            self.changed.emit()
 
     # Methods
 
     def refill(self):
         """Set the current value to its maximum."""
-        
+
         self.current = self.maximum
         self.changed.emit()
 
     def empty(self):
         """Set the current value to its minimum."""
-        
+
         self.current = 0
         self.changed.emit()

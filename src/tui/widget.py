@@ -94,7 +94,7 @@ class Widget:
 
         x = 0
         if self._layout == "grid":
-            x = self.parent.x + self.parent.grid_get_column_position(self._grid.column)
+            x = self.parent.x + self.parent._grid_get_column_position(self._grid.column)
         elif self._layout == "pack":
             x = self.parent.x
         elif self._layout == "place":
@@ -111,7 +111,7 @@ class Widget:
 
         y = 0
         if self._layout == "grid":
-            y = self.parent.y + self.parent.grid_get_row_position(self._grid.row)
+            y = self.parent.y + self.parent._grid_get_row_position(self._grid.row)
         elif self._layout == "pack":
             y = self.parent.y + self.parent._pack_get_row_position(self)
         elif self._layout == "place":
@@ -128,7 +128,7 @@ class Widget:
 
         w = 0
         if self._layout == "grid":
-            w = self.parent.grid_get_column_width(self._grid.column) * self._grid.columnspan
+            w = self.parent._grid_get_column_width(self._grid.column) * self._grid.columnspan
         elif self._layout == "pack":
             w = self.parent.width
         elif self._layout == "place":
@@ -145,7 +145,7 @@ class Widget:
 
         h = 0
         if self._layout == "grid":
-            h = self.parent.grid_get_row_height(self._grid.row) * self._grid.rowspan
+            h = self.parent._grid_get_row_height(self._grid.row) * self._grid.rowspan
         if self._layout == "pack":
             h = self.height_calc
         elif self._layout == "place":
@@ -156,7 +156,7 @@ class Widget:
     @property
     def height_calc(self) -> int:
         """The calculated height of a widget.
-        
+
         The calculated height represents the height taken by the widget to fully show its content.
         The widgets that are containers, such as the Frame, doesn't have a proper height and rely
         on the height of its children.
@@ -213,7 +213,7 @@ class Widget:
 
     def addstr(self, y:int, x:int, text:str, *args, **kwargs):
         """Write a string. The string cannot overflow the window size."""
-        
+
         if x + len(text) > curses.COLS:
             end_too_long = "~]"
             allowed = curses.COLS - x - len(end_too_long)
@@ -246,7 +246,7 @@ class Widget:
         layouts = self._get_layout_siblings()
         if any(l != "grid" for l in layouts if l):
             raise Exception(f"Can't use layout 'grid' with '{layouts[0]}' already in use")
-        
+
         self._layout = "grid"
         self._grid.set(row, column, rowspan, columnspan)
 
@@ -254,7 +254,7 @@ class Widget:
         """
         The widget are packed one above the other.
         """
-        
+
         layouts = self._get_layout_siblings()
         if any(l != "pack" for l in layouts if l):
             raise Exception(f"Can't use layout 'pack' with '{layouts[0]}' already in use")
@@ -275,7 +275,7 @@ class Widget:
         self._layout = "place"
         self._place.set(x, y, width, height)
 
-    def grid_get_row_position(self, row:int) -> int:
+    def _grid_get_row_position(self, row:int) -> int:
         """
         Returns the relative row position of a child (given from its grid row).
 
@@ -288,10 +288,10 @@ class Widget:
 
         row_position = 0
         for i in range(row):
-            row_position += self.grid_get_row_height(i)
+            row_position += self._grid_get_row_height(i)
         return row_position
 
-    def grid_get_row_height(self, row:int) -> int:
+    def _grid_get_row_height(self, row:int) -> int:
         """
         Returns the height of a row in the grid.
 
@@ -306,7 +306,7 @@ class Widget:
         height = self.height // rows
         return height
 
-    def grid_get_column_position(self, column:int) -> int:
+    def _grid_get_column_position(self, column:int) -> int:
         """
         Returns the relative column position of a child (given from its grid column).
 
@@ -319,10 +319,10 @@ class Widget:
 
         col_position = 0
         for i in range(column):
-            col_position += self.grid_get_column_width(i)
+            col_position += self._grid_get_column_width(i)
         return col_position
 
-    def grid_get_column_width(self, column:int) -> int:
+    def _grid_get_column_width(self, column:int) -> int:
         """
         Returns the width of a column in the grid.
 
@@ -354,11 +354,14 @@ class Widget:
                 return row
             row += child.height_calc
 
-    # TODO: Sort the methods
+    def _get_layout_siblings(self) -> list[str]:
+        """Return a list with the layout of all the siblings"""
+
+        return [child._layout for child in self.parent.children]
 
     def focus_set(self):
         """Set this widget as the current focused widget."""
-        
+
         self.main.focus_widget = self
 
     def focus_remove(self):
@@ -379,13 +382,8 @@ class Widget:
         self._is_on_focus = False
         return result
 
-    def set_style(self, style:int):
-        self.style = curses.color_pair(style)
-
     def _on_focus(self):
         pass
 
-    def _get_layout_siblings(self) -> list[str]:
-        """Return a list with the layout of all the siblings"""
-        
-        return [child._layout for child in self.parent.children]
+    def set_style(self, style:int):
+        self.style = curses.color_pair(style)

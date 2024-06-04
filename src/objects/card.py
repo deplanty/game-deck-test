@@ -26,7 +26,6 @@ class Card:
         self.upgrades = 0
         self.description = ""
 
-        # FIXME: with strenght, even non damaging cards apply damage. Should not happend.
         self.base_damage = 0
         self.armor = 0
         self.strenght = 0
@@ -54,6 +53,8 @@ class Card:
     def damage(self) -> int:
         """Return the calculated damage of the card."""
 
+        # A card without base damage can't deal damage. It's to fix a problem where a "magic" card
+        # deals direct damage when the strenght is greater than 0.
         if self.base_damage == 0:
             return 0
         else:
