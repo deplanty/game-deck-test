@@ -52,25 +52,22 @@ class Entry(Widget):
         """
 
         tmp = self.text
-        result = "ok"  # FIXME: Do something with this?
         self._set_cursor_end()
-
         curses.cbreak()
-        while True:
+
+        state = ""
+        while state == "":
             self.update()
             key = self.main.scr.getch()
             char = chr(key)
             if key == Keys.BACKSPACE:
                 self.text = self.text[:-1]
             elif key == Keys.TABLUATION:
-                result = "tab"
-                break
+                state = "tab"
             elif key == Keys.TABLUATION_BACK:
-                result = "tab_back"
-                break
+                state = "tab_back"
             elif key == Keys.RETURN:
-                result = "ok"
-                break
+                state = "ok"
             elif key == Keys.ESCAPE:
                 self.text = tmp
             elif char.isprintable():
@@ -78,4 +75,4 @@ class Entry(Widget):
 
         curses.nocbreak()
 
-        return result
+        return state

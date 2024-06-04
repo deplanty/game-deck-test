@@ -19,7 +19,7 @@ class Choice(Widget):
 
         self.selected = Signal()
         self.hovered = Signal()
-        
+
         self._current = 0  # Current selection
         self._selected = False  # If the Return key has been pressed
 
@@ -59,7 +59,9 @@ class Choice(Widget):
         self._selected = False
         curses.cbreak()
         cursor_previous = curses.curs_set(2)  # Very visible
-        while True:
+
+        state = ""
+        while state == "":
             self.update()
             key = self.getch()
             if key == Keys.ARROW_UP:
@@ -71,20 +73,17 @@ class Choice(Widget):
             elif key == Keys.RETURN:
                 self._selected = True
                 self.selected.emit()
-                result = "tab"
-                break
+                state = "tab"
             elif key == Keys.TABLUATION:
                 self.selected.emit()
-                result = "tab"
-                break
+                state = "tab"
             elif key == Keys.TABLUATION_BACK:
-                result = "tab_back"
-                break
+                state = "tab_back"
 
         curses.nocbreak()
         curses.curs_set(cursor_previous)
 
-        return result
+        return state
 
     # Methods Required
 
@@ -111,7 +110,7 @@ class Choice(Widget):
         self.choices.append(text)
         label = tui.Label(self, text, **kwargs)
         label.pack()
-        
+
     def add_labels(self, *texts):
         """Add several labels."""
 
@@ -130,7 +129,7 @@ class Choice(Widget):
         self.children.clear()
         self.current = 0
         self._selected = False
-        
+
     def _set_cursor_current(self):
         """Set the cursor at the current selected line."""
 
