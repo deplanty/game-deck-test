@@ -1,3 +1,5 @@
+#!venv/Scripts/python
+
 import src.singleton as sgt
 from src.objects import Player
 from src.scenes import SceneSelectHero
