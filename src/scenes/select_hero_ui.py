@@ -6,8 +6,13 @@ class SceneSelectHeroUi(tui.Tui):
         super().__init__()
         self.scene = scene
 
-        self.label_title = tui.Label(self, "Select your hero for this journey:")
+        self.frame_title = tui.Frame(self, border=True)
+        self.frame_title.pack()
+        self.label_title = tui.Label(self.frame_title, text="GAME DECK TEST", align="center")
         self.label_title.pack()
+
+        self.label_info = tui.Label(self, "Select your hero for this journey:")
+        self.label_info.pack()
 
         self.choice_heroes = tui.Choice(self)
         self.choice_heroes.pack()
