@@ -33,3 +33,62 @@ class Style:
     BG_DARK = 18
     BG_WHITE = 19
     
+
+class BoxSimple:
+    V = "|"
+    H = "-"
+
+    BORDER_H = H
+    BORDER_V = V
+
+    TL = "+"  # Top left
+    TR = "+"  # Top right
+    BL = "+"  # Bottom left
+    BR = "+"  # Bottom right
+
+    HB = "+"  # Horizontal bottom
+    HT = "+"  # Horizontal top
+    VL = "+"  # Vertical left
+    VR = "+"  # Vertical right
+
+    HV = "+"  # Horizontal vertical
+
+
+class BoxClean:
+    H = "─"
+    V = "│"
+
+    BORDER_H = H
+    BORDER_V = V
+
+    TL = "┌"  # Top left
+    TR = "┐"  # Top right
+    BL = "└"  # Bottom left
+    BR = "┘"  # Bottom right
+
+    HB = "┬"  # Horizontal bottom
+    HT = "┴"  # Horizontal top
+    VL = "┤"  # Vertical left
+    VR = "├"  # Vertical right
+
+    HV = "┼"  # Horizontal vertical
+
+
+class BoxCleanBorder:
+    H = "─"
+    V = "│"
+
+    BORDER_H = "═"
+    BORDER_V = "║"
+
+    TL = "╔"  # Top left
+    TR = "╗"  # Top right
+    BL = "╚"  # Bottom left
+    BR = "╝"  # Bottom right
+
+    HB = "╤"  # Horizontal bottom
+    HT = "╧"  # Horizontal top
+    VL = "╢"  # Vertical left
+    VR = "╟"  # Vertical right
+
+    HV = "┼"  # Horizontal vertical

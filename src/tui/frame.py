@@ -1,4 +1,7 @@
+import curses
+
 from src.tui import Widget
+from src.tui.style import BoxClean, Style
 
 
 class Frame(Widget):
@@ -10,13 +13,24 @@ class Frame(Widget):
         border (bool): This frame have borders or not. TODO: WIP
     """
 
-    def __init__(self, parent, border:bool=False):
+    style_border = BoxClean
+
+    def __init__(self, parent, border:bool=False, border_title:str=""):
         super().__init__(parent)
 
         self.border = border
+        self.border_title = border_title
         if self.border:
             self.pad_intern.x = 1
             self.pad_intern.y = 1
+
+    @property
+    def border_title(self) -> str:
+        return self._border_title
+
+    @border_title.setter
+    def border_title(self, title:str):
+        self._border_title = title
 
     @property
     def height_calc(self) -> int:
@@ -49,25 +63,28 @@ class Frame(Widget):
             return height
 
         elif layout == "pack":
-            if self.border:
-                return self.pad_intern.y * 2 + 4
-            else:
-                return 1
+            h = sum(child.height for child in self.children)
+            return self.pad_intern.y * 2 + h
         elif layout == "place":
-            if self.border:
-                return self.pad_intern. y * 2
-            else:
-                return 1
+            return self.pad_intern. y * 2
 
     def update(self):
         if self.border:
-            line = "-" * (self.width - 2)
-            top = f"+{line}+"
-            bottom = f"+{line}+"
+            # The string to display
+            line = self.style_border.H * (self.width - 2)
+            top = f"{self.style_border.TL}{line}{self.style_border.TR}"
+            bottom = f"{self.style_border.BL}{line}{self.style_border.BR}"
+
+            # Display the strings with the correct style
+            self.set_style(Style.TEXT_MUTED)
             self.addstr(self.y, self.x, top)
+            row = 0
             for row in range(1, self.height - 1):
-                self.addstr(self.y + row, self.x, "|")
-                self.addstr(self.y + row, self.x + self.width - 1, "|")
+                self.addstr(self.y + row, self.x, self.style_border.V)
+                self.addstr(self.y + row, self.x + self.width - 1, self.style_border.V)
             self.addstr(self.y + row + 1, self.x, bottom)
+
+            self.set_style(Style.NORMAL)
+            self.addstr(self.y, self.x + 1, self.border_title)
         else:
             pass

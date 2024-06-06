@@ -151,7 +151,7 @@ class Widget:
         elif self._layout == "place":
             h = self._place.height
 
-        return h - self.parent.pad_intern.y * 2
+        return h
 
     @property
     def height_calc(self) -> int:
@@ -385,5 +385,7 @@ class Widget:
     def _on_focus(self):
         pass
 
-    def set_style(self, style:int):
+    def set_style(self, style:int, *modifiers):
         self.style = curses.color_pair(style)
+        for modifier in modifiers:
+            self.style |= modifier
