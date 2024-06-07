@@ -18,7 +18,16 @@ def update_label():
 
 root = tui.Tui()
 
-frame_choices = tui.Frame(root)
+frame_title = tui.LabelFrame(root)
+frame_title.pack()
+label_title_left = tui.Label(frame_title, text="Title Left", align="left")
+label_title_left.pack()
+label_title = tui.Label(frame_title, text="Title", align="center")
+label_title.pack()
+label_title_right = tui.Label(frame_title, text="Title right", align="right")
+label_title_right.pack()
+
+frame_choices = tui.LabelFrame(root, text="Hello")
 frame_choices.pack()
 
 choice_shape = tui.Choice(frame_choices)

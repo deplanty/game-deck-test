@@ -25,7 +25,7 @@ class Choice(Widget):
 
     @property
     def height_calc(self) -> int:
-        return len(self.choices)
+        return sum(child.height for child in self.children)
 
     @property
     def current(self) -> int:
