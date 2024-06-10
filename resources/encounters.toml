@@ -2,13 +2,13 @@
 hp = 80
 energy = 2
 hand_size = 4
-deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 [Jacques]
 hp = 50
 energy = 3
 hand_size = 4
-deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 [number_one]
 hp = 20

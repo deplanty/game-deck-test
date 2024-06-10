@@ -69,3 +69,10 @@ name_full = "Bandage"
 cost = 2
 heal = 4
 description = "Heal {card.heal} health."
+
+[recharge]
+iid = 11
+name_full = "Recharge"
+cost = 1
+draw = 4
+description = "Draw {card.draw} cards."

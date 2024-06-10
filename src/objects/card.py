@@ -34,6 +34,7 @@ class Card:
         self.heal = 0
         self.energy = 0
         self.hurt = 0
+        self.draw = 0
 
         # Signals
         self.upgraded = Signal()

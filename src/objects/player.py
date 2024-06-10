@@ -139,6 +139,7 @@ class Player:
 
         self.armor += card.armor
         self.strenght += card.strenght
+        self.deck.draw(card.draw)
 
     def get_hit(self, card:Card):
         """
