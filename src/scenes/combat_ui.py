@@ -72,7 +72,6 @@ class SceneCombatUi(tui.Tui):
         self.player_hp.current = sgt.player.health.current
 
         # Show the cards in hand
-        cards = ["Cards in hand:"]
         self.choice_hand.reset_choices()
         for i, card in enumerate(sgt.player.deck.hand):
             if sgt.player.energy >= card.cost:

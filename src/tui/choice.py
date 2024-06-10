@@ -33,7 +33,7 @@ class Choice(Widget):
 
     @current.setter
     def current(self, value) -> int:
-        if value >= 0 and value < len(self.choices):
+        if value >= 0 and (value < len(self.choices) or len(self.choices) == 0):
             self._current = value
 
     @property
