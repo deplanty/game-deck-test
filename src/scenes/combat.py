@@ -1,3 +1,5 @@
+import time
+
 import src.singleton as sgt
 from src.scenes import Scene
 
@@ -86,6 +88,7 @@ class SceneCombat(Scene):
             return "end of turn"
         else:
             self.play_card(self.enemy, sgt.player, card)
+            time.sleep(0.2)
             return "continue"
 
     def play_card(self, source, destination, card):
