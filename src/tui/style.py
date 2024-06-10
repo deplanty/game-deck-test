@@ -1,18 +1,15 @@
 import curses
 
 class Color:
-    PRIMARY = 27
-    SECONDARY = 239
-    SUCCESS = 28
-    DANGER = 124
-    WARNING = 214
-    INFO = 75
+    """Color number in the curses colormap."""
 
     WHITE = curses.COLOR_WHITE
     BLACK = curses.COLOR_BLACK
 
 
 class Style:
+    """Index for the `curses.init_pair`."""
+
     NORMAL = 0
     
     TEXT_PRIMARY = 1
@@ -21,7 +18,9 @@ class Style:
     TEXT_DANGER = 4
     TEXT_WARNING = 5
     TEXT_INFO = 6
-    TEXT_MUTED = 7
+    TEXT_LIGHT = 7
+    TEXT_DARK = 8
+    TEXT_WHITE = 9
 
     BG_PRIMARY = 11
     BG_SECONDARY = 12
@@ -32,6 +31,8 @@ class Style:
     BG_LIGHT = 17
     BG_DARK = 18
     BG_WHITE = 19
+
+    MUTE = 21
     
 
 class BoxSimple:

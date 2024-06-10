@@ -15,7 +15,7 @@ class LabelFrame(Widget):
 
     style_box = BoxClean
 
-    def __init__(self, parent, text:str="", style_text=Style.NORMAL, style_border=Style.TEXT_MUTED):
+    def __init__(self, parent, text:str="", style_text=Style.NORMAL, style_border=Style.MUTE):
         super().__init__(parent)
 
         self.text = text

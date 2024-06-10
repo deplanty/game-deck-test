@@ -28,13 +28,33 @@ label_title.pack()
 label_title_right = tui.Label(frame_title, text="Title right", align="right")
 label_title_right.pack()
 
+frame_style = tui.LabelFrame(root, text="Styles")
+frame_style.pack()
+tui.Label(frame_style, "Text primary", style=Style.TEXT_PRIMARY).grid(0, 0)
+tui.Label(frame_style, "Text secondary", style=Style.TEXT_SECONDARY).grid(1, 0)
+tui.Label(frame_style, "Text success", style=Style.TEXT_SUCCESS).grid(2, 0)
+tui.Label(frame_style, "Text danger", style=Style.TEXT_DANGER).grid(3, 0)
+tui.Label(frame_style, "Text warning", style=Style.TEXT_WARNING).grid(4, 0)
+tui.Label(frame_style, "Text info", style=Style.TEXT_INFO).grid(5, 0)
+tui.Label(frame_style, "Background primary", style=Style.BG_PRIMARY).grid(0, 1)
+tui.Label(frame_style, "Background secondary", style=Style.BG_SECONDARY).grid(1, 1)
+tui.Label(frame_style, "Background success", style=Style.BG_SUCCESS).grid(2, 1)
+tui.Label(frame_style, "Background danger", style=Style.BG_DANGER).grid(3, 1)
+tui.Label(frame_style, "Background warning", style=Style.BG_WARNING).grid(4, 1)
+tui.Label(frame_style, "Background info", style=Style.BG_INFO).grid(5, 1)
+tui.Label(frame_style, "Text light", style=Style.TEXT_LIGHT).grid(0, 2)
+tui.Label(frame_style, "Text dark", style=Style.TEXT_DARK).grid(1, 2)
+tui.Label(frame_style, "Text white", style=Style.TEXT_WHITE).grid(2, 2)
+tui.Label(frame_style, "Background light", style=Style.BG_LIGHT).grid(3, 2)
+tui.Label(frame_style, "Background dark", style=Style.BG_DARK).grid(4, 2)
+tui.Label(frame_style, "Background white", style=Style.BG_WHITE).grid(5, 2)
+
 frame_choices = tui.LabelFrame(root, text="Hello", style_text=Style.TEXT_PRIMARY, style_border=Style.TEXT_INFO)
 frame_choices.pack()
 
 choice_shape = tui.Choice(frame_choices)
 choice_shape.add_labels("Triangle", "Square", "Pentagon", "Hexagon")
 choice_shape.grid(0, 0)
-choice_shape.focus_set()
 choice_shape.selected.connect(update_label)
 
 choice_element = tui.Choice(frame_choices)
@@ -64,6 +84,7 @@ label_trait.pack()
 
 update_label()
 
+entry.focus_set()
 choice_shape.focus_next = choice_element
 choice_element.focus_next = choice_trait
 choice_trait.focus_next = entry
