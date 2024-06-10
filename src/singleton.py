@@ -59,7 +59,7 @@ for name, data in toml.load("resources/encounters.toml").items():
 
 # All encounters are stored in a list
 all_encounters = [
-    encounter_from_name(name) for name in ["number_one", "number_two", "number_three"]
+    encounter_from_name(name) for name in ["number_one", "number_two", "number_three", "number_four"]
 ]
 
 # All heroes are stored in a list

@@ -77,7 +77,7 @@ class SceneCombatUi(tui.Tui):
             if sgt.player.energy >= card.cost:
                 style = Style.NORMAL
             else:
-                style = Style.TEXT_MUTED
+                style = Style.MUTE
             self.choice_hand.add_label(card.name_full, style=style)
         self.choice_hand.add_label("End of turn", style=Style.TEXT_INFO)
         self.choice_hand.add_label("Quit", style=Style.TEXT_WARNING)

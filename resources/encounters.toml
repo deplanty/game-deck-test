@@ -27,3 +27,9 @@ hp = 30
 energy = 2
 hand_size = 2
 deck = [1, 1, 2, 2]
+
+[number_four]
+hp = 50
+energy = 6
+hand_size = 4
+deck = [6, 6, 6, 6, 6, 6, 2, 2]
