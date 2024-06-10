@@ -23,11 +23,14 @@ progress.pack()
 tui.Frame(root).pack()
 
 entry = tui.Entry(root, "Input")
-entry.pack()
-entry.focus_set()
+entry.pack(fill=True)
 
+tui.Label(root, "Last line").pack()
+
+entry.focus_set()
+entry.focus_next = entry
 
 while True:
     root.update()
-    if entry.text == "quit":
+    if entry.text == "exit":
         break

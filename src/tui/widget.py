@@ -21,8 +21,11 @@ class Grid:
 
 
 class Pack:
-    def __init__(self):
-        ...
+    def __init__(self, fill:bool=False):
+        self.set(fill)
+
+    def set(self, fill:bool=None):
+        if fill is not None: self.fill = fill
 
 
 class Place:
@@ -147,7 +150,7 @@ class Widget:
         if self._layout == "grid":
             h = self.parent._grid_get_row_height(self._grid.row) * self._grid.rowspan
         if self._layout == "pack":
-            h = self.height_calc
+            h = self.parent._pack_get_height(self)
         elif self._layout == "place":
             h = self._place.height
 
@@ -250,7 +253,7 @@ class Widget:
         self._layout = "grid"
         self._grid.set(row, column, rowspan, columnspan)
 
-    def pack(self):
+    def pack(self, fill:bool=False):
         """
         The widget are packed one above the other.
         """
@@ -260,6 +263,7 @@ class Widget:
             raise Exception(f"Can't use layout 'pack' with '{layouts[0]}' already in use")
 
         self._layout = "pack"
+        self._pack.set(fill)
 
     def place(self, x:int=0, y:int=0, width:int=1, height:int=1):
         """
@@ -352,7 +356,34 @@ class Widget:
         for child in self.children:
             if child == widget:
                 return row
-            row += child.height_calc
+            row += self._pack_get_height(child)
+
+    def _pack_get_height(self, widget) -> int:
+        """Returns the height of a child packed widget.
+
+        If the widget is simply packed (without fill), its height is height_calc.
+        If the widget is packed with fill (= y fill), its height is calculated by self (its parent).
+        """
+
+        if not widget._pack.fill:
+            return widget.height_calc
+        else:
+            # Get how many children are packed with fill and get the height of the others
+            fill_n = 0
+            height_other = 0
+            for child in self.children:
+                if child._pack.fill:
+                    fill_n += 1
+                else:
+                    height_other += child.height_calc
+            # The height of this widget is the remaining height shared with the other filled.abs
+            h = (self.height - height_other) // fill_n
+            if fill_n == 1:
+                h -= 1
+            recalc = height_other + h * fill_n
+            if recalc >= self.height:
+                h -= 1
+            return h
 
     def _get_layout_siblings(self) -> list[str]:
         """Return a list with the layout of all the siblings"""
