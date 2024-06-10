@@ -13,12 +13,16 @@ class LabelFrame(Widget):
         border (bool): This frame have borders or not. TODO: WIP
     """
 
-    style_border = BoxClean
+    style_box = BoxClean
 
-    def __init__(self, parent, text:str=""):
+    def __init__(self, parent, text:str="", style_text=Style.NORMAL, style_border=Style.TEXT_MUTED):
         super().__init__(parent)
 
         self.text = text
+
+        self.style_border = style_border
+        self.style_text = style_text
+
         self.pad_intern.x = 1
         self.pad_intern.y = 1
 
@@ -66,18 +70,19 @@ class LabelFrame(Widget):
 
     def update(self):
         # The string to display
-        line = self.style_border.H * (self.width - 2)
-        top = f"{self.style_border.TL}{line}{self.style_border.TR}"
-        bottom = f"{self.style_border.BL}{line}{self.style_border.BR}"
+        line = self.style_box.H * (self.width - 2)
+        top = f"{self.style_box.TL}{line}{self.style_box.TR}"
+        bottom = f"{self.style_box.BL}{line}{self.style_box.BR}"
 
         # Display the strings with the correct style
-        self.set_style(Style.TEXT_MUTED)
+        self.set_style(self.style_border)
         self.addstr(self.y, self.x, top)
         row = 0
         for row in range(1, self.height - 1):
-            self.addstr(self.y + row, self.x, self.style_border.V)
-            self.addstr(self.y + row, self.x + self.width - 1, self.style_border.V)
+            self.addstr(self.y + row, self.x, self.style_box.V)
+            self.addstr(self.y + row, self.x + self.width - 1, self.style_box.V)
         self.addstr(self.y + row + 1, self.x, bottom)
 
-        self.set_style(Style.NORMAL)
-        self.addstr(self.y, self.x + 1, self.text)
+        self.set_style(self.style_text)
+        text = f" {self.text} " if self.text else ""
+        self.addstr(self.y, self.x + 1, text)

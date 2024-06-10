@@ -1,6 +1,7 @@
 import curses
 
 from src import tui
+from src.tui.style import Style
 
 
 def update_label():
@@ -27,7 +28,7 @@ label_title.pack()
 label_title_right = tui.Label(frame_title, text="Title right", align="right")
 label_title_right.pack()
 
-frame_choices = tui.LabelFrame(root, text="Hello")
+frame_choices = tui.LabelFrame(root, text="Hello", style_text=Style.TEXT_PRIMARY, style_border=Style.TEXT_INFO)
 frame_choices.pack()
 
 choice_shape = tui.Choice(frame_choices)
