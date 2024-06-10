@@ -8,8 +8,16 @@ class SceneCombatUi(tui.Tui):
         super().__init__()
         self.scene = scene
 
+        self.frame_title = tui.LabelFrame(self)
+        self.frame_title.pack()
+        self.label_title = tui.Label(self.frame_title, text="GAME DECK TEST", align="center")
+        self.label_title.pack()
+
+        self.frame_main = tui.Frame(self)
+        self.frame_main.pack(fill=True)
+
         # Enemy frame
-        self.frame_enemy = tui.Frame(self)
+        self.frame_enemy = tui.Frame(self.frame_main)
         self.frame_enemy.grid(0, columnspan=2)
         self.label_enemy_name = tui.Label(self.frame_enemy, align="center", style=Style.TEXT_PRIMARY)
         self.label_enemy_name.pack()
@@ -23,7 +31,7 @@ class SceneCombatUi(tui.Tui):
         self.label_enemy_card.grid(0, 1)
 
         # Player frame
-        self.frame_player = tui.Frame(self)
+        self.frame_player = tui.Frame(self.frame_main)
         self.frame_player.grid(1, columnspan=2)
         self.label_player_name = tui.Label(self.frame_player, align="center", style=Style.TEXT_PRIMARY)
         self.label_player_name.pack()
@@ -37,12 +45,12 @@ class SceneCombatUi(tui.Tui):
         self.label_player_card.grid(0, 1)
 
         # History of played cards
-        self.frame_history = tui.Label(self)
+        self.frame_history = tui.Label(self.frame_main)
         self.frame_history.filler = "."
         self.frame_history.grid(0, 2, rowspan=2)
 
         # Cards in player's hand frame
-        self.frame_cards = tui.Frame(self)
+        self.frame_cards = tui.Frame(self.frame_main)
         self.frame_cards.grid(2, columnspan=3)
         self.choice_hand = tui.Choice(self.frame_cards)
         self.choice_hand.grid(0, 0)
@@ -50,18 +58,11 @@ class SceneCombatUi(tui.Tui):
         self.label_card_hand.prefix = "Hovered card:\n"
         self.label_card_hand.grid(0, 1, columnspan=3)
 
-        # Frame for the user inputs
-        self.frame_input = tui.Frame(self)
-        self.frame_input.grid(3, columnspan=3)
-        self.label_status = tui.Label(self.frame_input)
-        self.label_status.pack()
-
         # Initialize values
         self.label_enemy_name.text = self.scene.enemy.name
         self.enemy_hp.maximum = self.scene.enemy.health.maximum
         self.label_player_name.text = sgt.player.name
         self.player_hp.maximum = sgt.player.health.maximum
-        self.label_status.prefix = "Status: "
 
     def update(self):
         # Update player and enemy health and all

@@ -54,7 +54,6 @@ class SceneCombat(Scene):
             str: Status after a loop - "continue" or "end of turn".
         """
 
-        self.ui.label_status.text = "Player turn"
         self.ui.choice_hand.focus_set()
         self.ui.update()
 
@@ -80,8 +79,6 @@ class SceneCombat(Scene):
         Returns:
             str: Status after a loop - "continue" or "end of turn".
         """
-
-        self.ui.label_status.text = "Enemy turn"
 
         self.ui.update()
         card = self.enemy.play_card(0)
