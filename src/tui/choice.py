@@ -45,6 +45,12 @@ class Choice(Widget):
 
         return self.choices[self.current] if self._selected else ""
 
+    @property
+    def choice_current(self) -> str:
+        """Return the current choice as text."""
+
+        return self.choices[self.current]
+
     # Events
 
     def _on_focus(self) -> str:
