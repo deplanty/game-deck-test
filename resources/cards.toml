@@ -90,3 +90,10 @@ name_full = "Spike"
 cost = 1
 thorn = 2
 description = "Give {card.thorn} thron."
+
+[sleeping_dart]
+iid = 14
+name_full = "Sleeping dart"
+cost = 1
+weakness = 2
+description = "Apply {card.weakness} weakness."

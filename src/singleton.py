@@ -64,7 +64,7 @@ all_encounters = [
 
 # All heroes are stored in a list
 all_heroes = [
-    encounter_from_name(name) for name in ["Lisa", "Jacques"]
+    encounter_from_name(name) for name in ["Lisa", "Jacques", "Barnabe"]
 ]
 
 root = None

@@ -35,6 +35,7 @@ class Card:
         # Debuff
         self.burn = 0
         self.poison = 0
+        self.weakness = 0
         # Effects
         self.heal = 0
         self.energy = 0
@@ -66,6 +67,7 @@ class Card:
         else:
             damage = self.base_damage + self.upgrades
             if self.owner: damage += self.owner.strenght
+            if self.owner.weakness: damage //= 2
             return damage
 
     @property

@@ -29,7 +29,8 @@ class Player:
         # Debuff
         self.burn = Buff("Burn")
         self.poison = Buff("Poison")
-        self.debuffs = [self.burn, self.poison]
+        self.weakness = Buff("Weakness")
+        self.debuffs = [self.burn, self.poison, self.weakness]
 
     def __str__(self) -> str:
         return f"{self.name}(HP: {self.health}, EP: {self.energy})"
@@ -103,6 +104,7 @@ class Player:
 
         self.health -= self.burn
         self.burn -= 1
+        self.weakness -= 1
 
     def play_card(self, index:int) -> Card:
         """
@@ -162,6 +164,7 @@ class Player:
 
         self.burn += card.burn
         self.poison += card.poison
+        self.weakness += card.weakness
 
         # The owner of the card take dame for each stack of thorn
         card.owner.health -= self.thorn

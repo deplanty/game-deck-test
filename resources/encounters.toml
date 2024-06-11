@@ -10,6 +10,12 @@ energy = 3
 hand_size = 4
 deck = [12, 12, 12, 6, 6, 6, 4, 4, 3, 3, 1, 1, 13, 13]
 
+[Barnabe]
+hp = 40
+energy = 3
+hand_size = 5
+deck = [14, 14, 3, 3, 12, 12, 7, 7, 8, 8]
+
 [number_one]
 hp = 20
 energy = 2
