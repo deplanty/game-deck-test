@@ -63,14 +63,14 @@ class Card:
 
         # A card without base damage can't deal damage. It's to fix a problem where a "magic" card
         # deals direct damage when the strenght is greater than 0.
-        if self.bash:
+        if self.bash and self.owner:
             damage = self.owner.armor
         elif self.base_damage == 0:
             damage = 0
         else:
             damage = self.base_damage + self.upgrades
             if self.owner: damage += self.owner.strenght
-            if self.owner.weakness: damage //= 2
+            if self.owner and self.owner.weakness: damage //= 2
 
         return damage
 

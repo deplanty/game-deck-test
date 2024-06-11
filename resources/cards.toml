@@ -82,14 +82,14 @@ iid = 12
 name_full = "Harden"
 cost = 1
 resistance = 1
-description = "Give {card.resistance} resitance."
+description = "Give {card.resistance} resistance."
 
 [spike]
 iid = 13
 name_full = "Spike"
 cost = 1
 thorn = 2
-description = "Give {card.thorn} thron."
+description = "Give {card.thorn} thorn."
 
 [sleeping_dart]
 iid = 14
