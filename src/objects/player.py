@@ -23,8 +23,8 @@ class Player:
         # Buffs
         self.armor = Buff("Armor")
         self.strenght = Buff("Strenght")
-        self.armored = Buff("Armored")
-        self.buffs = [self.armor, self.strenght, self.armored]
+        self.resistance = Buff("Resistance")
+        self.buffs = [self.armor, self.strenght, self.resistance]
         # Debuff
         self.burn = Buff("Burn")
         self.poison = Buff("Poison")
@@ -137,8 +137,9 @@ class Player:
         self.health += card.heal
         self.energy += card.energy
 
-        self.armor += card.armor
         self.strenght += card.strenght
+        self.resistance += card.resistance
+        self.armor += card.armor
         self.deck.draw(card.draw)
 
     def get_hit(self, card:Card):

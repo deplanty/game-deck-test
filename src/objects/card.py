@@ -27,10 +27,14 @@ class Card:
         self.description = ""
 
         self.base_damage = 0
-        self.armor = 0
+        self.base_armor = 0
+        # Buff
         self.strenght = 0
+        self.resistance = 0
+        # Debuff
         self.burn = 0
         self.poison = 0
+        # Effects
         self.heal = 0
         self.energy = 0
         self.hurt = 0
@@ -62,6 +66,19 @@ class Card:
             damage = self.base_damage + self.upgrades
             if self.owner: damage += self.owner.strenght
             return damage
+
+    @property
+    def armor(self) -> int:
+        """Return the calculated armor of the card."""
+
+        # A card without base armor can't give amror. It's to fix a problem where a card whitout
+        # amor can give it.
+        if self.base_armor == 0:
+            return 0
+        else:
+            armor = self.base_armor + self.upgrades
+            if self.owner: armor += self.owner.resistance
+            return armor
 
     @property
     def info(self) -> str:

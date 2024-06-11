@@ -16,7 +16,7 @@ description = "Deal {card.damage} damage."
 iid = 3
 name_full = "Shield"
 cost = 1
-armor = 4
+base_armor = 4
 description = "Gain {card.armor} armor."
 
 [sword_and_shield]
@@ -24,7 +24,7 @@ iid = 4
 name_full = "Sword and shield"
 cost = 1
 base_damage = 1
-armor = 2
+base_armor = 2
 description = "Gain {card.armor} armor and deal {card.damage} damage."
 
 [great_sword]
@@ -76,3 +76,10 @@ name_full = "Recharge"
 cost = 1
 draw = 4
 description = "Draw {card.draw} cards."
+
+[harden]
+iid = 12
+name_full = "Harden"
+cost = 1
+resistance = 1
+description = "Give {card.resistance} resitance."
