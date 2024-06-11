@@ -2,13 +2,13 @@
 
 import src.singleton as sgt
 from src.objects import Player
-from src.scenes import SceneSelectHero
+from src.scenes import SceneMainMenu
 
 
 class GameLoop:
     def __init__(self):
         sgt.root = self
-        self.current_scene = SceneSelectHero()
+        self.current_scene = SceneMainMenu()
 
     def mainloop(self):
         while self.current_scene:
