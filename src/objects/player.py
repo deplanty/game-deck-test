@@ -24,7 +24,8 @@ class Player:
         self.armor = Buff("Armor")
         self.strenght = Buff("Strenght")
         self.resistance = Buff("Resistance")
-        self.buffs = [self.armor, self.strenght, self.resistance]
+        self.thorn = Buff("Thorn")
+        self.buffs = [self.armor, self.strenght, self.resistance, self.thorn]
         # Debuff
         self.burn = Buff("Burn")
         self.poison = Buff("Poison")
@@ -140,6 +141,7 @@ class Player:
         self.strenght += card.strenght
         self.resistance += card.resistance
         self.armor += card.armor
+        self.thorn += card.thorn
         self.deck.draw(card.draw)
 
     def get_hit(self, card:Card):
@@ -160,6 +162,9 @@ class Player:
 
         self.burn += card.burn
         self.poison += card.poison
+
+        # The owner of the card take dame for each stack of thorn
+        card.owner.health -= self.thorn
 
     def copy(self):
         """Return a copy of the player."""

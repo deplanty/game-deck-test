@@ -31,6 +31,7 @@ class Card:
         # Buff
         self.strenght = 0
         self.resistance = 0
+        self.thorn = 0
         # Debuff
         self.burn = 0
         self.poison = 0

@@ -83,3 +83,10 @@ name_full = "Harden"
 cost = 1
 resistance = 1
 description = "Give {card.resistance} resitance."
+
+[spike]
+iid = 13
+name_full = "Spike"
+cost = 1
+thorn = 2
+description = "Give {card.thorn} thron."
