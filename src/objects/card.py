@@ -41,6 +41,7 @@ class Card:
         self.energy = 0
         self.hurt = 0
         self.draw = 0
+        self.bash = False
 
         # Signals
         self.upgraded = Signal()
@@ -62,13 +63,16 @@ class Card:
 
         # A card without base damage can't deal damage. It's to fix a problem where a "magic" card
         # deals direct damage when the strenght is greater than 0.
-        if self.base_damage == 0:
-            return 0
+        if self.bash:
+            damage = self.owner.armor
+        elif self.base_damage == 0:
+            damage = 0
         else:
             damage = self.base_damage + self.upgrades
             if self.owner: damage += self.owner.strenght
             if self.owner.weakness: damage //= 2
-            return damage
+
+        return damage
 
     @property
     def armor(self) -> int:

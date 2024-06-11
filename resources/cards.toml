@@ -97,3 +97,10 @@ name_full = "Sleeping dart"
 cost = 1
 weakness = 2
 description = "Apply {card.weakness} weakness."
+
+[bash]
+iid = 15
+name_full = "Bash"
+cost = 1
+bash = true
+description = "Deal damage equal to your armor."
