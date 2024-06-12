@@ -107,7 +107,7 @@ class Label(Widget):
         text_split = self.text_full.split("\n")
         lines = list()
         for line in text_split:
-            text = textwrap.wrap(line, self.width)
+            text = textwrap.wrap(line, self.width, replace_whitespace=False, drop_whitespace=False)
             for line in text:
                 if self.align == "left":
                     pass

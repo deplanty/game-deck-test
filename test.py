@@ -82,6 +82,23 @@ label_element.pack()
 label_trait = tui.Label(root, prefix="Trait: ", suffix="!")
 label_trait.pack()
 
+tui.Frame(root).pack()
+
+label_big = tui.Label(root, align="center")
+label_big.text = """\
+ __      ___      _                   
+ \ \    / (_)    | |                  
+  \ \  / / _  ___| |_ ___  _ __ _   _ 
+   \ \/ / | |/ __| __/ _ \| '__| | | |
+    \  /  | | (__| || (_) | |  | |_| |
+     \/   |_|\___|\__\___/|_|   \__, |
+                                 __/ |
+                                |___/ 
+
+"""
+label_big.pack()
+
+
 update_label()
 
 entry.focus_set()
