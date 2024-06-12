@@ -1,12 +1,12 @@
 import time
 
 import src.singleton as sgt
-from src.scenes import Scene
+from src import scenes
 
 from .combat_ui import SceneCombatUi
 
 
-class SceneCombat(Scene):
+class SceneCombat(scenes.Scene):
     def __init__(self, enemy_name:str):
         super().__init__()
 
@@ -33,7 +33,7 @@ class SceneCombat(Scene):
                     sgt.player.end_of_turn()
                     self.enemy.start_of_turn()
                 elif action == "quit":
-                    return
+                    return scenes.SceneMainMenu()
             elif turn == "enemy":
                 action = self.loop_turn_enemy()
                 if action == "end of turn":
@@ -44,9 +44,9 @@ class SceneCombat(Scene):
             count += 1
 
         if not sgt.player.is_alive():
-            print("DEFEAT")
+            return scenes.SceneCombatEnd("defeat")
         else:
-            print("VICTORY")
+            return scenes.SceneCombatEnd("victory")
 
     def loop_turn(self) -> str:
         """
