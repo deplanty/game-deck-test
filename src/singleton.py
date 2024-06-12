@@ -59,13 +59,17 @@ for name, data in toml.load("resources/encounters.toml").items():
 
 # All encounters are stored in a list
 all_encounters = [
-    encounter_from_name(name) for name in ["number_one", "number_two", "number_three", "number_four"]
+    encounter_from_name(name) for name in ["dummy", "number_one", "number_two", "number_three", "number_four"]
 ]
 
 # All heroes are stored in a list
 all_heroes = [
-    encounter_from_name(name) for name in ["Lisa", "Jacques", "Barnabe"]
+    encounter_from_name(name) for name in ["Tester", "Lisa", "Jacques", "Barnabe"]
 ]
+# The tester have access to all the cards
+tester = all_heroes[0]
+for card in all_cards:
+    tester.add_card_from_id(card)
 
 root = None
 player = None

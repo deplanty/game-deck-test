@@ -72,9 +72,7 @@ class Player:
         player.energy.maximum = data["energy"]
         player.hand_size = data["hand_size"]
         for iid in data["deck"]:
-            card = sgt.card_from_id(iid)
-            card.owner = player
-            player.deck.add(card)
+            player.add_card_from_id(iid)
         player.energy.refill()
         return player
 
@@ -174,3 +172,8 @@ class Player:
         """Return a copy of the player."""
 
         return copy.deepcopy(self)
+
+    def add_card_from_id(self, iid:int):
+        card = sgt.card_from_id(iid)
+        card.owner = self
+        self.deck.add(card)
