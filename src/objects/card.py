@@ -70,8 +70,7 @@ class Card:
         else:
             damage = self.base_damage + self.upgrades
             if self.owner: damage += self.owner.strenght
-            if self.owner and self.owner.weakness: damage //= 2
-
+            if self.owner and self.owner.weakness > 0: damage //= 2
         return damage
 
     @property
