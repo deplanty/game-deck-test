@@ -71,6 +71,9 @@ class SceneCombatUi(tui.Tui):
         self.label_player_info.text = sgt.player.info
         self.player_hp.current = sgt.player.health.current
 
+        self.frame_enemy.fill()
+        self.frame_player.fill()
+
         # Show the cards in hand
         self.choice_hand.reset_choices()
         for i, card in enumerate(sgt.player.deck.hand):
@@ -88,6 +91,7 @@ class SceneCombatUi(tui.Tui):
         for player, card in self.scene.history_cards:
             history.insert(0, f"{player.name}: {card}")
         self.frame_history.text = "\n".join(history)
+
         super().update()
 
     def card_played(self, player, card):
