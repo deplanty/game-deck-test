@@ -17,7 +17,7 @@ class Player:
     def __init__(self, name:str, max_health:int):
         self.name = name
         self.health = Gauge(max_health)
-        self.energy = Gauge(4)
+        self.energy = Gauge(2)
         self.deck = Deck()
         self.hand_size = 2
         # Buffs
@@ -75,6 +75,7 @@ class Player:
             card = sgt.card_from_id(iid)
             card.owner = player
             player.deck.add(card)
+        player.energy.refill()
         return player
 
     # Method
