@@ -104,3 +104,67 @@ name_full = "Bash"
 cost = 1
 bash = true
 description = "Deal damage equal to your armor."
+
+[vampirism]
+iid = 16
+name_full = "Vampirism"
+cost = 2
+base_damage = 2
+heal = 2
+description = "Deal {card.damage} damage and heal {card.heal} health."
+
+[toxic_cloud]
+iid = 17
+name_full = "Toxic cloud"
+cost = 1
+poison = 1
+weakness = 1
+description = "Apply {card.poison} poison and {card.weakness} weakness."
+
+[ashes]
+iid = 18
+name_full = "Ashes"
+cost = 1
+burn = 1
+weakness = 1
+description = "Apply {card.burn} burn and {card.weakness} weakness."
+
+[mud_trap]
+iid = 19
+name_full = "Mud trap"
+cost = 2
+base_damage = 2
+weakness = 2
+description = "Deal {card.damage} damage and apply {card.weakness} weakness."
+
+[elemental_storm]
+iid = 20
+name_full = "Elemental storm"
+cost = 3
+poison = 3
+burn = 3
+weakness = 3
+description = "Apply {card.poison} poison, {card.burn} burn and {card.weakness} weakness."
+
+[fire_wall]
+iid = 21
+name_full = "Fire wall"
+cost = 2
+base_armor = 2
+burn = 2
+description = "Gain {card.armor} armor and apply {card.burn} burn."
+
+[turtle_stand]
+iid = 22
+name_full = "Turtle stand"
+cost = 3
+resistance = 1
+base_armor = 2
+bash = true
+description = "Gain {card.resistance} resistance, {card.armor} armor and deal damage equal to your armor."
+
+[empty]
+iid = 23
+name_full = "Empty card"
+cost = 0
+description = "Do nothing"
