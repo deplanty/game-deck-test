@@ -28,9 +28,25 @@ class Entry(Widget):
         self.placeholder = placeholder
         self.text = ""
 
-        self._empty = "░"
-
         self.changed = Signal()
+
+        self._empty = "░"
+        self._cursor = 0
+
+    # Properties
+
+    @property
+    def _cursor(self) -> int:
+        return self.__cursor
+
+    @_cursor.setter
+    def _cursor(self, value:int):
+        if value < 0:
+            self.__cursor = 0
+        elif value > len(self.text):
+            self.__cursor = len(self.text)
+        else:
+            self.__cursor = value
 
     def update(self):
         if self.text == "":
@@ -40,12 +56,7 @@ class Entry(Widget):
 
         line = f"{text:{self._empty}<{self.width}}"
         self.addstr(self.y, self.x, line)
-        self._set_cursor_end()
-
-    def _set_cursor_end(self) -> None:
-        """Set the cursor at the end of the entry."""
-
-        self.main.scr.move(self.y, self.x + len(self.text))
+        self._place_cursor()
 
     def _on_focus(self) -> str:
         """
@@ -65,7 +76,7 @@ class Entry(Widget):
             key = self.getch()
             char = chr(key)
             if key == Keys.BACKSPACE:
-                self.text = self.text[:-1]
+                self._remove_char()
                 self.changed.emit()
             elif key == Keys.TABLUATION:
                 state = "tab"
@@ -75,11 +86,42 @@ class Entry(Widget):
                 state = "ok"
             elif key == Keys.ESCAPE:
                 self.text = tmp
+                self._set_cursor_end()
                 self.changed.emit()
+            elif key == Keys.ARROW_LEFT:
+                self._cursor -= 1
+            elif key == Keys.ARROW_RIGHT:
+                self._cursor += 1
             elif char.isprintable():
-                self.text += char
+                self._insert_char(char)
                 self.changed.emit()
 
         curses.nocbreak()
 
         return state
+
+    def _insert_char(self, char:str):
+        """Insert a char at the current cursor position."""
+        
+        self.text = self.text[:self._cursor] + char + self.text[self._cursor:]
+        self._cursor += 1
+
+    def _remove_char(self):
+        """Remove a char from the current cursor position."""
+
+        if self._cursor == 0:
+            return
+
+        self.text = self.text[:self._cursor - 1] + self.text[self._cursor:]
+        self._cursor -= 1
+
+    def _place_cursor(self):
+        """Place the cursor on screen at its current position."""
+
+        self.main.scr.move(self.y, self.x + self._cursor)
+
+    def _set_cursor_end(self):
+        """Set the cursor at the end of the entry."""
+
+        self._cursor = len(self.text)
+
