@@ -224,6 +224,8 @@ class Widget:
         self.main.scr.addstr(y, x, text, self.style, *args, *kwargs)
 
     def getch(self) -> str:
+        """Wait a char from the user."""
+
         return self.main.scr.getch()
 
     def fill(self):
@@ -414,6 +416,8 @@ class Widget:
         return result
 
     def _on_focus(self):
+        """Placeholder for subsequent inherited Widget that can be focused."""
+
         pass
 
     def set_style(self, style:int, *modifiers):

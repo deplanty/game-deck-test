@@ -25,15 +25,28 @@ class Label(Widget):
 
     @property
     def text(self) -> str:
+        """The text of the label.
+        
+        This text do not include the prefix nor the suffix.
+        """
+
         return self._text
 
     @text.setter
     def text(self, value:str):
+        """Set the text of the label.
+        
+        When the text is set, the flag that indicates that the widget should be filled to remove
+        the previous text is set to True.
+        """
+
         self._text = str(value)
         self._flag_fill = True
 
     @property
     def prefix(self) -> str:
+        """The prefix of the label is displayed right before the text."""
+
         return self._prefix
 
     @prefix.setter
@@ -43,6 +56,8 @@ class Label(Widget):
 
     @property
     def suffix(self) -> str:
+        """The suffix of the label is displayed right after the text."""
+
         return self._suffix
 
     @suffix.setter
@@ -52,6 +67,8 @@ class Label(Widget):
 
     @property
     def align(self) -> str:
+        """The alignment of the text in the label: right, left or center."""
+
         return self._align
 
     @align.setter
@@ -66,6 +83,13 @@ class Label(Widget):
 
     @property
     def text_full(self) -> str:
+        """The full text of the label including the prefix and the suffix.
+
+        If the text is empty, only the prefix is shown. For exemple, if the prefix is "Size: " the
+        suffix is a unit " cm", the full text will be "Size:  cm" whereas it should be "Size: ".
+        """
+        # TODO: Maybe add a parameter that allows the user to decide if the suffix should be displayed ir not.
+
         if self.text:
             return self.prefix + self.text + self.suffix
         else:

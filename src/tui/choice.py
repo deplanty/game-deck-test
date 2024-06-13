@@ -29,10 +29,17 @@ class Choice(Widget):
 
     @property
     def current(self) -> int:
+        """Current position of the cursor."""
+
         return self._current
 
     @current.setter
     def current(self, value) -> int:
+        """Set the position of the cursor.
+
+        It can't be lower than 0 and greater than the number of choices.
+        """
+
         if value >= 0 and (value < len(self.choices) or len(self.choices) == 0):
             self._current = value
 

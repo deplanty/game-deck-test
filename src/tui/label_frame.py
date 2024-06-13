@@ -9,8 +9,10 @@ class LabelFrame(Widget):
     A simple widget use to contains other widgets
 
     Args:
-        parent (Widget): The parent widget
-        border (bool): This frame have borders or not. TODO: WIP
+        parent (Widget): The parent widget.
+        text (str): The label displayed on this frame.
+        style_text (Style): The style applied on the label.
+        style_border (Style): The style applied on the border.
     """
 
     style_box = BoxClean
@@ -42,7 +44,7 @@ class LabelFrame(Widget):
         If the widget have children, the height depends on the layout.
             - For grid: it's the sum of the height of each row.
             - For pack: it's the sum of the height of each child.
-            - TODO: For place: ... It's... something? ... WIP !
+            - For place: the height is defined by the layout.
         """
 
         if not self.children:
@@ -66,7 +68,7 @@ class LabelFrame(Widget):
             h = sum(child.height for child in self.children)
             return self.pad_intern.y * 2 + h
         elif layout == "place":
-            return self.pad_intern. y * 2
+            return self._place.height
 
     def update(self):
         # The string to display

@@ -1,5 +1,8 @@
 import curses
 
+# TODO: Change how the styles are managed.
+# TODO: Allow a simple way to add Bold, Italic, Underline, etc.
+
 class Color:
     """Color number in the curses colormap."""
 

@@ -37,10 +37,17 @@ class Entry(Widget):
 
     @property
     def _cursor(self) -> int:
+        """Return the current position of the cursor."""
+
         return self.__cursor
 
     @_cursor.setter
     def _cursor(self, value:int):
+        """Set the position of the cursor.
+
+        The cursor can't be lower than 0 and greater that the size of the text.
+        """
+
         if value < 0:
             self.__cursor = 0
         elif value > len(self.text):

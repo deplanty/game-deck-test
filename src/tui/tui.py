@@ -56,7 +56,10 @@ class Tui(Widget):
             return cycle
 
     def _init_colors(self):
-        """Initialize a small bunch of color_pairs."""
+        """Initialize a small bunch of color_pairs.
+
+        The colors and pairs and everything should be stored in a file.
+        """
 
         curses.init_pair(Style.TEXT_PRIMARY, 33, -1)
         curses.init_pair(Style.TEXT_SECONDARY, 141, -1)

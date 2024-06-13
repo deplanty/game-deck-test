@@ -20,7 +20,7 @@ class Frame(Widget):
         If the widget have children, the height depends on the layout.
             - For grid: it's the sum of the height of each row.
             - For pack: it's the sum of the height of each child.
-            - TODO: For place: ... It's... something? ... WIP !
+            - For place: the height is defined by the layout.
         """
 
         if not self.children:
@@ -44,7 +44,7 @@ class Frame(Widget):
             return self.pad_intern.y * 2 + h
 
         elif layout == "place":
-            return self.pad_intern. y * 2
+            return self._place.height
 
     def update(self):
         pass
