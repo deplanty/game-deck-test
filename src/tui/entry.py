@@ -1,6 +1,6 @@
 import curses
 
-from src.tui import Widget
+from src.tui import Widget, Signal
 from src.tui.keys import Keys
 
 
@@ -20,6 +20,8 @@ class Entry(Widget):
         tabulation: Go to next widget in the focus list.
     """
 
+    changed:Signal
+
     def __init__(self, parent:Widget, placeholder:str="Entry"):
         super().__init__(parent)
 
@@ -27,6 +29,8 @@ class Entry(Widget):
         self.text = ""
 
         self._empty = "░"
+
+        self.changed = Signal()
 
     def update(self):
         if self.text == "":
@@ -58,10 +62,11 @@ class Entry(Widget):
         state = ""
         while state == "":
             self.update()
-            key = self.main.scr.getch()
+            key = self.getch()
             char = chr(key)
             if key == Keys.BACKSPACE:
                 self.text = self.text[:-1]
+                self.changed.emit()
             elif key == Keys.TABLUATION:
                 state = "tab"
             elif key == Keys.TABLUATION_BACK:
@@ -70,8 +75,10 @@ class Entry(Widget):
                 state = "ok"
             elif key == Keys.ESCAPE:
                 self.text = tmp
+                self.changed.emit()
             elif char.isprintable():
                 self.text += char
+                self.changed.emit()
 
         curses.nocbreak()
 
