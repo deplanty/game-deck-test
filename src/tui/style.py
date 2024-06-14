@@ -1,13 +1,35 @@
 import curses
 
-# TODO: Change how the styles are managed.
-# TODO: Allow a simple way to add Bold, Italic, Underline, etc.
 
 class Color:
-    """Color number in the curses colormap."""
+    """Color number in the curses colormap.
 
-    WHITE = curses.COLOR_WHITE
-    BLACK = curses.COLOR_BLACK
+    The names come from the website https://colornamer.robertcooper.me
+    """
+
+    WHITE = 231
+    BLACK = 16
+
+    RED = 196
+    BLUE = 21
+    GREEN = 46
+
+    MAGENTA = 201
+    YELLOW = 226
+    CYAN = 51
+
+    PRINCESS_BLUE = 1
+    GREEN_ENVY = 2
+    SUMMER_BLUE = 3
+    HOT_LAVA = 4
+    HIGHLIGHTER LAVENDER = 5
+    JAPANESE_FERN 6
+    AZURE = 9
+    GREEN_CAPE = 10
+    CLEAN_POOL = 11
+    PINK_RED = 12
+    LOBBY_LILAC = 13
+    DECO = 14
 
 
 class Pair:
