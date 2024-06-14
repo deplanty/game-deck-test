@@ -107,8 +107,10 @@ label_big.text = """\
 """
 label_big.pack()
 
+label_fill = tui.Label(root, text="Fill the rest of the window")
+label_fill.pack()
 frame_fill = tui.Frame(root)
-frame_fill.filler = "#"
+frame_fill.filler = "+"
 frame_fill.pack(True)
 
 
