@@ -9,17 +9,30 @@ class Label(Widget):
     A simple widget that displays some text.
 
     Args:
-        parent (Widget): The parent widget
+        parent (Widget): The parent widget.
+        text (str): The text displayed.
+        prefix (str): A text to display right before the main text.
+        suffix (str): A text to display right after the main text.
+        align (str): How the text is displayed (left, center, right).
+        style: The style used to show this label.
+
+    Other attributes:
+        prefix_always (bool): If True, always show the prefix before the main text.
+        suffix_always (bool): If False, hide the suffix after the main text when it is empty.
     """
 
-    def __init__(self, parent, text:str="", prefix:str="", suffix:str="", align:str="left", style:int=Style.NORMAL):
+    def __init__(self, parent:Widget, text:str="", prefix:str="", suffix:str="", align:str="left", style=Style.NORMAL):
         super().__init__(parent)
         self.text = text
         self.prefix = prefix
         self.suffix = suffix
         self.align = align
-
         self.style = style
+
+        # If `prefix_always` is True, it is shown even if the text is empty
+        self.prefix_always = True
+        # If `suffix_always` is False, it is hidden when the text is empty
+        self.suffix_always = False
 
     # Properties
 
@@ -88,12 +101,16 @@ class Label(Widget):
         If the text is empty, only the prefix is shown. For exemple, if the prefix is "Size: " the
         suffix is a unit " cm", the full text will be "Size:  cm" whereas it should be "Size: ".
         """
-        # TODO: Maybe add a parameter that allows the user to decide if the suffix should be displayed ir not.
 
         if self.text:
             return self.prefix + self.text + self.suffix
         else:
-            return self.prefix
+            text = ""
+            if self.prefix_always:
+                text += self.prefix
+            if self.suffix_always:
+                text += self.suffix
+            return text
 
     @property
     def height_calc(self) -> int:

@@ -84,6 +84,7 @@ entry.pack()
 tui.Frame(root).pack()
 
 label_shape = tui.Label(root, prefix="Shape: ", suffix=".")
+label_shape.suffix_always = True
 label_shape.pack()
 label_element = tui.Label(root, prefix="Element: ", suffix="?")
 label_element.pack()
