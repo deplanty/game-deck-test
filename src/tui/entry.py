@@ -102,6 +102,10 @@ class Entry(Widget):
                 self._cursor -= 1
             elif key == Keys.ARROW_RIGHT:
                 self._cursor += 1
+            elif key == Keys.ARROW_UP:
+                pass
+            elif key == Keys.ARROW_DOWN:
+                pass
             elif char.isprintable():
                 self._insert_char(char)
                 self.changed.emit()
