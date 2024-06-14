@@ -22,9 +22,10 @@ class Entry(Widget):
 
     changed:Signal
 
-    def __init__(self, parent:Widget, placeholder:str="Entry"):
+    def __init__(self, parent:Widget, prefix:str="", placeholder:str="Entry"):
         super().__init__(parent)
 
+        self.prefix = prefix
         self.placeholder = placeholder
         self.text = ""
 
@@ -56,10 +57,11 @@ class Entry(Widget):
             self.__cursor = value
 
     def update(self):
+        text = self.prefix
         if self.text == "":
-            text = self.placeholder
+            text += self.placeholder
         else:
-            text = self.text
+            text += self.text
 
         line = f"{text:{self._empty}<{self.width}}"
         self.addstr(self.y, self.x, line)
@@ -76,6 +78,7 @@ class Entry(Widget):
         tmp = self.text
         self._set_cursor_end()
         curses.cbreak()
+        self.style.bold()
 
         state = ""
         while state == "":
@@ -104,6 +107,7 @@ class Entry(Widget):
                 self.changed.emit()
 
         curses.nocbreak()
+        self.style.reset_modifiers()
 
         return state
 
@@ -125,7 +129,7 @@ class Entry(Widget):
     def _place_cursor(self):
         """Place the cursor on screen at its current position."""
 
-        self.main.scr.move(self.y, self.x + self._cursor)
+        self.main.scr.move(self.y, self.x + self._cursor + len(self.prefix))
 
     def _set_cursor_end(self):
         """Set the cursor at the end of the entry."""

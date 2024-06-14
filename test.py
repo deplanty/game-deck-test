@@ -78,7 +78,7 @@ choice_trait.selected.connect(update_label)
 
 tui.Frame(root).pack()
 
-entry = tui.Entry(root)
+entry = tui.Entry(root, prefix="Input: ", placeholder="Enter text here")
 entry.pack()
 
 tui.Frame(root).pack()
