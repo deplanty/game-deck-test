@@ -1,7 +1,7 @@
 import curses
 
 from src import tui
-from src.tui.style import Style
+from src.tui.style import Color, Style
 
 
 def update_label():
@@ -18,6 +18,9 @@ def update_label():
 
 
 root = tui.Tui()
+
+Style.add("custom-text", fg=Color.WHITE, bg=Color.AZURE)
+Style.add("custom-border", fg=Color.AZURE)
 
 frame_title = tui.LabelFrame(root)
 frame_title.pack()
@@ -52,7 +55,9 @@ tui.Label(frame_style, "Background light", style=Style.BG_LIGHT).grid(3, 2)
 tui.Label(frame_style, "Background dark", style=Style.BG_DARK).grid(4, 2)
 tui.Label(frame_style, "Background white", style=Style.BG_WHITE).grid(5, 2)
 
-frame_choices = tui.LabelFrame(root, text="Hello", style_text=Style.TEXT_PRIMARY, style_border=Style.TEXT_INFO)
+frame_choices = tui.LabelFrame(root, text="Hello")
+frame_choices.style_text = Style.get("custom-text")
+frame_choices.style_border = Style.get("custom-border")
 frame_choices.pack()
 
 choice_shape = tui.Choice(frame_choices)

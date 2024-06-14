@@ -22,8 +22,8 @@ class Color:
     GREEN_ENVY = 2
     SUMMER_BLUE = 3
     HOT_LAVA = 4
-    HIGHLIGHTER LAVENDER = 5
-    JAPANESE_FERN 6
+    HIGHLIGHTER_LAVENDER = 5
+    JAPANESE_FERN = 6
     AZURE = 9
     GREEN_CAPE = 10
     CLEAN_POOL = 11
@@ -111,13 +111,32 @@ class Style:
 
     _all_styles = {
         "normal": NORMAL,
-        "text_primary": TEXT_PRIMARY,
-        "bg_primary": BG_PRIMARY,
     }
 
     @classmethod
-    def get(cls, key:str):
-        return cls._all_styles.get(key, cls.NORMAL)
+    def get(cls, name:str) -> int:
+        """Return a curses style from its name."""
+
+        return cls._all_styles.get(name, cls.NORMAL)
+
+    @classmethod
+    def add(cls, name:str, fg:int=-1, bg:int=-1, *modifiers):
+        """Add a new style which will be accessible from the `get` method.
+
+        Args:
+            name (str): The name of the new style.
+            fg (int): The color of the foreground (curses number).
+            bg (int): The color of the background (curses number).
+            modifiers (int): Some curses modifiers (bold, italic, underline).
+        """
+
+        if name in cls._all_styles:
+            raise ValueError(f"Name {name} is already a known style.")
+
+        pair = Pair(fg, bg, *modifiers)
+        cls._all_styles[name] = pair
+
+        
 
 
 class BoxSimple:
