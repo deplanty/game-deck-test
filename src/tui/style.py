@@ -81,6 +81,12 @@ class Pair:
         self.modifiers.append(curses.A_REVERSE)
         return self
 
+    def reset_modifiers(self):
+        """Reset the modifiers of the style."""
+
+        self.modifiers.clear()
+        return self
+
 
 class Style:
     """Index for the `curses.init_pair`."""

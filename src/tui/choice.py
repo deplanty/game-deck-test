@@ -104,8 +104,10 @@ class Choice(Widget):
         for i, label in enumerate(self.children):
             if (self._is_on_focus or self._selected) and self.current == i:
                 label.prefix = f"{self.selector} "
+                label.style.bold()
             else:
                 label.prefix = " " * (len(self.selector) + 1)
+                label.style.reset_modifiers()
             label.text = self.choices[i]
             label.update()
         self._set_cursor_current()
