@@ -103,9 +103,13 @@ label_big.text = """\
      \/   |_|\___|\__\___/|_|   \__, |
                                  __/ |
                                 |___/ 
-
+                                
 """
 label_big.pack()
+
+frame_fill = tui.Frame(root)
+frame_fill.filler = "#"
+frame_fill.pack(True)
 
 
 update_label()

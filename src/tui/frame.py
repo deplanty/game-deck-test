@@ -47,4 +47,5 @@ class Frame(Widget):
             return self._place.height
 
     def update(self):
-        pass
+        if self._flag_fill:
+            self.fill()
