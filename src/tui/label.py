@@ -19,7 +19,7 @@ class Label(Widget):
         self.suffix = suffix
         self.align = align
 
-        self.set_style(style)
+        self.style = style
 
     # Properties
 

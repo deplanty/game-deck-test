@@ -11,7 +11,7 @@ class Progressbar(Widget):
         self.align = align
         self.display = display
         
-        self.set_style(style)
+        self.style = style
 
     def __add__(self, value:int):
         self._current = min(self._maximum, self._current + value)

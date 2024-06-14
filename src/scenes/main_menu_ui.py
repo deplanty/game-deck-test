@@ -12,7 +12,7 @@ class SceneMainMenuUi(tui.Tui):
         self.frame_title = tui.LabelFrame(self)
         self.frame_title.pack()
         self.label_title = tui.Label(self.frame_title, text="GAME DECK TEST", align="center")
-        self.label_title.set_style(Style.TEXT_WHITE, curses.A_BOLD)
+        self.label_title.style = Style.TEXT_WHITE.bold()
         self.label_title.pack()
         self.label_subtitle = tui.Label(self.frame_title, text="Main Menu", align="center")
         self.label_subtitle.pack()

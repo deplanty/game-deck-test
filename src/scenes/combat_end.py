@@ -15,10 +15,10 @@ class SceneCombatEnd(scenes.Scene):
 
     def run(self):
         if self.result == "victory":
-            self.ui.label_result.set_style(Style.TEXT_SUCCESS)
+            self.ui.label_result.style = Style.TEXT_SUCCESS
             self.ui.label_result.text = sgt.text_victory
         elif self.result == "defeat":
-            self.ui.label_result.set_style(Style.TEXT_WARNING)
+            self.ui.label_result.style = Style.TEXT_WARNING
             self.ui.label_result.text = sgt.text_defeat
         self.ui.choice_options.add_label("Main menu")
         self.ui.choice_options.add_label("Quit")

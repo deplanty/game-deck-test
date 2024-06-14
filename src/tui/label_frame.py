@@ -77,7 +77,7 @@ class LabelFrame(Widget):
         bottom = f"{self.style_box.BL}{line}{self.style_box.BR}"
 
         # Display the strings with the correct style
-        self.set_style(self.style_border)
+        self.style = self.style_border
         self.addstr(self.y, self.x, top)
         row = 0
         for row in range(1, self.height - 1):
@@ -85,6 +85,6 @@ class LabelFrame(Widget):
             self.addstr(self.y + row, self.x + self.width - 1, self.style_box.V)
         self.addstr(self.y + row + 1, self.x, bottom)
 
-        self.set_style(self.style_text)
+        self.style = self.style_text
         text = f" {self.text} " if self.text else ""
         self.addstr(self.y, self.x + 1, text)

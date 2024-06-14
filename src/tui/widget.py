@@ -1,3 +1,4 @@
+import copy
 import curses
 
 from src.tui.style import Style
@@ -187,6 +188,14 @@ class Widget:
     def focus_next(self, widget:"Widget"):
         self._focus_next = widget
 
+    @property
+    def style(self):
+        return self._style
+
+    @style.setter
+    def style(self, style):
+        self._style = copy.deepcopy(style)
+
     # Methods required
 
     def update(self):
@@ -221,7 +230,7 @@ class Widget:
             end_too_long = "~]"
             allowed = curses.COLS - x - len(end_too_long)
             text = text[:allowed] + end_too_long
-        self.main.scr.addstr(y, x, text, self.style, *args, *kwargs)
+        self.main.scr.addstr(y, x, text, self.style.apply(), *args, *kwargs)
 
     def getch(self) -> str:
         """Wait a char from the user."""
@@ -419,8 +428,3 @@ class Widget:
         """Placeholder for subsequent inherited Widget that can be focused."""
 
         pass
-
-    def set_style(self, style:int, *modifiers):
-        self.style = curses.color_pair(style)
-        for modifier in modifiers:
-            self.style |= modifier
