@@ -37,7 +37,11 @@ class Tui(Widget):
             result = self.focus_widget.focus()
 
             if result == "tab":
-                self.focus_widget = self.focus_widget.focus_next
+                while True:
+                    widget = self.focus_widget.focus_next
+                    self.focus_widget = widget
+                    if widget and widget.visible:
+                        break
             elif result == "tab_back":
                 focused_widgets = self._get_list_widget_focus()
                 index = focused_widgets.index(self.focus_widget)

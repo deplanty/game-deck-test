@@ -22,15 +22,29 @@ progress.pack()
 
 tui.Frame(root).pack()
 
-entry = tui.Entry(root, "Input")
-entry.pack(fill=True)
+entry_1 = tui.Entry(root, "Input 1: ")
+entry_1.pack()
+
+entry_2 = tui.Entry(root, "Input 2: ")
+entry_2.hide()
+entry_2.pack()
+
+entry_3 = tui.Entry(root, "Input 3: ")
+entry_3.pack(fill=True)
 
 tui.Label(root, "Last line").pack()
 
-entry.focus_set()
-entry.focus_next = entry
+entry_1.focus_set()
+entry_1.focus_next = entry_2
+entry_2.focus_next = entry_3
+entry_3.focus_next = entry_1
 
 while True:
     root.update()
-    if entry.text == "exit":
+    if entry_1.text == "exit":
         break
+
+    if entry_3.text == "hide":
+        entry_2.hide()
+    elif entry_3.text == "show":
+        entry_2.show()

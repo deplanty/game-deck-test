@@ -68,6 +68,9 @@ class Widget:
         self._place = Place()
         self._pack = Pack()
 
+        # Visibility of the widget
+        self._visible = True
+
         # Fill the widget to hide previous characters
         self.filler = " "
         self._flag_fill = False
@@ -170,6 +173,12 @@ class Widget:
         return 1
 
     @property
+    def visible(self) -> bool:
+        """The visibility state of the widget."""
+
+        return self._visible
+
+    @property
     def filler(self) -> str:
         return self._filler
 
@@ -206,9 +215,12 @@ class Widget:
     def _update(self):
         """Hiden function to update all the children widgets and this widget."""
 
-        for child in self.children:
-            child._update()
-        self.update()
+        if self.visible:
+            for child in self.children:
+                child._update()
+            self.update()
+        else:
+            self.fill()
 
     def add_child(self, child):
         """
@@ -251,6 +263,16 @@ class Widget:
 
         if not use_style:
             self.style = style
+
+    def show(self):
+        """If the widget was hidden, show it."""
+
+        self._visible = True
+
+    def hide(self):
+        """If the widget was visible, hide it."""
+
+        self._visible = False
 
     # Methods for layout
 
