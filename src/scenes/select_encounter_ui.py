@@ -1,4 +1,5 @@
 from src import tui
+from src.tui.style import Style
 
 
 class SceneSelectEncounterUi(tui.Tui):
@@ -20,6 +21,6 @@ class SceneSelectEncounterUi(tui.Tui):
     def update(self):
         for i, encounter in enumerate(self.scene.encounters):
             self.choice_encounter.add_label(str(encounter))
-        self.choice_encounter.add_label("Quit")
+        self.choice_encounter.add_label("Back", style=Style.TEXT_WARNING)
         
         super().update()

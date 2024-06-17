@@ -40,7 +40,9 @@ class Tui(Widget):
                 while True:
                     widget = self.focus_widget.focus_next
                     self.focus_widget = widget
-                    if widget and widget.visible:
+                    if widget is None:
+                        break
+                    elif widget.visible:
                         break
             elif result == "tab_back":
                 focused_widgets = self._get_list_widget_focus()

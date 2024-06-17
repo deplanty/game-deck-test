@@ -1,10 +1,10 @@
 import src.singleton as sgt
-from src.scenes import Scene, SceneCombat
+from src import scenes
 
 from .select_encounter_ui import SceneSelectEncounterUi
 
 
-class SceneSelectEncounter(Scene):
+class SceneSelectEncounter(scenes.Scene):
     def __init__(self):
         super().__init__()
 
@@ -28,9 +28,9 @@ class SceneSelectEncounter(Scene):
     # Events
 
     def _on_choice_encouter_selected(self):
-        if self.ui.choice_encounter.choice == "Quit":
-            self.scene = None
+        if self.ui.choice_encounter.choice == "Back":
+            self.scene = scenes.SceneSelectHero()
         else:
             index = self.ui.choice_encounter.current
             selected = self.encounters[index]
-            self.scene = SceneCombat(selected.name)
+            self.scene = scenes.SceneCombat(selected.name)

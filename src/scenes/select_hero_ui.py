@@ -1,4 +1,5 @@
 from src import tui
+from src.tui.style import Style
 
 
 class SceneSelectHeroUi(tui.Tui):
@@ -25,6 +26,6 @@ class SceneSelectHeroUi(tui.Tui):
     def update(self):
         for i, hero in enumerate(self.scene.heroes):
             self.choice_heroes.add_label(str(hero))
-        self.choice_heroes.add_label("Quit")
+        self.choice_heroes.add_label("Back", style=Style.TEXT_WARNING)
 
         super().update()
