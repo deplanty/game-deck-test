@@ -22,6 +22,8 @@ class SceneSelectHeroUi(tui.Tui):
 
         self.label_hero_description = tui.Label(self, prefix="Selected hero:\n")
         self.label_hero_description.pack()
+        self.label_cards_list = tui.Label(self, prefix="Cards in deck:\n")
+        self.label_cards_list.pack(fill=True)
 
     def update(self):
         for i, hero in enumerate(self.scene.heroes):

@@ -26,9 +26,12 @@ class SceneSelectHero(scenes.Scene):
         if index < len(self.heroes):
             hero = self.heroes[index]
             self.ui.label_hero_description.text = hero.info
+            self.ui.label_cards_list.text = "\n".join([card.name_full for card in hero.deck.deck])
         else:
             self.ui.label_hero_description.text = ""
+            self.ui.label_cards_list.text = ""
         self.ui.label_hero_description.update()
+        self.ui.label_cards_list.update()
 
     def _on_choice_hero_selected(self):
         if self.ui.choice_heroes.choice == "Back":
