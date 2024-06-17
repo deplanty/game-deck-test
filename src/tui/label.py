@@ -15,19 +15,22 @@ class Label(Widget):
         suffix (str): A text to display right after the main text.
         align (str): How the text is displayed (left, center, right).
         style: The style used to show this label.
+        style_filler (bool): Use the style of the label for its whole width.
 
     Other attributes:
         prefix_always (bool): If True, always show the prefix before the main text.
         suffix_always (bool): If False, hide the suffix after the main text when it is empty.
     """
 
-    def __init__(self, parent:Widget, text:str="", prefix:str="", suffix:str="", align:str="left", style=Style.NORMAL):
+    def __init__(self, parent:Widget, text:str="", prefix:str="", suffix:str="", align:str="left", style=Style.NORMAL, style_filler:bool=False):
         super().__init__(parent)
         self.text = text
         self.prefix = prefix
         self.suffix = suffix
         self.align = align
         self.style = style
+
+        self._style_filler = style_filler
 
         # If `prefix_always` is True, it is shown even if the text is empty
         self.prefix_always = True
@@ -126,7 +129,7 @@ class Label(Widget):
     def update(self):
         # If the label is modified, then the flag is up and the widget must be reset.
         if self._flag_fill:
-            self.fill()
+            self.fill(self._style_filler)
             self._flag_fill = False
 
         lines = self._get_text_as_list()

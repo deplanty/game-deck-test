@@ -237,12 +237,20 @@ class Widget:
 
         return self.main.scr.getch()
 
-    def fill(self):
+    def fill(self, use_style=False):
         """Fill the widget with the char `self.filler`."""
 
         line = self.filler * self.width
+
+        if not use_style:
+            style = self.style
+            self.style = Style.NORMAL
+
         for row in range(self.height):
             self.addstr(self.y + row, self.x, line)
+
+        if not use_style:
+            self.style = style
 
     # Methods for layout
 
