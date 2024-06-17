@@ -17,6 +17,15 @@ def update_label():
     label_trait.text = choice_trait.choice
 
 
+def update_choice_visible():
+    global choice_visible
+    global entry_visible
+
+    if choice_visible.choice.lower() == "show":
+        entry_visible.show()
+    elif choice_visible.choice.lower() == "hide":
+        entry_visible.hide()
+
 root = tui.Tui()
 
 Style.add("custom-text", fg=Color.WHITE, bg=Color.AZURE)
@@ -108,20 +117,40 @@ label_big.text = """\
 """
 label_big.pack()
 
-label_fill = tui.Label(root, text="Fill the rest of the window")
+frame_bottom = tui.Frame(root)
+frame_bottom.pack(fill=True)
+frame_bot_visible = tui.Frame(frame_bottom)
+frame_bot_visible.grid(0, 0)
+choice_visible = tui.Choice(frame_bot_visible)
+choice_visible.add_labels("Show", "Hide")
+choice_visible.selected.connect(update_choice_visible)
+choice_visible.grid(0, 0)
+entry_visible = tui.Entry(frame_bot_visible)
+label_visible = tui.Label(frame_bot_visible)
+label_visible.text = "The entry can be visible or hidden."
+label_visible.grid(0, 1)
+choice_visible._selected = True
+entry_visible.grid(1, 1)
+
+frame_bot_fill = tui.Frame(frame_bottom)
+frame_bot_fill.grid(0, 1)
+label_fill = tui.Label(frame_bot_fill, text="Fill the rest of the window")
 label_fill.pack()
-frame_fill = tui.Frame(root)
+frame_fill = tui.Frame(frame_bot_fill)
 frame_fill.filler = "+"
 frame_fill.pack(True)
 
 
 update_label()
+update_choice_visible()
 
 entry.focus_set()
 choice_shape.focus_next = choice_element
 choice_element.focus_next = choice_trait
 choice_trait.focus_next = entry
-entry.focus_next = choice_shape
+entry.focus_next = choice_visible
+choice_visible.focus_next = entry_visible
+entry_visible.focus_next = choice_shape
 
 while True:
     root.update()
