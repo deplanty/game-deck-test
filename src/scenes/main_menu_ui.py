@@ -16,14 +16,16 @@ class SceneMainMenuUi(tui.Tui):
         self.label_title.pack()
         self.label_subtitle = tui.Label(self.frame_title, text="Main Menu", align="center")
         self.label_subtitle.pack()
-        
 
         tui.Frame(self).pack()
 
         self.choice_menu = tui.Choice(self)
         self.choice_menu.pack()
 
+        self.choice_menu.focus_next = self.choice_menu
+
     def update(self):
+        self.choice_menu.reset_choices()
         for i, option in enumerate(self.scene.menu_options):
             self.choice_menu.add_label(option)
 

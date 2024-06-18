@@ -88,7 +88,6 @@ class Choice(Widget):
                 self.selected.emit()
                 state = "tab"
             elif key == Keys.TABLUATION:
-                self.selected.emit()
                 state = "tab"
             elif key == Keys.TABLUATION_BACK:
                 state = "tab_back"

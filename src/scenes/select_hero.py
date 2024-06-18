@@ -15,9 +15,12 @@ class SceneSelectHero(scenes.Scene):
 
     def run(self):
         self.ui.choice_heroes.focus_set()
-        self.ui.update()
+
+        self.scene_next = None
+        while self.scene_next is None:
+            self.ui.update()
         
-        return self.scene
+        return self.scene_next
 
     # Events
 
@@ -35,8 +38,8 @@ class SceneSelectHero(scenes.Scene):
 
     def _on_choice_hero_selected(self):
         if self.ui.choice_heroes.choice == "Back":
-            self.scene = scenes.SceneMainMenu()
+            self.scene_next = scenes.SceneMainMenu()
         else:
             index = self.ui.choice_heroes.current
             sgt.player = self.heroes[index]
-            self.scene = scenes.SceneSelectEncounter()
+            self.scene_next = scenes.SceneSelectEncounter()

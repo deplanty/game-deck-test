@@ -25,7 +25,10 @@ class SceneSelectHeroUi(tui.Tui):
         self.label_cards_list = tui.Label(self, prefix="Cards in deck:\n")
         self.label_cards_list.pack(fill=True)
 
+        self.choice_heroes.focus_next = self.choice_heroes
+
     def update(self):
+        self.choice_heroes.reset_choices()
         for i, hero in enumerate(self.scene.heroes):
             self.choice_heroes.add_label(str(hero))
         self.choice_heroes.add_label("Back", style=Style.TEXT_WARNING)

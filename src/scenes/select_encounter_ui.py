@@ -18,7 +18,10 @@ class SceneSelectEncounterUi(tui.Tui):
         self.choice_encounter = tui.Choice(self)
         self.choice_encounter.pack()
 
+        self.choice_encounter.focus_next = self.choice_encounter
+
     def update(self):
+        self.choice_encounter.reset_choices()
         for i, encounter in enumerate(self.scene.encounters):
             self.choice_encounter.add_label(str(encounter))
         self.choice_encounter.add_label("Back", style=Style.TEXT_WARNING)

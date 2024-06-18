@@ -21,16 +21,19 @@ class SceneSelectEncounter(scenes.Scene):
         """
 
         self.ui.choice_encounter.focus_set()
-        self.ui.update()
 
-        return self.scene
+        self.scene_next = None
+        while self.scene_next is None:
+            self.ui.update()
+
+        return self.scene_next
 
     # Events
 
     def _on_choice_encouter_selected(self):
         if self.ui.choice_encounter.choice == "Back":
-            self.scene = scenes.SceneSelectHero()
+            self.scene_next = scenes.SceneSelectHero()
         else:
             index = self.ui.choice_encounter.current
             selected = self.encounters[index]
-            self.scene = scenes.SceneCombat(selected.name)
+            self.scene_next = scenes.SceneCombat(selected.name)
