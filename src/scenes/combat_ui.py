@@ -81,7 +81,7 @@ class SceneCombatUi(tui.Tui):
                 style = Style.NORMAL
             else:
                 style = Style.MUTE
-            self.choice_hand.add_label(card.name_full, style=style)
+            self.choice_hand.add_label(card.name, style=style)
         self.choice_hand.add_label("End of turn", style=Style.TEXT_INFO)
         self.choice_hand.add_label("Quit", style=Style.TEXT_WARNING)
         self.frame_cards.fill()

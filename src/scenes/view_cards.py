@@ -26,7 +26,7 @@ class SceneViewCards(scenes.Scene):
             show = min(len(sgt.all_cards) - self.show_start, self.show_n)
             for i in range(self.show_start, self.show_start + show):
                 card = sgt.all_cards[i + 1]
-                self.menu_options.append(card.name_full)
+                self.menu_options.append(card.name)
 
             # Show the page previous option only if there are already sole cards shown
             if self.show_start > 0:

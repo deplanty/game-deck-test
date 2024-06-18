@@ -15,6 +15,7 @@ def card_from_id(iid:int, copy:bool=True) -> Card:
     Returns:
         Card: The card wanted.
     """
+    global all_cards
 
     card = all_cards[iid]
     if copy:
@@ -35,19 +36,20 @@ def encounter_from_name(name:str, copy:bool=True) -> Player:
     Returns:
         Player: The wanted encounter
     """
-    
+    global all_players
+
     encounter = all_players[name]
     if copy:
         return encounter.copy()
     else:
         return encounter
-    
+
 
 # Register all the cards in the game.
 #  They are stored in a dict {id: card}.
 all_cards = dict()
-for name, data in toml.load("resources/cards.toml").items():
-    card = Card.from_dict(name, data)
+for iid, data in toml.load("resources/cards.toml").items():
+    card = Card.from_dict(iid, data)
     all_cards[card.iid] = card
 
 # Register all the players in the game.

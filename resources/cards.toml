@@ -1,170 +1,147 @@
-[sword]
-iid = 1
-name_full = "Sword"
+[1]
+name = "Sword"
 cost = 1
 base_damage = 2
 description = "Deal {card.damage} damage."
 
-[bow]
-iid = 2
-name_full = "Bow"
+[2]
+name = "Bow"
 cost = 2
 base_damage = 2
 description = "Deal {card.damage} damage."
 
-[shield]
-iid = 3
-name_full = "Shield"
+[3]
+name = "Shield"
 cost = 1
 base_armor = 4
 description = "Gain {card.armor} armor."
 
-[sword_and_shield]
-iid = 4
-name_full = "Sword and shield"
+[4]
+name = "Sword and shield"
 cost = 1
 base_damage = 1
 base_armor = 2
 description = "Gain {card.armor} armor and deal {card.damage} damage."
 
-[great_sword]
-iid = 5
-name_full = "Great sword"
+[5]
+name = "Great sword"
 cost = 2
 base_damage = 4
 description = "Deal {card.damage} damage."
 
-[push_up]
-iid = 6
-name_full = "Push-up"
+[6]
+name = "Push-up"
 cost = 1
 strenght = 1
 description = "Give {card.strenght} strenght."
 
-[fireball]
-iid = 7
-name_full = "Fireball"
+[7]
+name = "Fireball"
 cost = 1
 burn = 2
 description = "Apply {card.burn} burn."
 
-[venom]
-iid = 8
-name_full = "Venom"
+[8]
+name = "Venom"
 cost = 1
 poison = 2
 description = "Apply {card.poison} poison."
 
-[perfusion]
-iid = 9
-name_full = "Perfusion"
+[9]
+name = "Perfusion"
 cost = 0
 energy = 1
 hurt = 2
 description = "Take {card.hurt} damage to gain {card.energy} energy."
 
-[bandage]
-iid = 10
-name_full = "Bandage"
+[10]
+name = "Bandage"
 cost = 2
 heal = 4
 description = "Heal {card.heal} health."
 
-[recharge]
-iid = 11
-name_full = "Recharge"
+[11]
+name = "Recharge"
 cost = 1
 draw = 4
 description = "Draw {card.draw} cards."
 
-[harden]
-iid = 12
-name_full = "Harden"
+[12]
+name = "Harden"
 cost = 1
 resistance = 1
 description = "Give {card.resistance} resistance."
 
-[spike]
-iid = 13
-name_full = "Spike"
+[13]
+name = "Spike"
 cost = 1
 thorn = 2
 description = "Give {card.thorn} thorn."
 
-[sleeping_dart]
-iid = 14
-name_full = "Sleeping dart"
+[14]
+name = "Sleeping dart"
 cost = 1
 weakness = 2
 description = "Apply {card.weakness} weakness."
 
-[bash]
-iid = 15
-name_full = "Bash"
+[15]
+name = "Bash"
 cost = 1
 bash = true
 description = "Deal damage equal to your armor."
 
-[vampirism]
-iid = 16
-name_full = "Vampirism"
+[16]
+name = "Vampirism"
 cost = 2
 base_damage = 2
 heal = 2
 description = "Deal {card.damage} damage and heal {card.heal} health."
 
-[toxic_cloud]
-iid = 17
-name_full = "Toxic cloud"
+[17]
+name = "Toxic cloud"
 cost = 1
 poison = 1
 weakness = 1
 description = "Apply {card.poison} poison and {card.weakness} weakness."
 
-[ashes]
-iid = 18
-name_full = "Ashes"
+[18]
+name = "Ashes"
 cost = 1
 burn = 1
 weakness = 1
 description = "Apply {card.burn} burn and {card.weakness} weakness."
 
-[mud_trap]
-iid = 19
-name_full = "Mud trap"
+[19]
+name = "Mud trap"
 cost = 2
 base_damage = 2
 weakness = 2
 description = "Deal {card.damage} damage and apply {card.weakness} weakness."
 
-[elemental_storm]
-iid = 20
-name_full = "Elemental storm"
+[20]
+name = "Elemental storm"
 cost = 3
 poison = 3
 burn = 3
 weakness = 3
 description = "Apply {card.poison} poison, {card.burn} burn and {card.weakness} weakness."
 
-[fire_wall]
-iid = 21
-name_full = "Fire wall"
+[21]
+name = "Fire wall"
 cost = 2
 base_armor = 2
 burn = 2
 description = "Gain {card.armor} armor and apply {card.burn} burn."
 
-[turtle_stand]
-iid = 22
-name_full = "Turtle stand"
+[22]
+name = "Turtle stand"
 cost = 3
 resistance = 1
 base_armor = 2
 bash = true
 description = "Gain {card.resistance} resistance, {card.armor} armor and deal damage equal to your armor."
 
-[empty]
-iid = 23
-name_full = "Empty card"
+[23]
+name = "Empty card"
 cost = 0
 description = "Do nothing"

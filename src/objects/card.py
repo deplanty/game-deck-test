@@ -8,7 +8,7 @@ class Card:
     Create a card.
 
     Args:
-        name (str): The name of the card.
+        iid (int): The uniq id if the card.
 
     Signals:
         upgraded: triggers when the card is upgraded
@@ -16,12 +16,12 @@ class Card:
 
     upgraded:Signal
 
-    def __init__(self, name:str):
-        self.name = name
+    def __init__(self, iid:int):
+        self.iid = int(iid)
+
         self.owner:Player = None
 
-        self.iid = 0
-        self.name_full = ""
+        self.name = ""
         self.cost = 0
         self.upgrades = 0
         self.description = ""
@@ -104,16 +104,16 @@ class Card:
     # Class methods
 
     @classmethod
-    def from_dict(cls, name:str, data:dict):
+    def from_dict(cls, iid:int, data:dict):
         """
         Create a new Card from the data contained in a dict.
 
         Args:
-            name (str): The name of the card.
+            iid (int): The uniq id of the card.
             data (dict): Data of the card (iid, cost, damage, armor, ...)
         """
 
-        card = cls(name)
+        card = cls(iid)
         card.__dict__.update(data)
         return card
 
