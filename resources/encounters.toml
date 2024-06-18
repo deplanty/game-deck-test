@@ -1,53 +1,63 @@
-[Tester]
+[0]
+name = "Tester"
 hp = 500
 energy = 5
 hand_size = 10
 deck = []
+playable = true
 
-[Lisa]
+[1]
+name = "Lisa"
 hp = 80
 energy = 2
 hand_size = 4
 deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
-[Jacques]
+[2]
+name = "Jacques"
 hp = 50
 energy = 3
 hand_size = 4
 deck = [12, 12, 12, 6, 6, 6, 4, 4, 3, 3, 1, 1, 13, 13, 15, 15, 15]
 
-[Barnabe]
+[3]
+name = "Barnabé"
 hp = 40
 energy = 3
 hand_size = 5
 deck = [14, 14, 3, 3, 12, 12, 7, 7, 8, 8]
 
-[dummy]
+[4]
+name = "Dumbo"
 hp = 500
 energy = 1
 hand_size = 1
 deck = [23]
 
-[number_one]
+[5]
+name = "First One"
 hp = 20
 energy = 2
 hand_size = 2
 deck = [2, 2, 3, 4]
 
-[number_two]
+[6]
+name = "First Two"
 hp = 20
 energy = 2
 hand_size = 2
 deck = [1, 1, 1, 1]
 
-[number_three]
+[7]
+name  = "The Third"
 hp = 30
 energy = 2
 hand_size = 2
 deck = [1, 1, 2, 2]
 
-[number_four]
-hp = 50
-energy = 6
+[8]
+name = "No Pain No Gain"
+hp = 70
+energy = 4
 hand_size = 4
 deck = [6, 6, 6, 6, 6, 6, 2, 2]

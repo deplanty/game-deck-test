@@ -10,14 +10,16 @@ class Player:
     Create a player.
 
     Args:
-        name (str): The player's name.
+        iid (int): The player's unique id.
         max_health (int): The player's max health.
     """
 
-    def __init__(self, name:str, max_health:int):
-        self.name = name
+    def __init__(self, iid:int, max_health:int, max_energy:int):
+        self.iid = int(iid)
+
+        self.name = ""
         self.health = Gauge(max_health)
-        self.energy = Gauge(2)
+        self.energy = Gauge(max_energy)
         self.deck = Deck()
         self.hand_size = 2
         # Buffs
@@ -56,24 +58,23 @@ class Player:
         # Class methods
 
     @classmethod
-    def from_dict(cls, name:str, data:dict):
+    def from_dict(cls, iid:int, data:dict):
         """
         Return a player with all its data from a dict.
 
         Args:
-            name (str): The player's name.
+            iid (int): The player's unique id.
             data (dict): All the data needed.
 
         Returns:
             Player: The build player from dict.
         """
 
-        player = cls(name, data["hp"])
-        player.energy.maximum = data["energy"]
+        player = cls(iid, data["hp"], data["energy"])
+        player.name = data["name"]
         player.hand_size = data["hand_size"]
-        for iid in data["deck"]:
-            player.add_card_from_id(iid)
-        player.energy.refill()
+        for card_iid in data["deck"]:
+            player.add_card_from_id(card_iid)
         return player
 
     # Method
