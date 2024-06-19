@@ -1,6 +1,6 @@
 import toml
 
-from src.objects import Card, Player
+from src.objects import Augment, Card, Player
 
 
 def card_from_id(iid:int, copy:bool=True) -> Card:
@@ -51,6 +51,11 @@ all_cards = dict()
 for iid, data in toml.load("resources/cards.toml").items():
     card = Card.from_dict(iid, data)
     all_cards[card.iid] = card
+
+all_augments = dict()
+for iid, data in toml.load("resources/augments.toml").items():
+    augment = Augment.from_dict(iid, data)
+    all_augments[augment.iid] = augment
 
 # Register all the players in the game.
 #  They are stored in a dict {name: player}

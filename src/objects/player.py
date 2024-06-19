@@ -33,6 +33,8 @@ class Player:
         self.poison = Buff("Poison")
         self.weakness = Buff("Weakness")
         self.debuffs = [self.burn, self.poison, self.weakness]
+        # Augment
+        self.augments = list()
 
     def __str__(self) -> str:
         return f"{self.name}(HP: {self.health}, EP: {self.energy})"
