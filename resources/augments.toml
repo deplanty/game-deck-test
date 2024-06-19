@@ -1,0 +1,9 @@
+[0]
+name = "Scroll of strenght"
+trigger = "start of combat"
+strenght = 1
+
+[1]
+name = "Scroll of resistance"
+trigger = "start of combat"
+resistance = 1
