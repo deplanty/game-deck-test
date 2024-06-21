@@ -86,6 +86,19 @@ class Player:
 
         return self.health > 0
 
+    def start_of_combat(self):
+        """
+        Prepare the player at the start of combat: reform and shuffle the deck, process augments.
+        """
+
+        self.deck.reform_and_shuffle()
+
+        for augment in self.augments:
+            if augment.trigger == "start of combat":
+                self.strenght += augment.strenght
+                self.resistance += augment.resistance
+                print(self, augment)
+
     def start_of_turn(self):
         """
         Make all the start of turn actions: discard hand, draw new hand, reset armor, ...
@@ -180,3 +193,7 @@ class Player:
         card = sgt.card_from_id(iid)
         card.owner = self
         self.deck.add(card)
+
+    def add_augment_from_id(self, iid:int):
+        augment = sgt.augment_from_id(iid)
+        self.augments.append(augment)

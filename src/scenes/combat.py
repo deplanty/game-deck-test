@@ -19,8 +19,12 @@ class SceneCombat(scenes.Scene):
     def run(self):
         """Run this scene loop."""
 
-        sgt.player.deck.reform_and_shuffle()
-        self.enemy.deck.reform_and_shuffle()
+        sgt.player.add_augment_from_id(0)
+        self.enemy.add_augment_from_id(1)
+
+        sgt.player.start_of_combat()
+        self.enemy.start_of_combat()
+
         turn = "player"
         sgt.player.start_of_turn()
         count = 1

@@ -45,6 +45,27 @@ def encounter_from_name(name:str, copy:bool=True) -> Player:
         return encounter
 
 
+def augment_from_id(iid:int, copy:bool=True) -> Card:
+    """
+    Return the augment given by its ID.
+    If `copy` is true, copy the augment.
+
+    Args:
+        iid (int): The augment ID.
+        copy (bool): Copy or not the returned augment.
+
+    Returns:
+        Augment: The augment wanted.
+    """
+    global all_augments
+
+    augment = all_augments[iid]
+    if copy:
+        return augment.copy()
+    else:
+        return augment
+
+
 # Register all the cards in the game.
 #  They are stored in a dict {id: card}.
 all_cards = dict()
