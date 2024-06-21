@@ -20,7 +20,8 @@ class SceneCombat(scenes.Scene):
         """Run this scene loop."""
 
         sgt.player.add_augment_from_id(0)
-        self.enemy.add_augment_from_id(1)
+        sgt.player.add_augment_from_id(1)
+        sgt.player.add_augment_from_id(2)
 
         sgt.player.start_of_combat()
         self.enemy.start_of_combat()

@@ -62,13 +62,13 @@ class SceneCombatUi(tui.Tui):
         self.label_enemy_name.text = self.scene.enemy.name
         self.enemy_hp.maximum = self.scene.enemy.health.maximum
         self.label_player_name.text = sgt.player.name
-        self.player_hp.maximum = sgt.player.health.maximum
 
     def update(self):
         # Update player and enemy health and all
         self.label_enemy_info.text = self.scene.enemy.info
         self.enemy_hp.current = self.scene.enemy.health.current
         self.label_player_info.text = sgt.player.info
+        self.player_hp.maximum = sgt.player.health.maximum
         self.player_hp.current = sgt.player.health.current
 
         self.frame_enemy.fill()

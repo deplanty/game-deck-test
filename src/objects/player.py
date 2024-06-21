@@ -97,7 +97,6 @@ class Player:
             if augment.trigger == "start of combat":
                 self.strenght += augment.strenght
                 self.resistance += augment.resistance
-                print(self, augment)
 
     def start_of_turn(self):
         """
@@ -197,3 +196,6 @@ class Player:
     def add_augment_from_id(self, iid:int):
         augment = sgt.augment_from_id(iid)
         self.augments.append(augment)
+
+        if augment.trigger == "get":
+            self.health.maximum += augment.max_hp

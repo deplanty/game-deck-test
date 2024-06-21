@@ -7,3 +7,8 @@ strenght = 1
 name = "Scroll of resistance"
 trigger = "start of combat"
 resistance = 1
+
+[2]
+name = "Scroll of health"
+trigger = "get"
+max_hp = 10
