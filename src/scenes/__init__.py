@@ -4,4 +4,5 @@ from .combat_end import SceneCombatEnd
 from .select_encounter import SceneSelectEncounter
 from .select_hero import SceneSelectHero
 from .view_cards import SceneViewCards
+from .view_augments import SceneViewAugments
 from .main_menu import SceneMainMenu
