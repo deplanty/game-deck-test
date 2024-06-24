@@ -15,3 +15,9 @@ name = "Scroll of health"
 trigger = "get"
 max_hp = 10
 description = "Get {augment.max_hp} maximum health."
+
+[3]
+name = "Turtle power"
+trigger = "start of turn"
+armor = 1
+description = "Start the turn with {augment.armor} armor."

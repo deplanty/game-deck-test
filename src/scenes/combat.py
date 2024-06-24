@@ -19,9 +19,8 @@ class SceneCombat(scenes.Scene):
     def run(self):
         """Run this scene loop."""
 
-        sgt.player.add_augment_from_id(0)
-        sgt.player.add_augment_from_id(1)
-        sgt.player.add_augment_from_id(2)
+        for i in range(len(sgt.all_augments)):
+            sgt.player.add_augment_from_id(i)
 
         sgt.player.start_of_combat()
         self.enemy.start_of_combat()

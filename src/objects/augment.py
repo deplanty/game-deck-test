@@ -10,6 +10,7 @@ class Augment:
         self.description = ""
         self.strenght = 0
         self.resistance = 0
+        self.armor = 0
 
     def __str__(self) -> str:
         return f"Augment({self.name})"

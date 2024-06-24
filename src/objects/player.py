@@ -107,6 +107,14 @@ class Player:
         self.deck.draw(self.hand_size)
         self.energy.refill()
         self.armor.value = 0
+
+        # Apply start of turn buff
+        for augment in self.augments:
+            if augment.trigger == "start of turn":
+                self.strenght += augment.strenght
+                self.resistance += augment.resistance
+                self.armor += augment.armor
+
         # Apply start of turn debuff
         self.health -= self.poison
         self.poison -= 1
