@@ -145,3 +145,9 @@ description = "Gain {card.resistance} resistance, {card.armor} armor and deal da
 name = "Empty card"
 cost = 0
 description = "Do nothing"
+
+[24]
+name = "Cheat card"
+cost = 1
+base_damage = 1000
+description = "Cheat card: deal {card.damage} damage."
