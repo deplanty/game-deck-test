@@ -41,5 +41,5 @@ class SceneSelectHero(scenes.Scene):
             self.scene_next = scenes.SceneMainMenu()
         else:
             index = self.ui.choice_heroes.current
-            sgt.player = self.heroes[index]
+            sgt.player = self.heroes[index].copy()
             self.scene_next = scenes.SceneSelectEncounter()
