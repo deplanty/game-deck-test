@@ -250,8 +250,6 @@ class Widget:
             for child in self.children:
                 child._update()
             self.update()
-        else:
-            self.fill()
 
     def add_child(self, child):
         """

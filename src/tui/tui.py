@@ -30,6 +30,10 @@ class Tui(Widget):
     # Methods
 
     def update(self):
+        # Clear the window. It's better to use scr.erase() rather than scr.clear() according to
+        # this question: https://stackoverflow.com/questions/9653688/how-to-refresh-curses-window-correctly
+        self.scr.erase()
+
         for child in self.children:
             child._update()
 
