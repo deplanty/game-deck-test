@@ -30,14 +30,33 @@ class Pack:
 
 
 class Place:
-    def __init__(self, x:int=0, y:int=0, width:int=1, height:int=1):
-        self.set(x, y, width, height)
+    def __init__(self, x:int=None, y:int=None, width:int=1, height:int=1,
+                 relx:float=None, rely:float=None, anchor:str="normal"):
+        self.x :int= None
+        self.y :int= None
+        self.width :int= None
+        self.height :int= None
+        self.relx :float= None
+        self.rely :float= None
+        self.anchor :str= None
 
-    def set(self, x:int=None, y:int=None, width:int=None, height:int=None):
+        self.set(x, y, width, height, relx, rely, anchor)
+
+    def set(self, x:int=None, y:int=None, width:int=None, height:int=None,
+            relx:float=None, rely:float=None, anchor:str=None):
+
+        if x is not None and relx is not None:
+            raise ValueError("`x` and `relx` can't be used simultaneously.")
+        if y is not None and rely is not None:
+            raise ValueError("`y` and `rely` can't be used simultaneously.")
+
         if x is not None: self.x = x
         if y is not None: self.y = y
         if width is not None: self.width = width
         if height is not None: self.height = height
+        if relx is not None: self.relx = relx
+        if rely is not None: self.rely = rely
+        if anchor is not None: self.anchor = anchor
 
 
 class Widget:
@@ -99,15 +118,21 @@ class Widget:
         if self.parent is None:
             return 0
 
-        x = 0
+        dx = 0
         if self._layout == "grid":
-            x = self.parent.x + self.parent._grid_get_column_position(self._grid.column)
+            dx = self.parent._grid_get_column_position(self._grid.column)
         elif self._layout == "pack":
-            x = self.parent.x
+            dx = 0
         elif self._layout == "place":
-            x = self.parent.x + self._place.x
+            if self._place.x is not None:
+                dx = self._place.x
+            else:
+                dx = round(self.parent.width * self._place.relx)
 
-        return x + self.parent.pad_intern.x
+            if self._place.anchor == "center":
+                dx -= round(self.width / 2)
+
+        return self.parent.x + self.parent.pad_intern.x + dx
 
     @property
     def y(self) -> int:
@@ -116,15 +141,21 @@ class Widget:
         if self.parent is None:
             return 0
 
-        y = 0
+        dy = 0
         if self._layout == "grid":
-            y = self.parent.y + self.parent._grid_get_row_position(self._grid.row)
+            dy = self.parent._grid_get_row_position(self._grid.row)
         elif self._layout == "pack":
-            y = self.parent.y + self.parent._pack_get_row_position(self)
+            dy = self.parent._pack_get_row_position(self)
         elif self._layout == "place":
-            y = self.parent.y + self._place.y
+            if self._place.y is not None:
+                dy = self._place.y
+            else:
+                dy = round(self.parent.height * self._place.rely)
 
-        return y + self.parent.pad_intern.y
+            if self._place.anchor == "center":
+                dy -= round(self.height / 2)
+
+        return self.parent.y + self.parent.pad_intern.y + dy
 
     @property
     def width(self) -> int:
@@ -306,7 +337,8 @@ class Widget:
         self._layout = "pack"
         self._pack.set(fill)
 
-    def place(self, x:int=0, y:int=0, width:int=1, height:int=1):
+    def place(self, x:int=None, y:int=None, width:int=1, height:int=1,
+              relx:float=None, rely:float=None, anchor:str="nw"):
         """
         The widget is placed at a given position.
 
@@ -315,10 +347,13 @@ class Widget:
                 y (int): The y (row) position.
                 width (int): The width allowed.
                 height (int): The height allowed.
+                relx (float): The relative x position (%).
+                rely (float): The relative y position (%).
+                anchor (str): Where the widget is anchored (normal, center).
         """
 
         self._layout = "place"
-        self._place.set(x, y, width, height)
+        self._place.set(x, y, width, height, relx, rely, anchor)
 
     def _grid_get_row_position(self, row:int) -> int:
         """

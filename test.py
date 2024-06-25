@@ -20,11 +20,14 @@ def update_label():
 def update_choice_visible():
     global choice_visible
     global entry_visible
+    global frame_popup
 
     if choice_visible.choice.lower() == "show":
         entry_visible.show()
+        frame_popup.show()
     elif choice_visible.choice.lower() == "hide":
         entry_visible.hide()
+        frame_popup.hide()
 
 root = tui.Tui()
 
@@ -140,6 +143,9 @@ frame_fill = tui.Frame(frame_bot_fill)
 frame_fill.filler = "+"
 frame_fill.pack(True)
 
+frame_popup = tui.LabelFrame(root, text="Popup")
+frame_popup.place(relx=0.5, rely=0.5, anchor="center", width=36, height=18)
+frame_popup.fill()
 
 update_label()
 update_choice_visible()
