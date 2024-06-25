@@ -20,19 +20,26 @@ class SceneCombatEnd(scenes.Scene):
         elif self.result == "defeat":
             self.ui.label_result.style = Style.TEXT_WARNING
             self.ui.label_result.text = sgt.text_defeat
+        self.ui.choice_options.add_label("Upgrade a card")
+        self.ui.choice_options.add_label("Add a new card")
+        self.ui.choice_options.add_label("Continue")
         self.ui.choice_options.add_label("Main menu")
         self.ui.choice_options.add_label("Quit")
 
-        loop = True
-        while loop:
+        scene = None
+        while scene is None:
             self.ui.choice_options.focus_set()
             self.ui.update()
 
             if self.ui.choice_options.choice == "Main menu":
                 scene = scenes.SceneMainMenu()
-                loop = False
             elif self.ui.choice_options.choice == "Quit":
-                scene = None
-                loop = False
+                scene = False
+            elif self.ui.choice_options.choice == "Continue":
+                scene = scenes.SceneSelectEncounter()
+            elif self.ui.choice_options.choice == "Upgrade a card":
+                ...
+            elif self.ui.choice_options.choice == "Add a nex card":
+                ...
 
         return scene

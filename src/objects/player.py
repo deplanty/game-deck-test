@@ -108,7 +108,7 @@ class Player:
         self.energy.refill()
         self.armor.value = 0
 
-        # Apply start of turn buff
+        # Apply start of turn augments
         for augment in self.augments:
             if augment.trigger == "start of turn":
                 self.strenght += augment.strenght
