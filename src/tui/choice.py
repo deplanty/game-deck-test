@@ -10,11 +10,12 @@ class Choice(Widget):
     hovered:Signal
     selected:Signal
 
-    def __init__(self, parent:Widget, selector:str=">", selector_empty:str=" "):
+    def __init__(self, parent:Widget, selector:str=">>", selector_empty:str="  ", selector_tmp:str="> "):
         super().__init__(parent)
 
         self.selector = selector
         self.selector_empty = selector_empty
+        self.selector_tmp = selector_tmp
 
         self.choices = list()
 
@@ -22,7 +23,7 @@ class Choice(Widget):
         self.hovered = Signal()
 
         self._current = 0  # Current selection
-        self._selected = False
+        self._selected = -1
 
     @property
     def height_calc(self) -> int:
@@ -51,7 +52,7 @@ class Choice(Widget):
         If nothing was selected, return an empty string.
         """
 
-        return self.choices[self.current] if self._selected else ""
+        return self.choices[self.current] if self._selected != -1 else ""
 
     @property
     def choice_current(self) -> str:
@@ -71,7 +72,11 @@ class Choice(Widget):
 
         self.hovered.emit()
         curses.cbreak()
-        cursor_previous = curses.curs_set(2)  # Very visible
+        # Cursor size:
+        #   - 0 invisible
+        #   - 1 small (bar)
+        #   - 2 big (block)
+        cursor_previous = curses.curs_set(1)
 
         state = ""
         while state == "":
@@ -84,13 +89,19 @@ class Choice(Widget):
                 self.current += 1
                 self.hovered.emit()
             elif key == Keys.RETURN:
-                self._selected = True
+                self._selected = self.current
                 self.selected.emit()
                 state = "ok"
             elif key == Keys.TABLUATION:
+                if self._selected != -1:
+                    self.current = self._selected
                 state = "tab"
             elif key == Keys.TABLUATION_BACK:
+                if self._selected != -1:
+                    self.current = self._selected
                 state = "tab_back"
+            elif key == Keys.ESCAPE:
+                self._selected = -1
 
         curses.nocbreak()
         curses.curs_set(cursor_previous)
@@ -100,13 +111,23 @@ class Choice(Widget):
     # Methods Required
 
     def update(self):
+        # 3 possible states for the selector:
+        #   - Selected: show the selector
+        #   - Not selected and not current: show the selector_empty
+        #   - Not selected and current: show the selecter_tmp
         for i, label in enumerate(self.children):
-            if (self._is_on_focus or self._selected) and self.current == i:
+            # Highlight only the currently selected item
+            label.style.reset_modifiers()
+            if self._is_on_focus and self.current == i:
+                    label.style.bold()
+
+            # Show the correct selector
+            if self._selected == i:
                 label.prefix = f"{self.selector} "
-                label.style.bold()
+            elif self._is_on_focus and self.current == i:
+                label.prefix = f"{self.selector_tmp} "
             else:
                 label.prefix = f"{self.selector_empty} "
-                label.style.reset_modifiers()
             label.text = self.choices[i]
             label.update()
         self._set_cursor_current()
@@ -142,7 +163,7 @@ class Choice(Widget):
         self.choices.clear()
         self.children.clear()
         self.current = 0
-        self._selected = False
+        self._selected = -1
 
     def _set_cursor_current(self):
         """Set the cursor at the current selected line."""

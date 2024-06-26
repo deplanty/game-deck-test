@@ -124,15 +124,15 @@ frame_bottom = tui.Frame(root)
 frame_bottom.pack(fill=True)
 frame_bot_visible = tui.Frame(frame_bottom)
 frame_bot_visible.grid(0, 0)
-choice_visible = tui.Choice(frame_bot_visible, "[x]", "[ ]")
+choice_visible = tui.Choice(frame_bot_visible, "[X]", "[ ]", "[x]")
 choice_visible.add_labels("Show", "Hide")
 choice_visible.selected.connect(update_choice_visible)
+choice_visible._selected = 1
 choice_visible.grid(0, 0)
 entry_visible = tui.Entry(frame_bot_visible)
 label_visible = tui.Label(frame_bot_visible)
 label_visible.text = "The entry can be visible or hidden."
 label_visible.grid(0, 1)
-choice_visible._selected = True
 entry_visible.grid(1, 1)
 
 frame_bot_fill = tui.Frame(frame_bottom)
