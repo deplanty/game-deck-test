@@ -10,10 +10,11 @@ class Choice(Widget):
     hovered:Signal
     selected:Signal
 
-    def __init__(self, parent:Widget, selector:str=">"):
+    def __init__(self, parent:Widget, selector:str=">", selector_empty:str=" "):
         super().__init__(parent)
 
         self.selector = selector
+        self.selector_empty = selector_empty
 
         self.choices = list()
 
@@ -104,7 +105,7 @@ class Choice(Widget):
                 label.prefix = f"{self.selector} "
                 label.style.bold()
             else:
-                label.prefix = " " * (len(self.selector) + 1)
+                label.prefix = f"{self.selector_empty} "
                 label.style.reset_modifiers()
             label.text = self.choices[i]
             label.update()
