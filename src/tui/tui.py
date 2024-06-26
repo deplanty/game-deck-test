@@ -41,23 +41,9 @@ class Tui(Widget):
             result = self.focus_widget.focus()
 
             if result == "tab":
-                while True:
-                    widget = self.focus_widget.focus_next
-                    self.focus_widget = widget
-                    if widget is None:
-                        break
-                    elif widget.visible:
-                        break
+                self.focus_widget = self._get_next_focus_widget()
             elif result == "tab_back":
-                focused_widgets = self._get_list_widget_focus()
-                index = focused_widgets.index(self.focus_widget)
-                while True:
-                    widget = focused_widgets[index -1]
-                    if widget and widget.visible:
-                        self.focus_widget = focused_widgets[index - 1]
-                        break
-                    else:
-                        index -= 1
+                self.focus_widget = self._get_prev_focus_widget()
 
         self.scr.refresh()
 
@@ -72,3 +58,26 @@ class Tui(Widget):
                     current = None
 
             return cycle
+
+    def _get_next_focus_widget(self) -> Widget:
+        current = self.focus_widget
+        while True:
+            current = current.focus_next
+            if current is None:
+                break
+            elif current.visible:
+                break
+        return current
+        
+
+    def _get_prev_focus_widget(self) -> Widget:
+        focused_widgets = self._get_list_widget_focus()
+
+        index = focused_widgets.index(self.focus_widget)
+        while True:
+            widget = focused_widgets[index -1]
+            if widget and widget.visible:
+                return focused_widgets[index - 1]
+            else:
+                index -= 1
+        

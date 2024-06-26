@@ -21,7 +21,7 @@ class Choice(Widget):
         self.hovered = Signal()
 
         self._current = 0  # Current selection
-        self._selected = False  # If the Return key has been pressed
+        self._selected = False
 
     @property
     def height_calc(self) -> int:
@@ -69,7 +69,6 @@ class Choice(Widget):
         """
 
         self.hovered.emit()
-        self._selected = False
         curses.cbreak()
         cursor_previous = curses.curs_set(2)  # Very visible
 
@@ -86,7 +85,7 @@ class Choice(Widget):
             elif key == Keys.RETURN:
                 self._selected = True
                 self.selected.emit()
-                state = "tab"
+                state = "ok"
             elif key == Keys.TABLUATION:
                 state = "tab"
             elif key == Keys.TABLUATION_BACK:
