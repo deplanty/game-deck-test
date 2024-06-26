@@ -71,16 +71,18 @@ class Widget:
         if self.parent is None:
             return 0
 
+        # dx is the position of the widget according to its parent
         dx = 0
         if self._layout == "grid":
             dx = self.parent._grid_get_column_position(self._grid.column)
         elif self._layout == "pack":
             dx = 0
         elif self._layout == "place":
-            if self._place.x is not None:
+            # The x position can be absolute or relative
+            if self._place.is_x_abs():
                 dx = self._place.x
             else:
-                dx = round(self.parent.width * self._place.relx)
+                dx = round(self.parent.width * self._place.x)
 
             if self._place.anchor == "center":
                 dx -= round(self.width / 2)
@@ -94,16 +96,18 @@ class Widget:
         if self.parent is None:
             return 0
 
+        # dy is the position of the widget according to its parent
         dy = 0
         if self._layout == "grid":
             dy = self.parent._grid_get_row_position(self._grid.row)
         elif self._layout == "pack":
             dy = self.parent._pack_get_row_position(self)
         elif self._layout == "place":
-            if self._place.y is not None:
+            # The y position can be absolute or relative
+            if self._place.is_y_abs():
                 dy = self._place.y
             else:
-                dy = round(self.parent.height * self._place.rely)
+                dy = round(self.parent.height * self._place.y)
 
             if self._place.anchor == "center":
                 dy -= round(self.height / 2)
@@ -123,7 +127,11 @@ class Widget:
         elif self._layout == "pack":
             w = self.parent.width
         elif self._layout == "place":
-            w = self._place.width
+            # The width can be absolute or relative
+            if self._place.is_width_abs():
+                w = self._place.width
+            else:
+                w = round(self.parent.width * self._place.width)
 
         return w - self.parent.pad_intern.x * 2
 
@@ -140,7 +148,11 @@ class Widget:
         if self._layout == "pack":
             h = self.parent._pack_get_height(self)
         elif self._layout == "place":
-            h = self._place.height
+            # The height can be absolute or relative
+            if self._place.is_height_abs():
+                h = self._place.height
+            else:
+                h = round(self.parent.height * self._place.height)
 
         return h
 
@@ -288,23 +300,21 @@ class Widget:
         self._layout = "pack"
         self._pack.set(fill)
 
-    def place(self, x:int=None, y:int=None, width:int=1, height:int=1,
-              relx:float=None, rely:float=None, anchor:str="nw"):
+    def place(self, x:int|float=None, y:int|float=None, width:int|float=1, height:int|float=1,
+              anchor:str="nw"):
         """
         The widget is placed at a given position.
 
             Args:
-                x (int): The x (column) position.
-                y (int): The y (row) position.
-                width (int): The width allowed.
-                height (int): The height allowed.
-                relx (float): The relative x position (%).
-                rely (float): The relative y position (%).
+                x (int|float): The x (column) position (int=absolute, float=relative).
+                y (int|float): The y (row) position (int=absolute, float=relative).
+                width (int|float): The width allowed (int=absolute, float=relative).
+                height (int|float): The height allowed (int=absolute, float=relative).
                 anchor (str): Where the widget is anchored (normal, center).
         """
 
         self._layout = "place"
-        self._place.set(x, y, width, height, relx, rely, anchor)
+        self._place.set(x, y, width, height, anchor)
 
     def _grid_get_row_position(self, row:int) -> int:
         """

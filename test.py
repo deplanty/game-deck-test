@@ -144,7 +144,7 @@ frame_fill.filler = "+"
 frame_fill.pack(True)
 
 frame_popup = tui.LabelFrame(root, text="Popup")
-frame_popup.place(relx=0.5, rely=0.5, anchor="center", width=36, height=18)
+frame_popup.place(x=0.5, y=0.5, anchor="center", width=0.9, height=0.9)
 
 update_label()
 update_choice_visible()

@@ -18,30 +18,45 @@ class Pack:
 
 
 class Place:
-    def __init__(self, x:int=None, y:int=None, width:int=1, height:int=1,
-                 relx:float=None, rely:float=None, anchor:str="normal"):
+    def __init__(self, x:int|float=None, y:int|float=None, width:int|float=1, height:int|float=1,
+                 anchor:str="normal"):
         self.x :int= None
         self.y :int= None
         self.width :int= None
         self.height :int= None
-        self.relx :float= None
-        self.rely :float= None
         self.anchor :str= None
 
-        self.set(x, y, width, height, relx, rely, anchor)
+        self.set(x, y, width, height, anchor)
 
-    def set(self, x:int=None, y:int=None, width:int=None, height:int=None,
-            relx:float=None, rely:float=None, anchor:str=None):
+    def set(self, x:int|float=None, y:int|float=None, width:int|float=None, height:int|float=None,
+            anchor:str=None):
 
-        if x is not None and relx is not None:
-            raise ValueError("`x` and `relx` can't be used simultaneously.")
-        if y is not None and rely is not None:
-            raise ValueError("`y` and `rely` can't be used simultaneously.")
+        # Validate input parameters
+        if isinstance(x, float) and (x < 0.0 or x > 1.0):
+            raise ValueError("If x is relative: 0.0 <= x <= 1.0")
+        if isinstance(y, float) and (y < 0.0 or y > 1.0):
+            raise ValueError("If y is relative: 0.0 <= y <= 1.0")
+        if isinstance(width, float) and (width < 0.0 or width > 1.0):
+            raise ValueError("If width is relative: 0.0 <= width <= 1.0")
+        if isinstance(height, float) and (height < 0.0 or height > 1.0):
+            raise ValueError("If height is relative: 0.0 <= height <= 1.0")
+        if anchor not in ["normal", "center"]:
+            raise ValueError(f"anchor is {anchor} and should be one of [normal, center]")
 
         if x is not None: self.x = x
         if y is not None: self.y = y
         if width is not None: self.width = width
         if height is not None: self.height = height
-        if relx is not None: self.relx = relx
-        if rely is not None: self.rely = rely
         if anchor is not None: self.anchor = anchor
+
+    def is_x_abs(self) -> bool:
+        return isinstance(self.x, int)
+
+    def is_y_abs(self) -> bool:
+        return isinstance(self.y, int)
+
+    def is_width_abs(self) -> bool:
+        return isinstance(self.width, int)
+
+    def is_height_abs(self) -> bool:
+        return isinstance(self.height, int)
