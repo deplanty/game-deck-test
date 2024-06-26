@@ -127,7 +127,6 @@ frame_bot_visible.grid(0, 0)
 choice_visible = tui.Choice(frame_bot_visible, "[X]", "[ ]", "[x]")
 choice_visible.add_labels("Show", "Hide")
 choice_visible.selected.connect(update_choice_visible)
-choice_visible._selected = 1
 choice_visible.grid(0, 0)
 entry_visible = tui.Entry(frame_bot_visible)
 label_visible = tui.Label(frame_bot_visible)
@@ -156,6 +155,8 @@ choice_trait.focus_next = entry
 entry.focus_next = choice_visible
 choice_visible.focus_next = entry_visible
 entry_visible.focus_next = choice_shape
+
+choice_visible.select(1)
 
 while True:
     root.update()

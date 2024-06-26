@@ -22,7 +22,7 @@ class Choice(Widget):
         self.selected = Signal()
         self.hovered = Signal()
 
-        self._current = 0  # Current selection
+        self.current = 0  # Current selection
         self._selected = -1
 
     @property
@@ -164,6 +164,18 @@ class Choice(Widget):
         self.children.clear()
         self.current = 0
         self._selected = -1
+
+    def select(self, index:int):
+        """
+        Select the given item by its index.
+
+        Args:
+            index (int): Index of the item to select.
+        """
+
+        self._selected = index
+        self.current = index
+        self.selected.emit()
 
     def _set_cursor_current(self):
         """Set the cursor at the current selected line."""
