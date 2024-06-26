@@ -60,7 +60,7 @@ class Player:
         # Class methods
 
     @classmethod
-    def from_dict(cls, iid:int, data:dict):
+    def from_dict(cls, iid:int, data:dict) -> "Player":
         """
         Return a player with all its data from a dict.
 

@@ -64,6 +64,7 @@ class Deck:
         self.exile.clear()
         self.deck.extend(self.hand)
         self.hand.clear()
+        self.deck.sort(key=lambda x: x.name)
 
     def shuffle_deck(self):
         """Shuffle the cards in the deck."""

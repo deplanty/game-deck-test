@@ -11,7 +11,12 @@ class SceneCombatEnd(scenes.Scene):
 
         self.result = result
 
+        sgt.player.deck.reform()
+        self.cards_upgrade = sgt.player.deck.deck
+
         self.ui = SceneCombatEndUi(self)
+        self.ui.choice_options.selected.connect(self._on_choice_options_selected)
+        self.ui.choice_upgrade.selected.connect(self._on_choice_upgrade_selected)
 
     def run(self):
         if self.result == "victory":
@@ -26,20 +31,28 @@ class SceneCombatEnd(scenes.Scene):
         self.ui.choice_options.add_label("Main menu")
         self.ui.choice_options.add_label("Quit")
 
-        scene = None
-        while scene is None:
-            self.ui.choice_options.focus_set()
+        self.scene = None
+        self.ui.choice_options.focus_set()
+        while self.scene is None:
             self.ui.update()
 
-            if self.ui.choice_options.choice == "Main menu":
-                scene = scenes.SceneMainMenu()
-            elif self.ui.choice_options.choice == "Quit":
-                scene = False
-            elif self.ui.choice_options.choice == "Continue":
-                scene = scenes.SceneSelectEncounter()
-            elif self.ui.choice_options.choice == "Upgrade a card":
-                ...
-            elif self.ui.choice_options.choice == "Add a nex card":
-                ...
+        return self.scene
 
-        return scene
+    def _on_choice_options_selected(self):
+        if self.ui.choice_options.choice == "Main menu":
+            self.scene = scenes.SceneMainMenu()
+        elif self.ui.choice_options.choice == "Quit":
+            self.scene = False
+        elif self.ui.choice_options.choice == "Continue":
+            self.scene = scenes.SceneSelectEncounter()
+        elif self.ui.choice_options.choice == "Upgrade a card":
+            self.ui.popup_upgrade.show()
+            self.ui.choice_upgrade.focus_set()
+        elif self.ui.choice_options.choice == "Add a nex card":
+            ...
+        
+
+    def _on_choice_upgrade_selected(self):
+        card = self.cards_upgrade[self.ui.choice_upgrade.current]
+        card.upgrade() 
+        self.scene = scenes.SceneSelectEncounter()
