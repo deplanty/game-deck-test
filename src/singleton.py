@@ -1,3 +1,5 @@
+import random
+
 import toml
 
 from src.objects import Augment, Card, Player
@@ -22,6 +24,21 @@ def card_from_id(iid:int, copy:bool=True) -> Card:
         return card.copy()
     else:
         return card
+
+
+def get_random_cards(n:int=1) -> list[Card]:
+    """
+    Return a random number of cards.
+
+    Args:
+        n (int): The number of cards returned.
+
+    Returns:
+        list[Card]: The list of the cards returned.
+    """
+    global all_cards
+
+    return random.choices(all_cards, k=n)
 
 
 def encounter_from_name(name:str, copy:bool=True) -> Player:
