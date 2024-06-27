@@ -436,7 +436,7 @@ class Widget:
         if self.main.focus_widget == self:
             self.main.focus_widget = None
 
-    def focus(self) -> str:
+    def _focus_run(self) -> str:
         """
         When a widget have the focus, set the cursor at its position and execute its function.
 

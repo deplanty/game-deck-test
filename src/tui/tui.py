@@ -38,7 +38,7 @@ class Tui(Widget):
             child._update()
 
         if self.focus_widget:
-            result = self.focus_widget.focus()
+            result = self.focus_widget._focus_run()
 
             if result == "tab":
                 self.focus_widget = self._get_next_focus_widget()
