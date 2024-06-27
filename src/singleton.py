@@ -37,8 +37,9 @@ def get_random_cards(n:int=1) -> list[Card]:
         list[Card]: The list of the cards returned.
     """
     global all_cards
+    cards = list(all_cards.values())
 
-    return random.choices(all_cards, k=n)
+    return random.choices(cards, k=n)
 
 
 def encounter_from_name(name:str, copy:bool=True) -> Player:
