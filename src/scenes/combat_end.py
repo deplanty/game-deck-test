@@ -16,7 +16,7 @@ class SceneCombatEnd(scenes.Scene):
 
         self.ui = SceneCombatEndUi(self)
         self.ui.choice_options.selected.connect(self._on_choice_options_selected)
-        self.ui.choice_upgrade.selected.connect(self._on_choice_upgrade_selected)
+        self.ui.popup_upgrade.selected.connect(self._on_popup_upgrade_selected)
 
     def run(self):
         if self.result == "victory":
@@ -47,12 +47,11 @@ class SceneCombatEnd(scenes.Scene):
             self.scene = scenes.SceneSelectEncounter()
         elif self.ui.choice_options.choice == "Upgrade a card":
             self.ui.popup_upgrade.show()
-            self.ui.choice_upgrade.focus_set()
+            self.ui.popup_upgrade.focus_set()
         elif self.ui.choice_options.choice == "Add a nex card":
             ...
-        
 
-    def _on_choice_upgrade_selected(self):
-        card = self.cards_upgrade[self.ui.choice_upgrade.current]
+    def _on_popup_upgrade_selected(self):
+        card = self.ui.popup_upgrade.card
         card.upgrade() 
         self.scene = scenes.SceneSelectEncounter()

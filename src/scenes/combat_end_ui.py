@@ -1,4 +1,5 @@
 from src import tui
+from src.widgets import SelectCard
 
 
 class SceneCombatEndUi(tui.Tui):
@@ -23,12 +24,6 @@ class SceneCombatEndUi(tui.Tui):
         self.choice_options.pack()
 
         # Popup upgrade card
-        self.popup_upgrade = tui.LabelFrame(self, text="Upgrade a card")
+        self.popup_upgrade = SelectCard(self, "Upgrade a card", scene.cards_upgrade)
         self.popup_upgrade.place(x=0.5, y=0.5, width=0.6, height=0.8, anchor="center")
         self.popup_upgrade.hide()
-        self.choice_upgrade = tui.Choice(self.popup_upgrade)
-        self.choice_upgrade.pack(fill=True)
-
-        # Initialize values
-        for card in scene.cards_upgrade:
-            self.choice_upgrade.add_label(str(card))
