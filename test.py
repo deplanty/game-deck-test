@@ -20,14 +20,23 @@ def update_label():
 def update_choice_visible():
     global choice_visible
     global entry_visible
-    global frame_popup
 
     if choice_visible.choice.lower() == "show":
         entry_visible.show()
-        frame_popup.show()
     elif choice_visible.choice.lower() == "hide":
         entry_visible.hide()
+
+
+def update_choice_popup_visible():
+    global choice_popup_visible
+    global frame_popup
+
+    if choice_popup_visible.choice.lower() == "show":
+        frame_popup.show()
+        choice_popup.focus_set()
+    elif choice_popup_visible.choice.lower() == "hide":
         frame_popup.hide()
+
 
 root = tui.Tui()
 
@@ -122,17 +131,32 @@ label_big.pack()
 
 frame_bottom = tui.Frame(root)
 frame_bottom.pack(fill=True)
+
 frame_bot_visible = tui.Frame(frame_bottom)
 frame_bot_visible.grid(0, 0)
+
+label_visible = tui.Label(frame_bot_visible)
+label_visible.text = "A widget can be visible or hidden."
+label_visible.pack()
+
 choice_visible = tui.Choice(frame_bot_visible, "[X]", "[ ]", "[x]")
 choice_visible.add_labels("Show", "Hide")
 choice_visible.selected.connect(update_choice_visible)
-choice_visible.grid(0, 0)
+choice_visible.pack()
+
 entry_visible = tui.Entry(frame_bot_visible)
-label_visible = tui.Label(frame_bot_visible)
-label_visible.text = "The entry can be visible or hidden."
-label_visible.grid(0, 1)
-entry_visible.grid(1, 1)
+entry_visible.pack()
+
+tui.Frame(frame_bot_visible).pack()
+
+label_popup = tui.Label(frame_bot_visible)
+label_popup.text = "A popup can be shown of hidden."
+label_popup.pack()
+
+choice_popup_visible = tui.Choice(frame_bot_visible, "(#)", "( )", "(-)")
+choice_popup_visible.add_labels("Show", "Hide")
+choice_popup_visible.selected.connect(update_choice_popup_visible)
+choice_popup_visible.pack()
 
 frame_bot_fill = tui.Frame(frame_bottom)
 frame_bot_fill.grid(0, 1)
@@ -143,10 +167,16 @@ frame_fill.filler = "+"
 frame_fill.pack(True)
 
 frame_popup = tui.LabelFrame(root, text="Popup")
-frame_popup.place(x=0.5, y=0.5, anchor="center", width=0.9, height=0.9)
+frame_popup.place(x=0.5, y=0.5, anchor="center", width=0.5, height=0.5)
+label_popup = tui.Label(frame_popup, text="What do you think of this?")
+label_popup.pack()
+choice_popup = tui.Choice(frame_popup)
+choice_popup.add_labels("Great", "Impressive", "Awesome", "Very good")
+choice_popup.pack(fill=True)
 
 update_label()
 update_choice_visible()
+update_choice_popup_visible()
 
 entry.focus_set()
 choice_shape.focus_next = choice_element
@@ -154,9 +184,12 @@ choice_element.focus_next = choice_trait
 choice_trait.focus_next = entry
 entry.focus_next = choice_visible
 choice_visible.focus_next = entry_visible
-entry_visible.focus_next = choice_shape
+entry_visible.focus_next = choice_popup_visible
+choice_popup_visible.focus_next = choice_popup
+choice_popup.focus_next = choice_shape
 
 choice_visible.select(1)
+choice_popup_visible.select(1)
 
 while True:
     root.update()
