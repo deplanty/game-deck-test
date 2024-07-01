@@ -164,7 +164,7 @@ label_fill = tui.Label(frame_bot_fill, text="Fill the rest of the window")
 label_fill.pack()
 frame_fill = tui.Frame(frame_bot_fill)
 frame_fill.filler = "+"
-frame_fill.pack(True)
+frame_fill.pack(fill=True)
 
 frame_popup = tui.LabelFrame(root, text="Popup")
 frame_popup.place(x=0.5, y=0.5, anchor="center", width=0.5, height=0.5)
@@ -173,6 +173,11 @@ label_popup.pack()
 choice_popup = tui.Choice(frame_popup)
 choice_popup.add_labels("Great", "Impressive", "Awesome", "Very good")
 choice_popup.pack(fill=True)
+
+# FIXME: This label is not packed wher it should be. The fill=True on frame_fill causes the problem.
+label_after_fill = tui.Label(frame_bot_fill, text="Bottom bottom")
+label_after_fill.filler = "#"
+label_after_fill.pack()
 
 update_label()
 update_choice_visible()
