@@ -390,10 +390,15 @@ class Widget:
         """
 
         row = 0
-        for child in self.children:
+        for child in self._pack_get_widgets():
             if child == widget:
                 return row
             row += self._pack_get_height(child)
+
+    def _pack_get_widgets(self) -> list["Widget"]:
+        """Returns the list of all packed widgets."""
+
+        return [widget for widget in self.children if widget._layout == "pack"]
 
     def _pack_get_height(self, widget) -> int:
         """Returns the height of a child packed widget.
@@ -408,7 +413,7 @@ class Widget:
             # Get how many children are packed with fill and get the height of the others
             fill_n = 0
             height_other = 0
-            for child in self.children:
+            for child in self._pack_get_widgets():
                 if child._pack.fill:
                     fill_n += 1
                 else:
