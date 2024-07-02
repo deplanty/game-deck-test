@@ -62,3 +62,10 @@ class Buff:
             return None
         else:
             return f"{self.name} = {self.value}"
+
+    # Methods
+
+    def reset(self):
+        """Reset the buff"""
+
+        self.value = 0

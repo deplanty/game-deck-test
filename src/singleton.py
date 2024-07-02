@@ -100,7 +100,7 @@ for iid, data in toml.load("resources/augments.toml").items():
 #  They are stored in a dict {name: player}
 all_players = dict()
 for iid, data in toml.load("resources/encounters.toml").items():
-    player = Player.from_dict(iid, data)
+    player :Player= Player.from_dict(iid, data)
     all_players[player.name] = player
 
 # All encounters are stored in a list

@@ -121,12 +121,20 @@ class Player:
 
     def end_of_turn(self):
         """
-        Make all the en of turn actions: apply buffs and debuffs
+        Make all the end of turn actions: apply buffs and debuffs
         """
 
         self.health -= self.burn
         self.burn -= 1
         self.weakness -= 1
+
+    def end_of_combat(self):
+        """
+        Reset all buffs and debuffs.
+        """
+
+        for buff in self.buffs: buff.reset()
+        for debuff in self.debuffs: debuff.reset()
 
     def play_card(self, index:int) -> Card:
         """

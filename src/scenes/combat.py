@@ -47,6 +47,8 @@ class SceneCombat(scenes.Scene):
 
             count += 1
 
+        sgt.player.end_of_combat()
+        self.enemy.end_of_combat()
         if not sgt.player.is_alive():
             return scenes.SceneCombatEnd("defeat")
         else:
