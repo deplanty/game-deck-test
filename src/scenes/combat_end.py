@@ -56,11 +56,11 @@ class SceneCombatEnd(scenes.Scene):
             self.ui.popup_add.focus_set()
 
     def _on_popup_upgrade_selected(self):
-        card = self.ui.popup_upgrade.card
+        card = self.ui.popup_upgrade.item
         card.upgrade() 
         self.scene = scenes.SceneSelectEncounter()
 
     def _on_popup_add_selected(self):
-        card = self.ui.popup_add.card
+        card = self.ui.popup_add.item
         sgt.player.add_card_from_id(card.iid)
         self.scene = scenes.SceneSelectEncounter()

@@ -1,5 +1,5 @@
 from src import tui
-from src.widgets import SelectCard
+from src.widgets import SelectItem
 
 
 class SceneCombatEndUi(tui.Tui):
@@ -24,11 +24,11 @@ class SceneCombatEndUi(tui.Tui):
         self.choice_options.pack()
 
         # Popup upgrade card
-        self.popup_upgrade = SelectCard(self, "Upgrade a card", scene.cards_upgrade)
+        self.popup_upgrade = SelectItem(self, "Upgrade a card", scene.cards_upgrade)
         self.popup_upgrade.place(x=0.5, y=0.5, width=0.6, height=0.8, anchor="center")
         self.popup_upgrade.hide()
 
         # Popup select card to add
-        self.popup_add = SelectCard(self, "Select a cart to add", scene.cards_add)
+        self.popup_add = SelectItem(self, "Select a cart to add", scene.cards_add)
         self.popup_add.place(x=0.5, y=0.5, width=0.6, height=0.8, anchor="center")
         self.popup_add.hide()
