@@ -6,25 +6,25 @@ hand_size = 1
 deck = [23]
 
 [1]
-name = "First One"
+name = "Stray dog"
 hp = 20
 energy = 2
-hand_size = 2
-deck = [2, 2, 3, 4]
+hand_size = 1
+deck = [25, 25, 26, 26, 26]
 
 [2]
-name = "First Two"
+name = "Bully"
 hp = 20
 energy = 2
-hand_size = 2
-deck = [1, 1, 1, 1]
+hand_size = 3
+deck = [27, 27, 28, 28]
 
 [3]
-name  = "The Third"
-hp = 30
+name  = "Angry Grandma"
+hp = 20
 energy = 2
-hand_size = 2
-deck = [1, 1, 2, 2]
+hand_size = 4
+deck = [29, 29, 29, 29, 30]
 
 [4]
 name = "No Pain No Gain"
