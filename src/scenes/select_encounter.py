@@ -8,7 +8,9 @@ class SceneSelectEncounter(scenes.Scene):
     def __init__(self):
         super().__init__()
 
-        self.encounters = sgt.all_encounters
+        self.encounters = list()
+        for iid in sgt.path_step_current.encounters:
+            self.encounters.append(sgt.encounter_from_id(iid))
 
         self.ui = SceneSelectEncounterUi(self)
         self.ui.choice_encounter.selected.connect(self._on_choice_encouter_selected)
@@ -36,4 +38,4 @@ class SceneSelectEncounter(scenes.Scene):
         else:
             index = self.ui.choice_encounter.current
             selected = self.encounters[index]
-            self.scene_next = scenes.SceneCombat(selected.name)
+            self.scene_next = scenes.SceneCombat(selected.iid)

@@ -2,7 +2,7 @@ import random
 
 import toml
 
-from src.objects import Augment, Card, Player
+from src.objects import Augment, Card, Player, PathStep
 
 
 def card_from_id(iid:int, copy:bool=True) -> Card:
@@ -42,13 +42,13 @@ def get_random_cards(n:int=1) -> list[Card]:
     return random.choices(all_cards, k=n)
 
 
-def encounter_from_name(name:str, copy:bool=True) -> Player:
+def encounter_from_id(iid:int, copy:bool=True) -> Player:
     """
-    Return the encounter given by its name.
+    Return the encounter given by its ID.
     If `copy` is true, copy the encounter.
 
     Args:
-        name (str): The encounter's name.
+        iid (int): The encounter's ID.
         copy (bool): Copy or not the returned encounter.
 
     Returns:
@@ -57,7 +57,7 @@ def encounter_from_name(name:str, copy:bool=True) -> Player:
     global all_encounters
 
     for enc in all_encounters:
-        if enc.name == name:
+        if enc.iid == iid:
             if copy:
                 return enc.copy()
             else:
@@ -86,16 +86,27 @@ def augment_from_id(iid:int, copy:bool=True) -> Card:
                 return augment
 
 
+def path_step_from_id(iid:int) -> PathStep:
+    """
+    Return the path step given wy its ID.
+    """
+    global all_path_steps
+
+    for path in all_path_steps:
+        if path.iid == iid:
+            return path
+
+
 # Register all the cards in the game.
 #  They are stored in a dict {id: card}.
 all_cards = list()
 for iid, data in toml.load("resources/cards.toml").items():
-    card = Card.from_dict(iid, data)
+    card :Card= Card.from_dict(iid, data)
     all_cards.append(card)
 
 all_augments = list()
 for iid, data in toml.load("resources/augments.toml").items():
-    augment = Augment.from_dict(iid, data)
+    augment :Augment= Augment.from_dict(iid, data)
     all_augments.append(augment)
 
 # All encounters are stored in a list
@@ -110,13 +121,19 @@ for iid, data in toml.load("resources/heroes.toml").items():
     player :Player= Player.from_dict(iid, data)
     all_heroes.append(player)
 
-# The tester have access to all the cards
-# and all augments
+# The tester have access to all the cards and all augments
 tester :Player= all_heroes[0]
 for card in all_cards:
     tester.add_card_from_id(card.iid)
 for augment in all_augments:
     tester.add_augment_from_id(augment.iid)
+
+all_path_steps = list()
+for iid, data in toml.load("resources/path_steps.toml").items():
+    path :PathStep= PathStep.from_dict(iid, data)
+    all_path_steps.append(path)
+
+path_step_current = None
 
 text_victory = """\
  __      ___      _                   
