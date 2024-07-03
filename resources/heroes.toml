@@ -1,0 +1,28 @@
+[0]
+name = "Tester"
+hp = 500
+energy = 5
+hand_size = 10
+deck = []
+playable = true
+
+[1]
+name = "Lisa"
+hp = 80
+energy = 2
+hand_size = 4
+deck = [24, 24, 24, 24, 24, 24]
+
+[2]
+name = "Jacques"
+hp = 50
+energy = 3
+hand_size = 4
+deck = [12, 12, 12, 6, 6, 6, 4, 4, 3, 3, 1, 1, 13, 13, 15, 15, 15]
+
+[3]
+name = "Barnabé"
+hp = 40
+energy = 3
+hand_size = 5
+deck = [14, 14, 3, 3, 12, 12, 7, 7, 8, 8]

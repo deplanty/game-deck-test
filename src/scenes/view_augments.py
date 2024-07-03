@@ -8,7 +8,7 @@ class SceneViewAugments(scenes.Scene):
     def __init__(self):
         super().__init__()
 
-        self.list_augments = list(sgt.all_augments.values())
+        self.list_augments = sgt.all_augments
         self.menu_options = list()
 
         self.ui = SceneViewAugmentsUi(self)

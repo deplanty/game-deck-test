@@ -25,7 +25,7 @@ class SceneViewCards(scenes.Scene):
             self.menu_options.clear()
             show = min(len(sgt.all_cards) - self.show_start, self.show_n)
             for i in range(self.show_start, self.show_start + show):
-                card = sgt.all_cards[i + 1]
+                card = sgt.all_cards[i]
                 self.menu_options.append(card.name)
 
             # Show the page previous option only if there are already sole cards shown
@@ -60,6 +60,6 @@ class SceneViewCards(scenes.Scene):
         if item in ["Previous", "Next", "Return to main menu"]:
             self.ui.label_card.text = ""
         else:
-            card = sgt.all_cards[self.show_start + index + 1]
+            card = sgt.all_cards[self.show_start + index]
             self.ui.label_card.text = card.info_full
         self.ui.label_card.update()

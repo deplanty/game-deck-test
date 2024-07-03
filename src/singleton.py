@@ -19,11 +19,12 @@ def card_from_id(iid:int, copy:bool=True) -> Card:
     """
     global all_cards
 
-    card = all_cards[iid]
-    if copy:
-        return card.copy()
-    else:
-        return card
+    for card in all_cards:
+        if card.iid == iid:
+            if copy:
+                return card.copy()
+            else:
+                return card
 
 
 def get_random_cards(n:int=1) -> list[Card]:
@@ -37,9 +38,8 @@ def get_random_cards(n:int=1) -> list[Card]:
         list[Card]: The list of the cards returned.
     """
     global all_cards
-    cards = list(all_cards.values())
 
-    return random.choices(cards, k=n)
+    return random.choices(all_cards, k=n)
 
 
 def encounter_from_name(name:str, copy:bool=True) -> Player:
@@ -54,13 +54,14 @@ def encounter_from_name(name:str, copy:bool=True) -> Player:
     Returns:
         Player: The wanted encounter
     """
-    global all_players
+    global all_encounters
 
-    encounter = all_players[name]
-    if copy:
-        return encounter.copy()
-    else:
-        return encounter
+    for enc in all_encounters:
+        if enc.name == name:
+            if copy:
+                return enc.copy()
+            else:
+                return enc
 
 
 def augment_from_id(iid:int, copy:bool=True) -> Card:
@@ -77,46 +78,45 @@ def augment_from_id(iid:int, copy:bool=True) -> Card:
     """
     global all_augments
 
-    augment = all_augments[iid]
-    if copy:
-        return augment.copy()
-    else:
-        return augment
+    for augment in all_augments:
+        if augment.iid == iid:
+            if copy:
+                return augment.copy()
+            else:
+                return augment
 
 
 # Register all the cards in the game.
 #  They are stored in a dict {id: card}.
-all_cards = dict()
+all_cards = list()
 for iid, data in toml.load("resources/cards.toml").items():
     card = Card.from_dict(iid, data)
-    all_cards[card.iid] = card
+    all_cards.append(card)
 
-all_augments = dict()
+all_augments = list()
 for iid, data in toml.load("resources/augments.toml").items():
     augment = Augment.from_dict(iid, data)
-    all_augments[augment.iid] = augment
-
-# Register all the players in the game.
-#  They are stored in a dict {name: player}
-all_players = dict()
-for iid, data in toml.load("resources/encounters.toml").items():
-    player :Player= Player.from_dict(iid, data)
-    all_players[player.name] = player
+    all_augments.append(augment)
 
 # All encounters are stored in a list
-all_encounters = [
-    encounter_from_name(name) for name in ["Dumbo", "First One", "First Two", "The Third", "No Pain No Gain"]
-]
+all_encounters = list()
+for iid, data in toml.load("resources/encounters.toml").items():
+    player :Player= Player.from_dict(iid, data)
+    all_encounters.append(player)
 
 # All heroes are stored in a list
-all_heroes = [
-    encounter_from_name(name) for name in ["Tester", "Lisa", "Jacques", "Barnabé"]
-]
-# The tester have access to all the cards
-tester = all_heroes[0]
-for card in all_cards:
-    tester.add_card_from_id(card)
+all_heroes = list()
+for iid, data in toml.load("resources/heroes.toml").items():
+    player :Player= Player.from_dict(iid, data)
+    all_heroes.append(player)
 
+# The tester have access to all the cards
+# and all augments
+tester :Player= all_heroes[0]
+for card in all_cards:
+    tester.add_card_from_id(card.iid)
+for augment in all_augments:
+    tester.add_augment_from_id(augment.iid)
 
 text_victory = """\
  __      ___      _                   
