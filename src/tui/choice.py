@@ -10,9 +10,10 @@ class Choice(Widget):
     hovered:Signal
     selected:Signal
 
-    def __init__(self, parent:Widget, selector:str=">>", selector_empty:str="  ", selector_tmp:str="> "):
+    def __init__(self, parent:Widget, prefix:str="", selector:str=">>", selector_empty:str="  ", selector_tmp:str="> "):
         super().__init__(parent)
 
+        self.prefix = prefix
         self.selector = selector
         self.selector_empty = selector_empty
         self.selector_tmp = selector_tmp
@@ -24,6 +25,10 @@ class Choice(Widget):
 
         self.current = 0  # Current selection
         self._selected = -1
+
+        if self.prefix:
+            self.label_prefix = tui.Label(self, text=self.prefix)
+            self.label_prefix.pack()
 
     @property
     def height_calc(self) -> int:
@@ -59,6 +64,14 @@ class Choice(Widget):
         """Return the current choice as text."""
 
         return self.choices[self.current]
+
+    @property
+    def children_choice(self) -> str:
+
+        if self.prefix:
+            return self.children[1:]
+        else:
+            return self.children
 
     # Events
 
@@ -115,7 +128,7 @@ class Choice(Widget):
         #   - Selected: show the selector
         #   - Not selected and not current: show the selector_empty
         #   - Not selected and current: show the selecter_tmp
-        for i, label in enumerate(self.children):
+        for i, label in enumerate(self.children_choice):
             # Highlight only the currently selected item
             label.style.reset_modifiers()
             if self._is_on_focus and self.current == i:
@@ -161,7 +174,14 @@ class Choice(Widget):
         """Reset all the data in the widget"""
 
         self.choices.clear()
+
+        # The prefix label is in the children and should be kept
+        if self.prefix:
+            prefix = self.children.pop(0)
         self.children.clear()
+        if self.prefix:
+            self.children.append(prefix)
+
         self.current = 0
         self._selected = -1
 
@@ -180,7 +200,7 @@ class Choice(Widget):
     def _set_cursor_current(self):
         """Set the cursor at the current selected line."""
 
-        height = 0
+        height = self.label_prefix.height if self.prefix else 0
         for i in range(self.current):
-            height += self.children[i].height
+            height += self.children_choice[i].height
         self.main.scr.move(self.y + height, self.x)

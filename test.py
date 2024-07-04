@@ -81,7 +81,7 @@ frame_choices.style_text = Style.get("custom-text")
 frame_choices.style_border = Style.get("custom-border")
 frame_choices.pack()
 
-choice_shape = tui.Choice(frame_choices)
+choice_shape = tui.Choice(frame_choices, "Shape:")
 choice_shape.add_labels("Triangle", "Square", "Pentagon", "Hexagon")
 choice_shape.grid(0, 0)
 choice_shape.selected.connect(update_label)
@@ -139,7 +139,7 @@ label_visible = tui.Label(frame_bot_visible)
 label_visible.text = "A widget can be visible or hidden."
 label_visible.pack()
 
-choice_visible = tui.Choice(frame_bot_visible, "[X]", "[ ]", "[x]")
+choice_visible = tui.Choice(frame_bot_visible, "", "[X]", "[ ]", "[x]")
 choice_visible.add_labels("Show", "Hide")
 choice_visible.selected.connect(update_choice_visible)
 choice_visible.pack()
@@ -153,7 +153,7 @@ label_popup = tui.Label(frame_bot_visible)
 label_popup.text = "A popup can be shown of hidden."
 label_popup.pack()
 
-choice_popup_visible = tui.Choice(frame_bot_visible, "(#)", "( )", "(-)")
+choice_popup_visible = tui.Choice(frame_bot_visible, "", "(#)", "( )", "(-)")
 choice_popup_visible.add_labels("Show", "Hide")
 choice_popup_visible.selected.connect(update_choice_popup_visible)
 choice_popup_visible.pack()
