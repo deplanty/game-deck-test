@@ -197,6 +197,17 @@ class Choice(Widget):
         self.current = index
         self.selected.emit()
 
+    def select_item(self, item):
+        """
+        Select the given str(item) in the choice.
+
+        Args:
+            item (Any): The item that should be selected.
+        """
+
+        index = self.choices.index(str(item))
+        self.select(index)
+
     def _set_cursor_current(self):
         """Set the cursor at the current selected line."""
 
