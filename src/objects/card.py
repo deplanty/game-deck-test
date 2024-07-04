@@ -9,44 +9,49 @@ class Card:
 
     Args:
         iid (int): The uniq id if the card.
-
-    Signals:
-        upgraded: triggers when the card is upgraded
     """
-
-    upgraded:Signal
 
     def __init__(self, iid:int):
         self.iid = int(iid)
 
         self.owner:Player = None
 
-        self.name = ""
-        self.cost = 0
-        self.upgrades = 0
-        self.description = ""
+        # The name of the card
+        self.name:str = ""
+        # Its energy cost
+        self.cost:int = 0
+        # The number of upgrades that the card benefits
+        self.upgrades:int = 0
+        # Its description (used with .format())
+        self.description:str = ""
 
-        self.obtainable = True
+        # If the hero can obtain this card
+        self.obtainable:bool = True
 
-        self.base_damage = 0
-        self.base_armor = 0
-        # Buff
-        self.strenght = 0
-        self.resistance = 0
-        self.thorn = 0
-        # Debuff
-        self.burn = 0
-        self.poison = 0
-        self.weakness = 0
+        # The base damage, used to calculate the real damage it deals
+        self.base_damage:int = 0
+        # The base armor, used to calculate the real armor it grants
+        self.base_armor:int = 0
+
+        # Buff: increase buff of a player
+        self.strenght:int = 0
+        self.resistance:int = 0
+        self.thorn:int = 0
+        # Debuff: increase debuf of a player
+        self.burn:int = 0
+        self.poison:int = 0
+        self.weakness:int = 0
         # Effects
-        self.heal = 0
-        self.energy = 0
-        self.hurt = 0
-        self.draw = 0
-        self.bash = False
-
-        # Signals
-        self.upgraded = Signal()
+        # Heals the player
+        self.heal:int = 0
+        # Grants energy to the player
+        self.energy:int = 0
+        # Deals damage to the player that play the card
+        self.hurt:int = 0
+        # Allows the player to draw more cards
+        self.draw:int = 0
+        # Deals damage equal to the armor of the player
+        self.bash:int = False
 
     def __str__(self) -> str:
         if self.upgrades > 0:
@@ -142,5 +147,3 @@ class Card:
 
         for _ in range(n):
             self._upgrade()
-
-        self.upgraded.emit()
