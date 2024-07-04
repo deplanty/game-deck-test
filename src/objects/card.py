@@ -125,6 +125,20 @@ class Card:
         card.__dict__.update(data)
         return card
 
+    def to_dict(self) -> dict:
+        """
+        Return the data from this card as a dict.
+        Only export parameters where the value is different than the default.
+        """
+
+        default = Card(-1)
+
+        data = dict()
+        for key, value in self.__dict__.items():
+            if value != getattr(default, key):
+                data[key] = value
+        return data
+
     # Methods
 
     def copy(self):

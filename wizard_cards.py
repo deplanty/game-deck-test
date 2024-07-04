@@ -260,7 +260,7 @@ class CardWizard(tui.Tui):
                 self._all_cards.append(card)
 
     def save_cards(self):
-        data = {str(card.iid): card for card in self._all_cards}
+        data = {str(card.iid): card.to_dict() for card in self._all_cards}
         with open("tmp-cards-wizard.toml", "w") as fid:
             toml.dump(data, fid)
 
