@@ -27,19 +27,25 @@ def card_from_id(iid:int, copy:bool=True) -> Card:
                 return card
 
 
-def get_random_cards(n:int=1) -> list[Card]:
+def get_random_cards(n:int=1, only_obtainable:bool=True) -> list[Card]:
     """
     Return a random number of cards.
 
     Args:
         n (int): The number of cards returned.
+        only_obtainable (bool): Only obtainable cards can be returned.
 
     Returns:
         list[Card]: The list of the cards returned.
     """
     global all_cards
 
-    return random.choices(all_cards, k=n)
+    if only_obtainable:
+        cards = [card for card in all_cards if card.obtainable]
+    else:
+        cards = all_cards
+
+    return random.choices(cards, k=n)
 
 
 def encounter_from_id(iid:int, copy:bool=True) -> Player:

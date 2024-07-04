@@ -145,36 +145,42 @@ description = "Gain {card.resistance} resistance, {card.armor} armor and deal da
 name = "Empty card"
 cost = 0
 description = "Do nothing"
+obtainable = false
 
 [24]
 name = "Cheat card"
 cost = 1
 base_damage = 1000
 description = "Cheat card: deal {card.damage} damage."
+obtainable = false
 
 [25]
 name = "Growl"
 cost = 2
 strenght = 1
 description = "Gain {card.strenght} strenght."
+obtainable = false
 
 [26]
 name = "Bite"
 cost = 2
 base_damage = 2
 description = "Deal {card.damage} damage."
+obtainable = false
 
 [27]
 name = "Baseball bat"
 cost = 2
 base_damage = 4
 description = "Deal {card.damage} damage."
+obtainable = false
 
 [28]
 name = "Intimidation"
 cost = 1
 weakness = 1
 description = "Apply {card.weakness} weakness."
+obtainable = false
 
 [29]
 name = "Bag shot"
@@ -182,6 +188,7 @@ cost = 1
 base_damage = 1
 weakness = 1
 description = "Deal {card.damage} damage and apply {card.weakness} weakness."
+obtainable = false
 
 [30]
 name = "Denture bite"
@@ -189,6 +196,7 @@ cost = 2
 base_damage = 2
 poison = 2
 description = "Deal {card.damage} damage and apply {card.poison} poison."
+obtainable = false
 
 [31]
 name = "High blood pressure pill"
@@ -196,3 +204,4 @@ cost = 2
 strenght = 1
 weakness = 1
 description = "Apply {card.strenght} strenght and {card.weakness} weakness."
+obtainable = false

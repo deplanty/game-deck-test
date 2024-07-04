@@ -26,6 +26,8 @@ class Card:
         self.upgrades = 0
         self.description = ""
 
+        self.obtainable = True
+
         self.base_damage = 0
         self.base_armor = 0
         # Buff
@@ -98,6 +100,7 @@ class Card:
 
         text = f"{str(self)}\n"
         text += f"Cost = {self.cost}\n"
+        text += f"Obtainable = {self.obtainable}\n"
         text += self.description.format(card=self)
         return text
 
