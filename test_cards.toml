@@ -1,0 +1,207 @@
+[1]
+name = "Sword"
+cost = 1
+base_damage = 2
+description = "Deal {card.damage} damage."
+
+[2]
+name = "Bow"
+cost = 2
+base_damage = 2
+description = "Deal {card.damage} damage."
+
+[3]
+name = "Shield"
+cost = 1
+base_armor = 4
+description = "Gain {card.armor} armor."
+
+[4]
+name = "Sword and shield"
+cost = 1
+base_damage = 1
+base_armor = 2
+description = "Gain {card.armor} armor and deal {card.damage} damage."
+
+[5]
+name = "Great sword"
+cost = 2
+base_damage = 4
+description = "Deal {card.damage} damage."
+
+[6]
+name = "Push-up"
+cost = 1
+strenght = 1
+description = "Give {card.strenght} strenght."
+
+[7]
+name = "Fireball"
+cost = 1
+burn = 2
+description = "Apply {card.burn} burn."
+
+[8]
+name = "Venom"
+cost = 1
+poison = 2
+description = "Apply {card.poison} poison."
+
+[9]
+name = "Perfusion"
+cost = 0
+energy = 1
+hurt = 2
+description = "Take {card.hurt} damage to gain {card.energy} energy."
+
+[10]
+name = "Bandage"
+cost = 2
+heal = 4
+description = "Heal {card.heal} health."
+
+[11]
+name = "Recharge"
+cost = 1
+draw = 4
+description = "Draw {card.draw} cards."
+
+[12]
+name = "Harden"
+cost = 1
+resistance = 1
+description = "Give {card.resistance} resistance."
+
+[13]
+name = "Spike"
+cost = 1
+thorn = 2
+description = "Give {card.thorn} thorn."
+
+[14]
+name = "Sleeping dart"
+cost = 1
+weakness = 2
+description = "Apply {card.weakness} weakness."
+
+[15]
+name = "Bash"
+cost = 1
+bash = true
+description = "Deal damage equal to your armor."
+
+[16]
+name = "Vampirism"
+cost = 2
+base_damage = 2
+heal = 2
+description = "Deal {card.damage} damage and heal {card.heal} health."
+
+[17]
+name = "Toxic cloud"
+cost = 1
+poison = 1
+weakness = 1
+description = "Apply {card.poison} poison and {card.weakness} weakness."
+
+[18]
+name = "Ashes"
+cost = 1
+burn = 1
+weakness = 1
+description = "Apply {card.burn} burn and {card.weakness} weakness."
+
+[19]
+name = "Mud trap"
+cost = 2
+base_damage = 2
+weakness = 2
+description = "Deal {card.damage} damage and apply {card.weakness} weakness."
+
+[20]
+name = "Elemental storm"
+cost = 3
+poison = 3
+burn = 3
+weakness = 3
+description = "Apply {card.poison} poison, {card.burn} burn and {card.weakness} weakness."
+
+[21]
+name = "Fire wall"
+cost = 2
+base_armor = 2
+burn = 2
+description = "Gain {card.armor} armor and apply {card.burn} burn."
+
+[22]
+name = "Turtle stand"
+cost = 3
+resistance = 1
+base_armor = 2
+bash = true
+description = "Gain {card.resistance} resistance, {card.armor} armor and deal damage equal to your armor."
+
+[23]
+name = "Empty card"
+cost = 0
+description = "Do nothing"
+obtainable = false
+
+[24]
+name = "Cheat card"
+cost = 1
+base_damage = 1000
+description = "Cheat card: deal {card.damage} damage."
+obtainable = false
+
+[25]
+name = "Growl"
+cost = 2
+strenght = 1
+description = "Gain {card.strenght} strenght."
+obtainable = false
+
+[26]
+name = "Bite"
+cost = 2
+base_damage = 2
+description = "Deal {card.damage} damage."
+obtainable = false
+
+[27]
+name = "Baseball bat"
+cost = 2
+base_damage = 4
+description = "Deal {card.damage} damage."
+obtainable = false
+
+[28]
+name = "Intimidation"
+cost = 1
+weakness = 1
+description = "Apply {card.weakness} weakness."
+obtainable = false
+
+[29]
+name = "Bag shot"
+cost = 1
+base_damage = 1
+weakness = 1
+description = "Deal {card.damage} damage and apply {card.weakness} weakness."
+obtainable = false
+
+[30]
+name = "Denture bite"
+cost = 2
+base_damage = 2
+poison = 2
+description = "Deal {card.damage} damage and apply {card.poison} poison."
+obtainable = false
+
+[31]
+name = "High blood pressure pill"
+cost = 2
+strenght = 1
+weakness = 1
+description = "Apply {card.strenght} strenght and {card.weakness} weakness."
+obtainable = false

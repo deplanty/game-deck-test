@@ -51,7 +51,7 @@ class Card:
         # Allows the player to draw more cards
         self.draw:int = 0
         # Deals damage equal to the armor of the player
-        self.bash:int = False
+        self.bash:bool = False
 
     def __str__(self) -> str:
         if self.upgrades > 0:
