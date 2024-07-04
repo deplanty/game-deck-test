@@ -21,14 +21,30 @@ class CardWizardUi:
         # Menu
         self.frame_menu = tui.Frame(parent)
         self.frame_menu.pack()
-        self.entry = tui.Entry(self.frame_menu)
-        self.entry.pack()
+        self.button_new = tui.Button(self.frame_menu, "New")
+        self.button_new.grid(0, 0)
+        self.button_edit = tui.Button(self.frame_menu, "Edit")
+        self.button_edit.grid(0, 1)
+        self.button_prev = tui.Button(self.frame_menu, "  <  ")
+        self.button_prev.grid(0, 2)
+        self.button_next = tui.Button(self.frame_menu, "  >  ")
+        self.button_next.grid(0, 3)
+        self.button_quit = tui.Button(self.frame_menu, "Quit")
+        self.button_quit.grid(0, 4)
 
         tui.Frame(parent).pack()
 
         # Card
         self.frame_card = tui.LabelFrame(parent, text="Card")
         self.frame_card.pack(fill=True)
+
+        #   Buttons
+        frame_buttons = tui.Frame(self.frame_card)
+        frame_buttons.pack()
+        self.button_valid = tui.Button(frame_buttons, "  Ok  ")
+        self.button_valid.grid(0, 0)
+        self.button_cancel = tui.Button(frame_buttons, "Cancel")
+        self.button_cancel.grid(0, 1)
 
         #   Required parameters
         self.frame_required = tui.LabelFrame(self.frame_card, text="Required")
@@ -89,7 +105,15 @@ class CardWizardUi:
         self.choice_bash.add_labels("True", "False")
 
         # Init focus and focus cycle
-        self.entry.focus_next = self.entry_iid
+        #   Cycle over menu buttons
+        self.button_new.focus_next = self.button_edit
+        self.button_edit.focus_next = self.button_prev
+        self.button_prev.focus_next = self.button_next
+        self.button_next.focus_next = self.button_quit
+        self.button_quit.focus_next = self.button_new
+        # Cycle over button parameters
+        self.button_valid.focus_next = self.button_cancel
+        self.button_cancel.focus_next = self.entry_iid
         self.entry_iid.focus_next = self.entry_name
         self.entry_name.focus_next = self.entry_cost
         self.entry_cost.focus_next = self.entry_description
@@ -107,7 +131,7 @@ class CardWizardUi:
         self.entry_energy.focus_next = self.entry_hurt
         self.entry_hurt.focus_next = self.entry_draw
         self.entry_draw.focus_next = self.choice_bash
-        self.choice_bash.focus_next = self.entry
+        self.choice_bash.focus_next = self.button_valid
 
     def setup_card(self, card:Card):
         self.entry_iid.text = card.iid
@@ -130,39 +154,115 @@ class CardWizardUi:
         self.choice_bash.select_item(card.bash)
 
 
-
 class CardWizard(tui.Tui):
     def __init__(self):
         super().__init__()
 
         self.file_cards = "resources/cards.toml"
         self.load_cards()
+        self.card_new = None
 
-        self.current = self._all_cards[0]
+        self.current = 0
 
         self.ui = CardWizardUi(self)
+        self.ui.button_new.pressed.connect(self._on_button_new_pressed)
+        self.ui.button_edit.pressed.connect(self._on_button_edit_pressed)
+        self.ui.button_prev.pressed.connect(self._on_button_prev_pressed)
+        self.ui.button_next.pressed.connect(self._on_button_next_pressed)
+        self.ui.button_quit.pressed.connect(self._on_button_quit_pressed)
+        self.ui.button_valid.pressed.connect(self._on_button_valid_pressed)
+        self.ui.button_cancel.pressed.connect(self._on_button_cancel_pressed)
 
     def run(self):
-        self.ui.entry.focus_set()
-        self.ui.setup_card(self.current)
+        self.ui.button_new.focus_set()
+        self.setup_card_current()
 
+        self.action = ""
         while True:
             self.update()
 
-            if self.ui.entry.text == "exit":
+            if self.action == "quit":
                 break
+
+    # Events
+
+    def _on_button_new_pressed(self):
+        next_iid = max(card.iid for card in self._all_cards) + 1
+        self.card_new = Card(next_iid)
+        self.ui.setup_card(self.card_new)
+        self._on_button_edit_pressed()
+
+    def _on_button_edit_pressed(self):
+        self.ui.entry_iid.focus_set()
+
+    def _on_button_prev_pressed(self):
+        self.current -= 1
+        if self.current < 0:
+            self.current = len(self._all_cards) - 1
+
+        self.setup_card_current()
+
+    def _on_button_next_pressed(self):
+        self.current += 1
+        if self.current >= len(self._all_cards):
+            self.current = 0
+
+        self.setup_card_current()
+
+    def _on_button_quit_pressed(self):
+        self.action = "quit"
+        self.save_cards()
+
+    def _on_button_valid_pressed(self):
+        # If it's a new card, save it
+        if self.card_new:
+            card = self.ui_to_card()
+            self._all_cards.append(card)
+            self.card_new = None
+        # If it's an existing card, update it
+        else:
+            card = self.ui_to_card()
+
+        self.ui.button_new.focus_set()
+
+    def _on_button_cancel_pressed(self):
+        self.ui.button_new.focus_set()
+
+        # If its a new card, discard it
+        if self.card_new:
+            self.card_new = None
+        # Reset to the current card
+        self.setup_card_current()
+
+    # Methods
+
+    def setup_card_current(self):
+        self.ui.setup_card(self._all_cards[self.current])
+
+    def ui_to_card(self):
+        card = Card(0)
+        card.iid = int(self.ui.entry_iid.text)
+        card.name = self.ui.entry_name.text
+        card.cost = int(self.ui.entry_cost.text)
+        card.description = self.ui.entry_description.text
+        card.obtainable = True if self.ui.choice_obtainable.choice == "True" else False
+        card.base_damage = int(self.ui.entry_damage.text)
+        card.base_armor = int(self.ui.entry_armor.text)
+        return card
 
     # Methods: load and save the cards
 
     def load_cards(self):
         self._all_cards = list()
-        for iid, data in toml.load("resources/cards.toml").items():
-            card :Card= Card.from_dict(iid, data)
-            self._all_cards.append(card)
+        with open("resources/cards.toml") as fid:
+            for iid, data in toml.load(fid).items():
+                card :Card= Card.from_dict(iid, data)
+                self._all_cards.append(card)
 
     def save_cards(self):
-        with open("test_cards.toml", "w") as fid:
-            toml.dump(self._all_cards, fid)
+        data = {str(card.iid): card for card in self._all_cards}
+        with open("tmp-cards-wizard.toml", "w") as fid:
+            toml.dump(data, fid)
 
 
 if __name__ == "__main__":
