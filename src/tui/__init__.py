@@ -5,6 +5,7 @@ from .tui import Tui
 from .frame import Frame
 from .label import Label
 from .label_frame import LabelFrame
+from .button import Button
 from .entry import Entry
 from .progressbar import Progressbar
 from .choice import Choice
