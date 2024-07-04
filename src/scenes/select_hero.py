@@ -43,4 +43,5 @@ class SceneSelectHero(scenes.Scene):
             index = self.ui.choice_heroes.current
             sgt.player = self.heroes[index].copy()
             sgt.path_step_current = sgt.path_step_from_id(0)
+            sgt.path_step_current.init()
             self.scene_next = scenes.SceneSelectEncounter()

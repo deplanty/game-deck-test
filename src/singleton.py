@@ -94,6 +94,7 @@ def path_step_from_id(iid:int) -> PathStep:
 
     for path in all_path_steps:
         if path.iid == iid:
+            path.init()
             return path
 
 
@@ -133,7 +134,7 @@ for iid, data in toml.load("resources/path_steps.toml").items():
     path :PathStep= PathStep.from_dict(iid, data)
     all_path_steps.append(path)
 
-path_step_current = None
+path_step_current :PathStep= None
 
 text_victory = """\
  __      ___      _                   

@@ -7,10 +7,10 @@ from .combat_ui import SceneCombatUi
 
 
 class SceneCombat(scenes.Scene):
-    def __init__(self, enemy_iid:str):
+    def __init__(self):
         super().__init__()
 
-        self.enemy = sgt.encounter_from_id(enemy_iid)
+        self.enemy = sgt.path_step_current.encounter_current
         self.history_cards = list()
 
         self.ui = SceneCombatUi(self)
