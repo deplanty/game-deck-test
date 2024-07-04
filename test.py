@@ -115,6 +115,12 @@ label_trait.pack()
 
 tui.Frame(root).pack()
 
+button = tui.Button(root, text="Click on me to exit")
+button.pressed.connect(exit)
+button.pack()
+
+tui.Frame(root).pack()
+
 label_big = tui.Label(root, align="center")
 label_big.text = """\
  __      ___      _                   
@@ -139,7 +145,7 @@ label_visible = tui.Label(frame_bot_visible)
 label_visible.text = "A widget can be visible or hidden."
 label_visible.pack()
 
-choice_visible = tui.Choice(frame_bot_visible, "", "[X]", "[ ]", "[x]")
+choice_visible = tui.ChoiceLine(frame_bot_visible, "", "[X]", "[ ]", "[x]")
 choice_visible.add_labels("Show", "Hide")
 choice_visible.selected.connect(update_choice_visible)
 choice_visible.pack()
@@ -149,11 +155,7 @@ entry_visible.pack()
 
 tui.Frame(frame_bot_visible).pack()
 
-label_popup = tui.Label(frame_bot_visible)
-label_popup.text = "A popup can be shown of hidden."
-label_popup.pack()
-
-choice_popup_visible = tui.Choice(frame_bot_visible, "", "(#)", "( )", "(-)")
+choice_popup_visible = tui.ChoiceLine(frame_bot_visible, "A popup can be shown or hidden", "(#)", "( )", "(-)")
 choice_popup_visible.add_labels("Show", "Hide")
 choice_popup_visible.selected.connect(update_choice_popup_visible)
 choice_popup_visible.pack()
@@ -174,7 +176,6 @@ choice_popup = tui.Choice(frame_popup)
 choice_popup.add_labels("Great", "Impressive", "Awesome", "Very good")
 choice_popup.pack(fill=True)
 
-# FIXME: This label is not packed wher it should be. The fill=True on frame_fill causes the problem.
 label_after_fill = tui.Label(frame_bot_fill, text="Bottom bottom")
 label_after_fill.filler = "#"
 label_after_fill.pack()
@@ -187,7 +188,8 @@ entry.focus_set()
 choice_shape.focus_next = choice_element
 choice_element.focus_next = choice_trait
 choice_trait.focus_next = entry
-entry.focus_next = choice_visible
+entry.focus_next = button
+button.focus_next = choice_visible
 choice_visible.focus_next = entry_visible
 entry_visible.focus_next = choice_popup_visible
 choice_popup_visible.focus_next = choice_popup
