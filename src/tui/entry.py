@@ -37,6 +37,14 @@ class Entry(Widget):
     # Properties
 
     @property
+    def text(self) -> str:
+        return self._text
+
+    @text.setter
+    def text(self, text:str):
+        self._text = str(text)
+
+    @property
     def _cursor(self) -> int:
         """Return the current position of the cursor."""
 
