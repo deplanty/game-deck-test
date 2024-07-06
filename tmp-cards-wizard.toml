@@ -1,9 +1,22 @@
-[1]
-iid = 1
-name = "Sword"
-cost = 1
-description = "Deal {card.damage} damage."
-base_damage = 2
+[0]
+iid = 0
+name = "Sword and the brave"
+cost = 5
+description = "Deal {card.damage} damage and the brave."
+obtainable = false
+base_damage = 1
+base_armor = 2
+strenght = 3
+resistance = 4
+thorn = 5
+burn = 6
+poison = 7
+weakness = 8
+heal = 9
+energy = 10
+hurt = 11
+draw = 12
+bash = true
 
 [2]
 iid = 2

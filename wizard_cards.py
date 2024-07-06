@@ -222,6 +222,7 @@ class CardWizard(tui.Tui):
         # If it's an existing card, update it
         else:
             card = self.ui_to_card()
+            self._all_cards[self.current] = card
 
         self.ui.button_new.focus_set()
 
@@ -245,9 +246,20 @@ class CardWizard(tui.Tui):
         card.name = self.ui.entry_name.text
         card.cost = int(self.ui.entry_cost.text)
         card.description = self.ui.entry_description.text
-        card.obtainable = True if self.ui.choice_obtainable.choice == "True" else False
+        card.obtainable = self.ui.choice_obtainable.choice == "True"
         card.base_damage = int(self.ui.entry_damage.text)
         card.base_armor = int(self.ui.entry_armor.text)
+        card.strenght = int(self.ui.entry_strenght.text)
+        card.resistance = int(self.ui.entry_resistance.text)
+        card.thorn = int(self.ui.entry_thorn.text)
+        card.burn = int(self.ui.entry_burn.text)
+        card.poison = int(self.ui.entry_poison.text)
+        card.weakness = int(self.ui.entry_weakness.text)
+        card.heal = int(self.ui.entry_heal.text)
+        card.energy = int(self.ui.entry_energy.text)
+        card.hurt = int(self.ui.entry_hurt.text)
+        card.draw = int(self.ui.entry_draw.text)
+        card.bash = self.ui.choice_bash.choice == "True"
         return card
 
     # Methods: load and save the cards
