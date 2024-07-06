@@ -266,14 +266,14 @@ class CardWizard(tui.Tui):
 
     def load_cards(self):
         self._all_cards = list()
-        with open("resources/cards.toml") as fid:
+        with open(self.file_cards) as fid:
             for iid, data in toml.load(fid).items():
                 card :Card= Card.from_dict(iid, data)
                 self._all_cards.append(card)
 
     def save_cards(self):
         data = {str(card.iid): card.to_dict() for card in self._all_cards}
-        with open("tmp-cards-wizard.toml", "w") as fid:
+        with open(self.file_cards, "w") as fid:
             toml.dump(data, fid)
 
 

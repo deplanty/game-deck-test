@@ -1,207 +1,245 @@
 [1]
+iid = 1
 name = "Sword"
 cost = 1
-base_damage = 2
 description = "Deal {card.damage} damage."
+base_damage = 2
 
 [2]
+iid = 2
 name = "Bow"
 cost = 2
-base_damage = 2
 description = "Deal {card.damage} damage."
+base_damage = 2
 
 [3]
+iid = 3
 name = "Shield"
 cost = 1
-base_armor = 4
 description = "Gain {card.armor} armor."
+base_armor = 4
 
 [4]
+iid = 4
 name = "Sword and shield"
 cost = 1
+description = "Gain {card.armor} armor and deal {card.damage} damage."
 base_damage = 1
 base_armor = 2
-description = "Gain {card.armor} armor and deal {card.damage} damage."
 
 [5]
+iid = 5
 name = "Great sword"
 cost = 2
-base_damage = 4
 description = "Deal {card.damage} damage."
+base_damage = 4
 
 [6]
+iid = 6
 name = "Push-up"
 cost = 1
-strenght = 1
 description = "Give {card.strenght} strenght."
+strenght = 1
 
 [7]
+iid = 7
 name = "Fireball"
 cost = 1
-burn = 2
 description = "Apply {card.burn} burn."
+burn = 2
 
 [8]
+iid = 8
 name = "Venom"
 cost = 1
-poison = 2
 description = "Apply {card.poison} poison."
+poison = 2
 
 [9]
+iid = 9
 name = "Perfusion"
-cost = 0
+description = "Take {card.hurt} damage to gain {card.energy} energy."
 energy = 1
 hurt = 2
-description = "Take {card.hurt} damage to gain {card.energy} energy."
 
 [10]
+iid = 10
 name = "Bandage"
 cost = 2
-heal = 4
 description = "Heal {card.heal} health."
+heal = 4
 
 [11]
+iid = 11
 name = "Recharge"
 cost = 1
-draw = 4
 description = "Draw {card.draw} cards."
+draw = 4
 
 [12]
+iid = 12
 name = "Harden"
 cost = 1
-resistance = 1
 description = "Give {card.resistance} resistance."
+resistance = 1
 
 [13]
+iid = 13
 name = "Spike"
 cost = 1
-thorn = 2
 description = "Give {card.thorn} thorn."
+thorn = 2
 
 [14]
+iid = 14
 name = "Sleeping dart"
 cost = 1
-weakness = 2
 description = "Apply {card.weakness} weakness."
+weakness = 2
 
 [15]
+iid = 15
 name = "Bash"
 cost = 1
-bash = true
 description = "Deal damage equal to your armor."
+bash = true
 
 [16]
+iid = 16
 name = "Vampirism"
 cost = 2
+description = "Deal {card.damage} damage and heal {card.heal} health."
 base_damage = 2
 heal = 2
-description = "Deal {card.damage} damage and heal {card.heal} health."
 
 [17]
+iid = 17
 name = "Toxic cloud"
 cost = 1
+description = "Apply {card.poison} poison and {card.weakness} weakness."
 poison = 1
 weakness = 1
-description = "Apply {card.poison} poison and {card.weakness} weakness."
 
 [18]
+iid = 18
 name = "Ashes"
 cost = 1
+description = "Apply {card.burn} burn and {card.weakness} weakness."
 burn = 1
 weakness = 1
-description = "Apply {card.burn} burn and {card.weakness} weakness."
 
 [19]
+iid = 19
 name = "Mud trap"
 cost = 2
+description = "Deal {card.damage} damage and apply {card.weakness} weakness."
 base_damage = 2
 weakness = 2
-description = "Deal {card.damage} damage and apply {card.weakness} weakness."
 
 [20]
+iid = 20
 name = "Elemental storm"
 cost = 3
-poison = 3
-burn = 3
-weakness = 3
 description = "Apply {card.poison} poison, {card.burn} burn and {card.weakness} weakness."
+burn = 3
+poison = 3
+weakness = 3
 
 [21]
+iid = 21
 name = "Fire wall"
 cost = 2
+description = "Gain {card.armor} armor and apply {card.burn} burn."
 base_armor = 2
 burn = 2
-description = "Gain {card.armor} armor and apply {card.burn} burn."
 
 [22]
+iid = 22
 name = "Turtle stand"
 cost = 3
-resistance = 1
-base_armor = 2
-bash = true
 description = "Gain {card.resistance} resistance, {card.armor} armor and deal damage equal to your armor."
+base_armor = 2
+resistance = 1
+bash = true
 
 [23]
+iid = 23
 name = "Empty card"
-cost = 0
 description = "Do nothing"
 obtainable = false
 
 [24]
+iid = 24
 name = "Cheat card"
 cost = 1
-base_damage = 1000
 description = "Cheat card: deal {card.damage} damage."
 obtainable = false
+base_damage = 1000
 
 [25]
+iid = 25
 name = "Growl"
 cost = 2
-strenght = 1
 description = "Gain {card.strenght} strenght."
 obtainable = false
+strenght = 1
 
 [26]
+iid = 26
 name = "Bite"
 cost = 2
-base_damage = 2
 description = "Deal {card.damage} damage."
 obtainable = false
+base_damage = 2
 
 [27]
+iid = 27
 name = "Baseball bat"
 cost = 2
-base_damage = 4
 description = "Deal {card.damage} damage."
 obtainable = false
+base_damage = 4
 
 [28]
+iid = 28
 name = "Intimidation"
 cost = 1
-weakness = 1
 description = "Apply {card.weakness} weakness."
 obtainable = false
+weakness = 1
 
 [29]
+iid = 29
 name = "Bag shot"
 cost = 1
-base_damage = 1
-weakness = 1
 description = "Deal {card.damage} damage and apply {card.weakness} weakness."
 obtainable = false
+base_damage = 1
+weakness = 1
 
 [30]
+iid = 30
 name = "Denture bite"
 cost = 2
-base_damage = 2
-poison = 2
 description = "Deal {card.damage} damage and apply {card.poison} poison."
 obtainable = false
+base_damage = 2
+poison = 2
 
 [31]
+iid = 31
 name = "High blood pressure pill"
 cost = 2
-strenght = 1
-weakness = 1
 description = "Apply {card.strenght} strenght and {card.weakness} weakness."
 obtainable = false
+strenght = 1
+weakness = 1
+
+[32]
+iid = 32
+name = "Flash bang"
+cost = 2
+description = "Take {cost.hurt} damge to deal {card.damage} damage and to apply {card.weakness} weakness."
+base_damage = 4
+weakness = 1
+hurt = 1
