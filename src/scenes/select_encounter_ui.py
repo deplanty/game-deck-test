@@ -12,6 +12,8 @@ class SceneSelectEncounterUi(tui.Tui):
         self.label_title = tui.Label(self.frame_title, text="GAME DECK TEST", align="center")
         self.label_title.pack()
 
+        tui.Frame(self).pack()
+
         self.label_info = tui.Label(self, "List of encounters:")
         self.label_info.pack()
 

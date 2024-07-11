@@ -12,17 +12,26 @@ class SceneSelectHeroUi(tui.Tui):
         self.label_title = tui.Label(self.frame_title, text="GAME DECK TEST", align="center")
         self.label_title.pack()
 
-        self.label_info = tui.Label(self, "Select your hero for this journey:")
-        self.label_info.pack()
-
-        self.choice_heroes = tui.Choice(self)
-        self.choice_heroes.pack()
-
         tui.Frame(self).pack()
 
-        self.label_hero_description = tui.Label(self, prefix="Selected hero:\n")
+        frame = tui.Frame(self)
+        frame.pack(fill=True)
+
+        frame_select = tui.Frame(frame)
+        frame_select.grid(0, 0)
+
+        self.label_info = tui.Label(frame_select, "Select your hero for this journey:")
+        self.label_info.pack()
+
+        self.choice_heroes = tui.Choice(frame_select)
+        self.choice_heroes.pack()
+
+        frame_description = tui.Frame(frame)
+        frame_description.grid(0, 1)
+
+        self.label_hero_description = tui.Label(frame_description, prefix="Selected hero:\n")
         self.label_hero_description.pack()
-        self.label_cards_list = tui.Label(self, prefix="Cards in deck:\n")
+        self.label_cards_list = tui.Label(frame_description, prefix="Cards in deck:\n")
         self.label_cards_list.pack(fill=True)
 
         self.choice_heroes.focus_next = self.choice_heroes
