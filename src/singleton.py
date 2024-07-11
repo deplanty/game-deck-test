@@ -45,7 +45,7 @@ def get_random_cards(n:int=1, only_obtainable:bool=True) -> list[Card]:
     else:
         cards = all_cards
 
-    return random.choices(cards, k=n)
+    return random.sample(cards, n)
 
 
 def encounter_from_id(iid:int, copy:bool=True) -> Player:
