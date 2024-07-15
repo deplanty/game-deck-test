@@ -21,7 +21,10 @@ class CardPlayerUi:
         self.label_name.text = player.name
         self.label_hp.text = player.health
         self.label_energy.text = player.energy
-        self.label_augment.text = "\n".join(f"  - {a.name}" for a in player.augments)
+        if len(player.augments) > 0:
+            self.label_augment.text = "\n".join(f"  - {a.name}" for a in player.augments)
+        else:
+            self.label_augment.hide()
 
 
 class CardPlayer(tui.LabelFrame):

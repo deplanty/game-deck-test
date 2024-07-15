@@ -15,27 +15,28 @@ class SceneSelectHeroUi(tui.Tui):
 
         tui.Frame(self).pack()
 
+        self.button_back = tui.Button(self, text=" <-- Back ")
+        self.button_back.pack()
+
         frame = tui.Frame(self)
         frame.pack(fill=True)
 
         frame_select = tui.Frame(frame)
         frame_select.grid(0, 0)
 
-        self.label_info = tui.Label(frame_select, "Select your hero for this journey:")
-        self.label_info.pack()
-
-        self.choice_heroes = tui.ChoiceWidget(frame_select, columns=2)
+        self.choice_heroes = tui.ChoiceWidget(frame_select, "Select your hero for this journey:", columns=2)
         self.choice_heroes.pack()
 
         frame_description = tui.Frame(frame)
-        frame_description.grid(0, 1)
+        frame_description.grid(0, 2)
 
         self.label_hero_description = tui.Label(frame_description, prefix="Selected hero:\n")
         self.label_hero_description.pack()
         self.label_cards_list = tui.Label(frame_description, prefix="Cards in deck:\n")
         self.label_cards_list.pack(fill=True)
 
-        self.choice_heroes.focus_next = self.choice_heroes
+        self.choice_heroes.focus_next = self.button_back
+        self.button_back.focus_next = self.choice_heroes
 
     def update(self):
         self.choice_heroes.reset()

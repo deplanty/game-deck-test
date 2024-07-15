@@ -12,6 +12,7 @@ class SceneSelectHero(scenes.Scene):
         self.ui = SceneSelectHeroUi(self)
         self.ui.choice_heroes.selected.connect(self._on_choice_hero_selected)
         self.ui.choice_heroes.hovered.connect(self._on_choice_hero_hovered)
+        self.ui.button_back.pressed.connect(self._on_button_back_pressed)
 
     def run(self):
         self.ui.choice_heroes.focus_set()
@@ -42,3 +43,6 @@ class SceneSelectHero(scenes.Scene):
         sgt.path_step_current = sgt.path_step_from_id(0)
         sgt.path_step_current.init()
         self.scene_next = scenes.SceneSelectEncounter()
+
+    def _on_button_back_pressed(self):
+        self.scene_next = scenes.SceneMainMenu()
