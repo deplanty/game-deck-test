@@ -43,6 +43,10 @@ class ChoiceWidget(tui.Widget):
     def children_choice(self) -> str:
         return self.frame.children
 
+    @property
+    def current(self) -> int:
+        return self.position.index
+
     # Events
 
     def _on_focus(self) -> str:

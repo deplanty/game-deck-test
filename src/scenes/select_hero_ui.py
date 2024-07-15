@@ -1,5 +1,6 @@
 from src import tui
 from src.tui.style import Style
+from src.widgets import CardPlayer
 
 
 class SceneSelectHeroUi(tui.Tui):
@@ -23,7 +24,7 @@ class SceneSelectHeroUi(tui.Tui):
         self.label_info = tui.Label(frame_select, "Select your hero for this journey:")
         self.label_info.pack()
 
-        self.choice_heroes = tui.Choice(frame_select)
+        self.choice_heroes = tui.ChoiceWidget(frame_select, columns=2)
         self.choice_heroes.pack()
 
         frame_description = tui.Frame(frame)
@@ -37,9 +38,8 @@ class SceneSelectHeroUi(tui.Tui):
         self.choice_heroes.focus_next = self.choice_heroes
 
     def update(self):
-        self.choice_heroes.reset_choices()
+        self.choice_heroes.reset()
         for i, hero in enumerate(self.scene.heroes):
-            self.choice_heroes.add_label(str(hero))
-        self.choice_heroes.add_label("Back", style=Style.TEXT_WARNING)
+            self.choice_heroes.add_widget(CardPlayer, hero)
 
         super().update()
