@@ -225,7 +225,7 @@ class Widget:
         """
 
         self.children.append(child)
-        self.children.sort(key=lambda x: x._grid.row)
+        # self.children.sort(key=lambda x: x._grid.row)
 
     # Methods general
 
