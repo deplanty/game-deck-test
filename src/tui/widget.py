@@ -301,7 +301,7 @@ class Widget:
         self._pack.set(fill)
 
     def place(self, x:int|float=None, y:int|float=None, width:int|float=1, height:int|float=1,
-              anchor:str="nw"):
+              anchor:str="normal"):
         """
         The widget is placed at a given position.
 
