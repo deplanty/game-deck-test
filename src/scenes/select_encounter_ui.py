@@ -1,5 +1,6 @@
 from src import tui
 from src.tui.style import Style
+from src.widgets import CardPlayer
 
 
 class SceneSelectEncounterUi(tui.Tui):
@@ -14,18 +15,23 @@ class SceneSelectEncounterUi(tui.Tui):
 
         tui.Frame(self).pack()
 
-        self.label_info = tui.Label(self, "List of encounters:")
-        self.label_info.pack()
+        self.button_back = tui.Button(self, text=" <-- Back ")
+        self.button_back.pack()
 
-        self.choice_encounter = tui.Choice(self)
-        self.choice_encounter.pack()
+        frame = tui.Frame(self)
+        frame.pack()
 
-        self.choice_encounter.focus_next = self.choice_encounter
+        self.choice_encounter = tui.ChoiceWidget(frame, "List of encounters:", columns=3)
+        self.choice_encounter.grid(0, 1, columnspan=8)
+        tui.Frame(frame).grid(0, 9)
+
+
+        self.choice_encounter.focus_next = self.button_back
+        self.button_back.focus_next = self.choice_encounter
 
     def update(self):
-        self.choice_encounter.reset_choices()
+        self.choice_encounter.reset()
         for i, encounter in enumerate(self.scene.encounters):
-            self.choice_encounter.add_label(str(encounter))
-        self.choice_encounter.add_label("Back", style=Style.TEXT_WARNING)
+            self.choice_encounter.add_widget(CardPlayer, encounter)
         
         super().update()

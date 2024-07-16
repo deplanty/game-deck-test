@@ -1,3 +1,5 @@
+import random
+
 from src.components import Gauge
 from src.objects import Player
 import src.singleton as sgt
@@ -34,6 +36,16 @@ class PathStep:
 
         index = self.encounters.index(encounter)
         self.encounter_current = self.encounters.pop(index)
+
+    def get_encounters(self, n:int=3):
+        """
+        Return a random selection of `n` encounters.
+        """
+
+        if n > len(self.encounters):
+            return self.encounters
+        else:
+            return random.sample(self.encounters, k=n)
 
     @classmethod
     def from_dict(cls, iid:int, data:dict) -> "PathStep":
