@@ -15,6 +15,9 @@ class SceneCombat(scenes.Scene):
 
         self.ui = SceneCombatUi(self)
         self.ui.choice_hand.hovered.connect(self._on_player_card_hovered)
+        self.ui.choice_hand.selected.connect(self._on_player_card_selected)
+        self.ui.button_turn_end.pressed.connect(self._on_button_turn_end_pressed)
+        self.ui.button_quit.pressed.connect(self._on_button_quit_pressed)
 
     def run(self):
         """Run this scene loop."""
@@ -30,7 +33,7 @@ class SceneCombat(scenes.Scene):
                 action = self.loop_turn()
                 if action == "end of turn":
                     turn = "enemy"
-                    self.ui.choice_hand.focus_remove()
+                    self.ui.main.focus_widget.focus_remove()
                     sgt.player.end_of_turn()
                     self.enemy.start_of_turn()
                 elif action == "quit":
@@ -60,22 +63,11 @@ class SceneCombat(scenes.Scene):
         """
 
         self.ui.choice_hand.focus_set()
-        self.ui.update()
+        self.action = ""
+        while self.action == "":
+            self.ui.update()
 
-        index = self.ui.choice_hand.current
-        text = self.ui.choice_hand.choice
-
-        if text == "End of turn":
-            return "end of turn"
-        elif text == "Quit":
-            return "quit"
-        else:
-            card = sgt.player.play_card(index)
-            if card is None:
-                return "continue"
-
-            self.play_card(sgt.player, self.enemy, card)
-            return "continue"
+        return self.action
 
     def loop_turn_enemy(self) -> str:
         """
@@ -104,9 +96,19 @@ class SceneCombat(scenes.Scene):
 
     def _on_player_card_hovered(self):
         index = self.ui.choice_hand.current
-        if index < len(sgt.player.deck.hand):
-            card = sgt.player.deck.hand[index]
-            self.ui.label_card_hand.text = card.info_full
-        else:
-            self.ui.label_card_hand.text = ""
-        self.ui.label_card_hand.update()
+
+    def _on_player_card_selected(self):
+        index = self.ui.choice_hand.current
+        card = sgt.player.play_card(index)
+        if card is None:
+            self.action = "continue"
+            return
+
+        self.play_card(sgt.player, self.enemy, card)
+        self.action = "continue"
+
+    def _on_button_turn_end_pressed(self):
+        self.action = "end of turn"
+
+    def _on_button_quit_pressed(self):
+        self.action = "quit"

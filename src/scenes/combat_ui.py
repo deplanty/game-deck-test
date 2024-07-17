@@ -1,6 +1,7 @@
 import src.singleton as sgt
 from src import tui
 from src.tui.style import Style
+from src.widgets import CardCard
 
 
 class SceneCombatUi(tui.Tui):
@@ -52,11 +53,23 @@ class SceneCombatUi(tui.Tui):
         # Cards in player's hand frame
         self.frame_cards = tui.Frame(self.frame_main)
         self.frame_cards.grid(2, columnspan=3)
-        self.choice_hand = tui.Choice(self.frame_cards)
-        self.choice_hand.grid(0, 0)
-        self.label_card_hand = tui.Label(self.frame_cards)
-        self.label_card_hand.prefix = "Hovered card:\n"
-        self.label_card_hand.grid(0, 1, columnspan=3)
+        frame_menu = tui.Frame(self.frame_cards)
+        frame_menu.grid(0, 0)
+        tui.Frame(frame_menu).pack()
+        self.button_turn_end = tui.Button(frame_menu, " End of turn ")
+        self.button_turn_end.pack()
+        tui.Frame(frame_menu).pack()
+        self.button_quit = tui.Button(frame_menu, " Quit ")
+        self.button_quit.pack()
+        self.choice_hand = tui.ChoiceWidget(self.frame_cards, columns=5)
+        self.choice_hand.grid(0, 1, columnspan=6)
+
+
+        # Focus cycle
+        self.button_turn_end.focus_next = self.button_quit
+        self.button_quit.focus_next = self.choice_hand
+        self.choice_hand.focus_next = self.button_turn_end
+
 
         # Initialize values
         self.label_enemy_name.text = self.scene.enemy.name
@@ -75,15 +88,15 @@ class SceneCombatUi(tui.Tui):
         self.frame_player.fill()
 
         # Show the cards in hand
-        self.choice_hand.reset_choices()
+        self.choice_hand.reset()
         for i, card in enumerate(sgt.player.deck.hand):
             if sgt.player.energy >= card.cost:
                 style = Style.NORMAL
             else:
                 style = Style.MUTE
-            self.choice_hand.add_label(card.name, style=style)
-        self.choice_hand.add_label("End of turn", style=Style.TEXT_INFO)
-        self.choice_hand.add_label("Quit", style=Style.TEXT_WARNING)
+            self.choice_hand.add_widget(CardCard, card)
+        # self.choice_hand.add_label("End of turn", style=Style.TEXT_INFO)
+        # self.choice_hand.add_label("Quit", style=Style.TEXT_WARNING)
         self.frame_cards.fill()
 
         # Show the history of played cards

@@ -12,13 +12,14 @@ class CardCardUi:
         tui.HLine(widget).pack()
         self.label_cost = tui.Label(widget, prefix="Cost: ")
         self.label_cost.pack()
-        self.label_desc = tui.Label(widget, prefix="Description:\n")
+        tui.Frame(widget).pack()
+        self.label_desc = tui.Label(widget)
         self.label_desc.pack()
 
     def update(self, card:Card):
-        self.label_name = card.name
-        self.label_cost = card.cost
-        self.label_desc = card.description
+        self.label_name.text = card.name
+        self.label_cost.text = card.cost
+        self.label_desc.text = card.description
 
 
 class CardCard(tui.LabelFrame):
@@ -26,5 +27,5 @@ class CardCard(tui.LabelFrame):
         super().__init__(parent)
 
         self.ui = CardCardUi(self)
-        self.ui.update(player)
+        self.ui.update(card)
         self.update()
