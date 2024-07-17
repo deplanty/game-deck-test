@@ -2,7 +2,7 @@
 name = "Tester"
 hp = 500
 energy = 5
-hand_size = 10
+hand_size = 8
 deck = []
 playable = true
 
@@ -14,15 +14,15 @@ hand_size = 4
 deck = [24, 24, 24, 24, 24, 24]
 
 [2]
-name = "Jacques"
-hp = 50
-energy = 3
-hand_size = 4
-deck = [12, 12, 12, 6, 6, 6, 4, 4, 3, 3, 1, 1, 13, 13, 15, 15, 15]
+name = "Warrior"
+hp = 60
+energy = 2
+hand_size = 5
+deck = [3, 3, 1, 1, 1, 1, 1, 6, 16]
 
 [3]
-name = "Barnabé"
-hp = 40
-energy = 3
+name = "Staller"
+hp = 60
+energy = 2
 hand_size = 5
-deck = [14, 14, 3, 3, 12, 12, 7, 7, 8, 8]
+deck = [3, 3, 4, 4, 4, 4, 4, 12, 15]
