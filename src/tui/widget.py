@@ -459,3 +459,61 @@ class Widget:
         """Placeholder for subsequent inherited Widget that can be focused."""
 
         pass
+
+
+
+
+
+"""
+Notes to help debug the layout system.
+18/07/2024
+
+# For the grid layout
+
+## Getting the x position of a widget:
+-> x
+-> parent.get_column_position
+-> (parent.)get_column_width
+-> (parent.)width
+-> parent.(parent.)get_column_width
+-> ... until parent is None. The width is curses.COLS.
+
+## Getting the y position of a widget:
+-> y
+-> parent.get_row_position
+-> (parent.)get_row_height
+-> (parent.)height
+-> parent.(parent.)get_row_height
+-> ... until parent is None. The width is curses.LINES.
+
+## Getting the height and width of a widget:
+The process is described with x and y.
+
+# For the pack layout
+
+## Getting the x position of a widget:
+-> x = 0
+
+## Getting the y position of a widget:
+-> y
+-> parent.get_row_position
+-> (parent).get_height
+  -> (fill == False) height_calc
+or
+  -> (fill == True) (parent.)height
+  -> parent.(parent.)get_height
+  -> ... until parent is None.
+
+## Getting the width of a widget:
+-> width
+-> parent.width
+-> ... until parent is None.
+
+# Getting the height of a widget:
+The process is described with y.
+
+
+For a container widget (Frame of LabelFrame), the height_calc is calculated from its children.
+In the height function, the parent is called. Then, the children calls the parent and loop.
+
+"""
